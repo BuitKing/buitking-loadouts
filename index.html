@@ -188,6 +188,55 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 </style>
 </head>
 <body>
+<style>
+#pw-overlay{position:fixed;inset:0;background:#0a0a0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:18px}
+#pw-overlay.hidden{display:none}
+.pw-box{background:#141420;border:1px solid #21468B;border-radius:12px;padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 8px 40px rgba(33,70,139,.4)}
+.pw-logo{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;letter-spacing:2px;color:#F0F0F0}.pw-logo span{color:#AE1C28}.pw-logo em{color:#21468B;font-style:normal}
+.pw-sub{font-size:12px;color:#888;font-family:'Share Tech Mono',monospace;letter-spacing:1px}
+.pw-input{background:#0a0a0f;border:1px solid #21468B;border-radius:6px;padding:10px 16px;color:#F0F0F0;font-family:'Share Tech Mono',monospace;font-size:15px;width:220px;outline:none;text-align:center;letter-spacing:3px}
+.pw-input:focus{border-color:#AE1C28}
+.pw-btn{background:#21468B;color:#F0F0F0;border:none;border-radius:6px;padding:10px 32px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .2s}
+.pw-btn:hover{background:#AE1C28}
+.pw-error{color:#AE1C28;font-size:12px;font-family:'Share Tech Mono',monospace;min-height:16px}
+</style>
+
+<div id="pw-overlay">
+  <div class="pw-box">
+    <div class="pw-logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
+    <div class="pw-sub">TOEGANGSCODE VEREIST</div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="••••••••" maxlength="32" />
+    <button class="pw-btn" onclick="checkPW()">INLOGGEN</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ─── WACHTWOORD (verander dit naar iets wat jij en je vriend afspreken) ───
+  var PW = "BuitKingBlinkiez2026";
+  // ─────────────────────────────────────────────────────────────────────────
+
+  var KEY = "bk_auth";
+  if(sessionStorage.getItem(KEY) === "1"){
+    document.getElementById("pw-overlay").classList.add("hidden");
+  }
+  document.getElementById("pw-input").addEventListener("keydown", function(e){
+    if(e.key === "Enter") checkPW();
+  });
+  window.checkPW = function(){
+    var val = document.getElementById("pw-input").value;
+    if(val === PW){
+      sessionStorage.setItem(KEY, "1");
+      document.getElementById("pw-overlay").classList.add("hidden");
+    } else {
+      document.getElementById("pw-error").textContent = "Verkeerde code — probeer opnieuw";
+      document.getElementById("pw-input").value = "";
+    }
+  };
+})();
+</script>
+
 
 <div class="header">
   <div class="logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
