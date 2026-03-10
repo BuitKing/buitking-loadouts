@@ -23,7 +23,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
 body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);pointer-events:none;z-index:0}
 
 /* ── HEADER ── */
-.header{background:linear-gradient(135deg,#080910 0%,#0f1220 50%,#080910 100%);border-bottom:3px solid var(--nl-red);padding:14px 20px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+.header{background:linear-gradient(135deg,#080910 0%,#0f1220 50%,#080910 100%);border-bottom:3px solid var(--nl-red);padding:14px 20px;display:flex;align-items:center;gap:16px}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--nl-blue);letter-spacing:2px;text-transform:uppercase}
 .logo span{color:var(--nl-red)}
 .logo em{color:var(--nl-white);font-style:normal}
@@ -38,12 +38,12 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .game-tab.active .badge{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
 
 /* ── FILTER BAR ── */
-.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;flex-wrap:nowrap;gap:6px;align-items:center;position:sticky;top:57px;z-index:90;overflow-x:auto;scrollbar-width:none}.filter-bar::-webkit-scrollbar{display:none}
-.cat-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
+.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;flex-wrap:nowrap;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none}.filter-bar::-webkit-scrollbar{display:none}
+.cat-pill{padding:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
 .cat-pill:hover{border-color:var(--border2);color:var(--text)}
 .cat-pill.active{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
 .filter-sep{width:1px;height:20px;background:var(--border2);margin:0 4px}
-.tier-pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;letter-spacing:.8px}
+.tier-pill{padding:4px 9px;border-radius:20px;border:1px solid var(--border);font-size:11px;font-weight:700;cursor:pointer;transition:all .12s;letter-spacing:.6px}
 .tier-pill.tier-all{background:var(--bg3);color:var(--text2)}
 .tier-pill.tier-all.active{background:rgba(255,255,255,.08);border-color:var(--text2);color:var(--text)}
 .tier-pill.tier-s{background:rgba(240,192,64,.07);color:var(--s-gold);border-color:rgba(240,192,64,.3)}
@@ -51,10 +51,10 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .tier-pill.tier-a{background:rgba(56,165,255,.07);color:var(--a-blue);border-color:rgba(56,165,255,.3)}
 .tier-pill.tier-a.active{background:rgba(56,165,255,.2);border-color:var(--a-blue);box-shadow:0 0 8px rgba(56,165,255,.2)}
 .search-box{position:relative;flex-shrink:0}
-.search-box input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 12px 5px 30px;font-size:13px;font-family:'Rajdhani',sans-serif;border-radius:3px;width:150px;outline:none;transition:border .12s}
+.search-box input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 10px 4px 26px;font-size:12px;font-family:'Rajdhani',sans-serif;border-radius:3px;width:130px;outline:none;transition:border .12s}
 .search-box input:focus{border-color:var(--border2)}
 .search-box::before{content:'🔍';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;pointer-events:none}
-.code-toggle{padding:5px 12px;background:rgba(56,165,255,.07);border:1px solid rgba(56,165,255,.25);border-radius:20px;font-size:12px;font-weight:600;color:#6699cc;cursor:pointer;transition:all .12s;white-space:nowrap}
+.code-toggle{padding:4px 10px;background:rgba(56,165,255,.07);border:1px solid rgba(56,165,255,.25);border-radius:20px;font-size:11px;font-weight:600;color:#6699cc;cursor:pointer;transition:all .12s;white-space:nowrap}
 .code-toggle.active{background:rgba(56,165,255,.2);border-color:var(--blue2);color:var(--blue2)}
 
 /* ── LAYOUT ── */
@@ -84,7 +84,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;justify-content:center;align-items:center;padding:20px}
 .modal-overlay.open{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border2);width:min(720px,100%);max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.8)}
-.modal-header{background:linear-gradient(90deg,#080910,#0f1220);padding:14px 18px;border-bottom:2px solid var(--amber);display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.modal-header{background:linear-gradient(90deg,#080910,#0f1220);padding:14px 18px;border-bottom:2px solid var(--amber);display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:10}
 .modal-gun-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--amber2);letter-spacing:2px;text-transform:uppercase;flex:1}
 .modal-cat{font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace;letter-spacing:1px}
 .modal-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
@@ -148,14 +148,14 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .empty{color:var(--text3);font-size:13px;text-align:center;padding:60px 20px;font-family:'Share Tech Mono',monospace;letter-spacing:1px}
 
 /* source filter pills */
-.src-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.8px}
+.src-pill{padding:4px 9px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.6px}
 .src-pill:hover{border-color:var(--border2);color:var(--text)}
 .src-pill.active{background:rgba(255,255,255,.08);border-color:var(--text2);color:var(--text)}
 .src-pill.src-wz.active{background:rgba(56,165,255,.15);border-color:var(--blue2);color:var(--blue2)}
 .src-pill.src-hub.active{background:rgba(160,90,200,.18);border-color:#a060cc;color:#cc88ff}
 
 /* game filter pills */
-.game-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:0;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.8px}
+.game-pill{padding:4px 9px;background:var(--bg3);border:1px solid var(--border);border-radius:0;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);font-size:11px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.6px}
 .game-pill:hover{border-color:var(--border2);color:var(--text)}
 .game-pill.active{background:rgba(33,70,139,.2);border-color:var(--nl-blue);color:#6699ff;box-shadow:0 0 6px rgba(33,70,139,.3)}
 
@@ -164,7 +164,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .game-section-head{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:6px;color:var(--nl-blue);text-transform:uppercase;padding:12px 0 7px;border-bottom:2px solid rgba(33,70,139,.25);border-left:3px solid var(--nl-blue);padding-left:10px;margin-bottom:10px;margin-top:8px;background:rgba(33,70,139,.04)}
 
 /* sort toggle */
-.sort-toggle{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
+.sort-toggle{padding:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
 .sort-toggle:hover{border-color:var(--border2);color:var(--text)}
 .sort-toggle.active{background:rgba(174,28,40,.15);border-color:var(--amber);color:var(--amber2)}
 
@@ -176,7 +176,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .tier-head-a{color:var(--a-blue);border-bottom-color:rgba(56,165,255,.25)}
 .tier-head-none{color:var(--text3);border-bottom-color:var(--border)}
 /* ── PLAYLIST PANEL ── */
-.playlist-panel{width:280px;min-width:280px;max-width:280px;background:var(--bg2);border-left:1px solid var(--border);padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:1}
+.playlist-panel{width:280px;min-width:280px;max-width:280px;background:var(--bg2);border-left:1px solid var(--border);padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:1;flex-shrink:0}
 .playlist-panel::-webkit-scrollbar{width:4px}
 .playlist-panel::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 .pl-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;color:var(--nl-red);text-transform:uppercase;margin-bottom:4px}
@@ -205,6 +205,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(33,70,139,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(33,70,139,.03) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
 
 /* HEADER — scherpe diagonale accent + glow */
+.sticky-top{position:sticky;top:0;z-index:100}
 .header{background:linear-gradient(135deg,#050608 0%,#0c0e18 40%,#080910 100%);border-bottom:none;box-shadow:0 2px 20px rgba(174,28,40,.25),0 0 40px rgba(0,0,0,.8);position:relative}
 .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--nl-red) 0%,var(--nl-red) 18%,rgba(240,240,240,.6) 38%,var(--nl-white) 50%,rgba(240,240,240,.6) 62%,var(--nl-blue) 82%,var(--nl-blue) 100%);opacity:.85}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;position:relative}
@@ -219,7 +220,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .game-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--nl-red);box-shadow:0 0 8px rgba(174,28,40,.6)}
 
 /* FILTER BAR — dunne rode accentlijn links */
-.filter-bar{border-left:3px solid rgba(174,28,40,.4);border-bottom:1px solid var(--border)}
+.filter-bar{border-left:3px solid rgba(174,28,40,.4);border-bottom:1px solid var(--border);min-width:0}
 .cat-pill.active{clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);border-radius:0}
 .tier-pill{border-radius:0;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
 
@@ -266,8 +267,10 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 /* MODAL — CoD HUD look */
 .modal{
   clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);
-  border:1px solid var(--border2);
+  border:none;
   box-shadow:0 0 40px rgba(0,0,0,.9),0 0 20px rgba(174,28,40,.1);
+  outline:1px solid var(--border2);
+  outline-offset:-1px;
 }
 .modal-header{
   background:linear-gradient(90deg,rgba(174,28,40,.12),#0a0c14,#0a0c14);
@@ -512,13 +515,14 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 </script>
 
 
+<div class="sticky-top">
 <div class="header">
   <div class="logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
   <div class="updated" id="lastUpdated">Bijgewerkt: 10/03/2026 16:01</div>
 </div>
-
 <div class="game-tabs" id="gameTabs"></div>
 <div class="filter-bar" id="filterBar"></div>
+</div>
 <div class="main-layout">
   <div class="content" id="content"></div>
   <div class="playlist-panel" id="playlistPanel"></div>
@@ -527,7 +531,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
     <div class="modal-header">
-      <div>
+      <div style="flex:1;min-width:0">
         <div class="modal-gun-name" id="modalGunName"></div>
         <div class="modal-cat" id="modalCat"></div>
       </div>
@@ -667,6 +671,7 @@ function renderCatBar(){
     `<div class="sort-toggle ${sortByTier?'active':''}" onclick="toggleSort()">↕ TIER SORTERING</div>` +
     `<div class="filter-sep"></div>` +
     `<div class="code-toggle ${codeOnly?'active':''}" onclick="toggleCode()">BUILD CODE</div>` +
+    `<div class="filter-sep"></div>` +
     `<div class="search-box"><input type="text" placeholder="Zoek wapen..." value="${searchQ}" oninput="setSearch(this.value)"></div>`;
 }
 
