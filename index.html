@@ -453,19 +453,28 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 <style>
 #pw-overlay{position:fixed;inset:0;background:#0a0a0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:18px}
 #pw-overlay.hidden{display:none}
-.pw-box{background:#141420;border:1px solid #21468B;border-radius:12px;padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 8px 40px rgba(33,70,139,.4)}
-.pw-logo{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;letter-spacing:2px;color:#F0F0F0}.pw-logo span{color:#AE1C28}.pw-logo em{color:#21468B;font-style:normal}
-.pw-sub{font-size:12px;color:#888;font-family:'Share Tech Mono',monospace;letter-spacing:1px}
-.pw-input{background:#0a0a0f;border:1px solid #21468B;border-radius:6px;padding:10px 16px;color:#F0F0F0;font-family:'Share Tech Mono',monospace;font-size:15px;width:220px;outline:none;text-align:center;letter-spacing:3px}
-.pw-input:focus{border-color:#AE1C28}
-.pw-btn{background:#21468B;color:#F0F0F0;border:none;border-radius:6px;padding:10px 32px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .2s}
-.pw-btn:hover{background:#AE1C28}
-.pw-error{color:#AE1C28;font-size:12px;font-family:'Share Tech Mono',monospace;min-height:16px}
+.pw-box{background:#0c0e18;border:1px solid rgba(33,70,139,.6);border-radius:0;clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 0 40px rgba(33,70,139,.25),0 0 80px rgba(0,0,0,.8);position:relative;overflow:hidden}
+.pw-logo{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;letter-spacing:4px;color:#F0F0F0;text-transform:uppercase;position:relative}
+.pw-logo::before{content:'//';font-size:14px;color:var(--nl-red);margin-right:6px;font-family:'Share Tech Mono',monospace;opacity:.7}
+.pw-logo span{color:#ff3344;text-shadow:0 0 12px rgba(255,50,60,.8),0 0 24px rgba(174,28,40,.5)}
+.pw-logo em{color:#4488ff;font-style:normal;text-shadow:0 0 12px rgba(68,136,255,.7),0 0 24px rgba(33,70,139,.5)}
+.pw-logo-white{text-shadow:0 0 8px rgba(240,240,240,.4)}
+.pw-sub{font-size:11px;color:#556;font-family:'Share Tech Mono',monospace;letter-spacing:3px}
+.pw-input{background:#080910;border:1px solid rgba(33,70,139,.5);border-radius:0;clip-path:polygon(4px 0%,100% 0%,100% calc(100% - 4px),calc(100% - 4px) 100%,0% 100%,0% 4px);padding:10px 16px;color:#F0F0F0;font-family:'Share Tech Mono',monospace;font-size:15px;width:220px;outline:none;text-align:center;letter-spacing:3px;transition:border-color .2s}
+.pw-input:focus{border-color:rgba(174,28,40,.7);box-shadow:0 0 10px rgba(174,28,40,.2)}
+.pw-btn{background:rgba(33,70,139,.4);color:#F0F0F0;border:1px solid rgba(33,70,139,.7);border-radius:0;clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);padding:10px 32px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:4px;cursor:pointer;transition:all .2s;text-shadow:0 0 8px rgba(100,150,255,.4)}
+.pw-btn:hover{background:rgba(174,28,40,.5);border-color:rgba(174,28,40,.8);box-shadow:0 0 16px rgba(174,28,40,.3)}
+.pw-error{color:#ff4455;font-size:11px;font-family:'Share Tech Mono',monospace;min-height:16px;letter-spacing:1px;text-shadow:0 0 8px rgba(255,68,85,.5)}
+
+/* Scan animatie op pw-box */
+@keyframes pwScan{0%{top:-4px;opacity:.9}100%{top:110%;opacity:0}}
+.pw-scan{position:absolute;inset-inline:0;height:2px;background:linear-gradient(90deg,transparent,var(--nl-red),var(--nl-red),transparent);box-shadow:0 0 10px var(--nl-red),0 0 20px rgba(174,28,40,.4);pointer-events:none;z-index:10;animation:pwScan 2.5s ease-in infinite}
 </style>
 
 <div id="pw-overlay">
   <div class="pw-box">
-    <div class="pw-logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
+    <div class="pw-scan"></div>
+    <div class="pw-logo"><span>BUIT</span><em>KING'S</em> <span class="pw-logo-white" style="color:#f0f0f0;text-shadow:0 0 8px rgba(240,240,240,.35)">LOADOUTS</span></div>
     <div class="pw-sub">TOEGANGSCODE VEREIST</div>
     <input class="pw-input" id="pw-input" type="password" placeholder="••••••••" maxlength="32" />
     <button class="pw-btn" onclick="checkPW()">INLOGGEN</button>
