@@ -16,7 +16,7 @@ import sys, os, json, logging, datetime, tempfile, re
 # ─────────────────────────────────────────────
 
 EXCEL_URL      = "https://docs.google.com/spreadsheets/d/10uE2AoXbZpy6C9sdRdJ8GzQGPYNzg-xrNrEoM6V1-jE/export?format=xlsx"
-HTML_PATH      = os.path.join(os.path.dirname(os.path.abspath(__file__)), "buitking_loadouts.html")
+HTML_PATH      = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
 LOG_PATH       = os.path.join(os.path.dirname(os.path.abspath(__file__)), "buitking_update.log")
 WZ_URL         = "https://warzoneloadout.games/warzone-meta/"
 WZHUB_URL      = "https://wzhub.gg/loadouts"
