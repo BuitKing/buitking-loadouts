@@ -38,7 +38,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .game-tab.active .badge{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
 
 /* ── FILTER BAR ── */
-.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;flex-wrap:nowrap;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none}.filter-bar::-webkit-scrollbar{display:none}
+.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:6px 16px;display:flex;flex-wrap:nowrap;gap:5px;align-items:center;overflow-x:auto;scrollbar-width:none}.filter-bar::-webkit-scrollbar{display:none}
 .cat-pill{padding:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
 .cat-pill:hover{border-color:var(--border2);color:var(--text)}
 .cat-pill.active{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
@@ -220,7 +220,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .game-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--nl-red);box-shadow:0 0 8px rgba(174,28,40,.6)}
 
 /* FILTER BAR — dunne rode accentlijn links */
-.filter-bar{border-left:3px solid rgba(174,28,40,.4);border-bottom:1px solid var(--border);min-width:0}
+.filter-bar{border-left:3px solid rgba(174,28,40,.4)}
 .cat-pill.active{clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);border-radius:0}
 .tier-pill{border-radius:0;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
 
@@ -265,16 +265,10 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .cat-section h2::after{content:'';position:absolute;bottom:-1px;left:0;width:60px;height:1px;background:linear-gradient(90deg,var(--nl-red),transparent);box-shadow:0 0 6px var(--nl-red)}
 
 /* MODAL — CoD HUD look */
-.modal{
-  clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);
-  border:none;
-  box-shadow:0 0 40px rgba(0,0,0,.9),0 0 20px rgba(174,28,40,.1);
-  outline:1px solid var(--border2);
-  outline-offset:-1px;
-}
 .modal-header{
-  background:linear-gradient(90deg,rgba(174,28,40,.12),#0a0c14,#0a0c14);
-  border-bottom:1px solid rgba(174,28,40,.4);
+  background:linear-gradient(90deg,rgba(174,28,40,.08),#0a0c14 60%);
+  border-bottom:1px solid rgba(174,28,40,.6);
+  box-shadow:0 1px 8px rgba(174,28,40,.2);
   position:relative;
 }
 .modal-header::before{content:'▶';color:var(--nl-red);font-size:10px;margin-right:4px;opacity:.7}
@@ -288,7 +282,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
   transition:border-color .12s;
 }
 .att-box:hover{border-color:rgba(33,70,139,.4)}
-.att-slot{color:var(--nl-blue);opacity:.8;font-size:8px;letter-spacing:2px}
+.att-slot{color:var(--nl-red);opacity:.7;font-size:8px;letter-spacing:2px}
 .att-val{font-size:11px;letter-spacing:.5px}
 
 /* PLAYLIST PANEL — militaire stijl */
@@ -331,6 +325,8 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .stripe-wz{width:4px;height:22px;background:var(--has-wz);box-shadow:0 0 6px var(--has-wz),0 0 12px rgba(61,143,255,.3)}
 .stripe-hub{width:22px;height:4px;background:var(--has-hub);box-shadow:0 0 6px var(--has-hub),0 0 12px rgba(204,68,255,.3)}
 
+
+
 /* SCROLLBAR — tactisch smal */
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -358,7 +354,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
   border-radius:0;
   clip-path:none;
   border:1px solid rgba(33,70,139,.5);
-  box-shadow:0 0 40px rgba(33,70,139,.2),0 0 80px rgba(0,0,0,.8);
+  box-shadow:0 0 40px rgba(0,0,0,.8);
   background:#0c0e18;
 }
 .pw-logo::before{content:'//';font-size:14px;color:var(--nl-red);margin-right:6px;font-family:'Share Tech Mono',monospace;opacity:.7}
@@ -458,7 +454,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 <style>
 #pw-overlay{position:fixed;inset:0;background:#0a0a0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:18px}
 #pw-overlay.hidden{display:none}
-.pw-box{background:#141420;border:1px solid #21468B;border-radius:0;clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 8px 40px rgba(33,70,139,.4);position:relative;overflow:hidden}
+.pw-box{background:#141420;border:1px solid rgba(33,70,139,.6);border-radius:0;padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 0 0 1px rgba(174,28,40,.25),0 8px 40px rgba(33,70,139,.4),0 0 30px rgba(33,70,139,.15),-1px -1px 0 0 rgba(174,28,40,.4),1px 1px 0 0 rgba(33,70,139,.4);position:relative;overflow:hidden}
 .pw-logo{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;letter-spacing:2px;color:#F0F0F0}
 .pw-logo span{color:#ff3344;text-shadow:0 0 10px rgba(255,50,60,.9),0 0 22px rgba(174,28,40,.6)}
 .pw-logo em{color:#4488ff;font-style:normal;text-shadow:0 0 10px rgba(68,136,255,.9),0 0 22px rgba(33,70,139,.6)}
@@ -518,7 +514,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 <div class="sticky-top">
 <div class="header">
   <div class="logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
-  <div class="updated" id="lastUpdated">Bijgewerkt: 10/03/2026 16:01</div>
+  <div class="updated">Made by BuitKing</div>
 </div>
 <div class="game-tabs" id="gameTabs"></div>
 <div class="filter-bar" id="filterBar"></div>
@@ -635,14 +631,17 @@ function setGame(g){
 
 // ─── FILTER BAR ──────────────────────────────────────────────────────────
 function renderCatBar(){
-  // Verzamel categorieën over alle games (of geselecteerde game)
-  const allCats = new Set();
-  const gamesToCheck = activeGameFilter === 'all' ? Object.keys(RAW) : [activeGameFilter];
-  for(const g of gamesToCheck){
-    for(const c of Object.keys(RAW[g]||{})) allCats.add(c);
-  }
-  const cats = Array.from(allCats);
   const games = Object.keys(RAW);
+  const gamesToCheck = activeGameFilter === 'all' ? games : [activeGameFilter];
+
+  // Alleen categorieën tonen die minstens één zichtbaar wapen hebben
+  const visibleCats = new Set();
+  for(const g of gamesToCheck){
+    for(const [cat, weapons] of Object.entries(RAW[g]||{})){
+      if(weapons.some(w => filterWeapon(w))) visibleCats.add(cat);
+    }
+  }
+  const cats = Array.from(visibleCats);
 
   const el = document.getElementById('filterBar');
 
@@ -656,7 +655,8 @@ function renderCatBar(){
     ...games.map(g=>`<div class="game-pill ${activeGameFilter===g?'active':''}" onclick="setGameFilter('${g}')">${g}</div>`)
   ].join('');
 
-  el.innerHTML = catPills +
+  el.innerHTML =
+    catPills +
     `<div class="filter-sep"></div>` +
     `<div class="tier-pill tier-all ${activeTier==='all'?'active':''}" onclick="setTier('all')">ALLE TIERS</div>` +
     `<div class="tier-pill tier-s ${activeTier==='S'?'active':''}" onclick="setTier('S')">S-TIER</div>` +
