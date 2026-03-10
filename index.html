@@ -67,6 +67,8 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .weapon-card.has-code::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--has-code);box-shadow:0 0 8px var(--has-code),0 0 16px rgba(0,255,136,.3)}
 .weapon-card.has-wz::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--has-wz);box-shadow:0 0 8px var(--has-wz),0 0 16px rgba(61,143,255,.3)}
 .weapon-card.has-hub .hub-stripe{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--has-hub);box-shadow:0 0 8px var(--has-hub),0 0 16px rgba(204,68,255,.3)}
+.code-stripe{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--has-code);box-shadow:0 0 8px var(--has-code),0 0 16px rgba(0,255,136,.3);z-index:2}
+.wz-stripe{position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--has-wz);box-shadow:0 0 8px var(--has-wz),0 0 16px rgba(61,143,255,.3);z-index:2}
 .weapon-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text);text-transform:uppercase;margin-bottom:4px;padding-right:28px}
 .weapon-meta{display:flex;gap:5px;flex-wrap:wrap}
 .att-count{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace}
@@ -351,7 +353,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 /* WACHTWOORD SCHERM — CoD stijl */
 .pw-box{
   border-radius:0;
-  clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);
+  clip-path:none;
   border:1px solid rgba(33,70,139,.5);
   box-shadow:0 0 40px rgba(33,70,139,.2),0 0 80px rgba(0,0,0,.8);
   background:#0c0e18;
@@ -453,28 +455,29 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 <style>
 #pw-overlay{position:fixed;inset:0;background:#0a0a0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:18px}
 #pw-overlay.hidden{display:none}
-.pw-box{background:#0c0e18;border:1px solid rgba(33,70,139,.6);border-radius:0;clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 0 40px rgba(33,70,139,.25),0 0 80px rgba(0,0,0,.8);position:relative;overflow:hidden}
-.pw-logo{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;letter-spacing:4px;color:#F0F0F0;text-transform:uppercase;position:relative}
-.pw-logo::before{content:'//';font-size:14px;color:var(--nl-red);margin-right:6px;font-family:'Share Tech Mono',monospace;opacity:.7}
-.pw-logo span{color:#ff3344;text-shadow:0 0 12px rgba(255,50,60,.8),0 0 24px rgba(174,28,40,.5)}
-.pw-logo em{color:#4488ff;font-style:normal;text-shadow:0 0 12px rgba(68,136,255,.7),0 0 24px rgba(33,70,139,.5)}
-.pw-logo-white{text-shadow:0 0 8px rgba(240,240,240,.4)}
-.pw-sub{font-size:11px;color:#556;font-family:'Share Tech Mono',monospace;letter-spacing:3px}
-.pw-input{background:#080910;border:1px solid rgba(33,70,139,.5);border-radius:0;clip-path:polygon(4px 0%,100% 0%,100% calc(100% - 4px),calc(100% - 4px) 100%,0% 100%,0% 4px);padding:10px 16px;color:#F0F0F0;font-family:'Share Tech Mono',monospace;font-size:15px;width:220px;outline:none;text-align:center;letter-spacing:3px;transition:border-color .2s}
-.pw-input:focus{border-color:rgba(174,28,40,.7);box-shadow:0 0 10px rgba(174,28,40,.2)}
-.pw-btn{background:rgba(33,70,139,.4);color:#F0F0F0;border:1px solid rgba(33,70,139,.7);border-radius:0;clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);padding:10px 32px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:4px;cursor:pointer;transition:all .2s;text-shadow:0 0 8px rgba(100,150,255,.4)}
-.pw-btn:hover{background:rgba(174,28,40,.5);border-color:rgba(174,28,40,.8);box-shadow:0 0 16px rgba(174,28,40,.3)}
-.pw-error{color:#ff4455;font-size:11px;font-family:'Share Tech Mono',monospace;min-height:16px;letter-spacing:1px;text-shadow:0 0 8px rgba(255,68,85,.5)}
+.pw-box{background:#141420;border:1px solid #21468B;border-radius:0;clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 8px 40px rgba(33,70,139,.4);position:relative;overflow:hidden}
+.pw-logo{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;letter-spacing:2px;color:#F0F0F0}
+.pw-logo span{color:#ff3344;text-shadow:0 0 10px rgba(255,50,60,.9),0 0 22px rgba(174,28,40,.6)}
+.pw-logo em{color:#4488ff;font-style:normal;text-shadow:0 0 10px rgba(68,136,255,.9),0 0 22px rgba(33,70,139,.6)}
+.pw-sub{font-size:12px;color:#888;font-family:'Share Tech Mono',monospace;letter-spacing:1px}
+.pw-input{background:#0a0a0f;border:1px solid #21468B;border-radius:6px;padding:10px 16px;color:#F0F0F0;font-family:'Share Tech Mono',monospace;font-size:15px;width:220px;outline:none;text-align:center;letter-spacing:3px}
+.pw-input:focus{border-color:#AE1C28}
+.pw-btn{background:#21468B;color:#F0F0F0;border:none;border-radius:6px;padding:10px 32px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .2s}
+.pw-btn:hover{background:#AE1C28}
+.pw-error{color:#AE1C28;font-size:12px;font-family:'Share Tech Mono',monospace;min-height:16px}
 
 /* Scan animatie op pw-box */
-@keyframes pwScan{0%{top:-4px;opacity:.9}100%{top:110%;opacity:0}}
-.pw-scan{position:absolute;inset-inline:0;height:2px;background:linear-gradient(90deg,transparent,var(--nl-red),var(--nl-red),transparent);box-shadow:0 0 10px var(--nl-red),0 0 20px rgba(174,28,40,.4);pointer-events:none;z-index:10;animation:pwScan 2.5s ease-in infinite}
+@keyframes pwScan{
+  0%  {top:0%;opacity:.6}
+  100%{top:100%;opacity:0}
+}
+.pw-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(174,28,40,.8),rgba(174,28,40,.8),transparent);box-shadow:0 0 10px rgba(174,28,40,.6),0 0 20px rgba(174,28,40,.3);pointer-events:none;z-index:10;animation:pwScan 3s linear infinite}
 </style>
 
 <div id="pw-overlay">
   <div class="pw-box">
     <div class="pw-scan"></div>
-    <div class="pw-logo"><span>BUIT</span><em>KING'S</em> <span class="pw-logo-white" style="color:#f0f0f0;text-shadow:0 0 8px rgba(240,240,240,.35)">LOADOUTS</span></div>
+    <div class="pw-logo"><span>BUIT</span><em>KING'S</em> <span class="pw-logo-white" style="color:#f0f0f0;text-shadow:0 0 10px rgba(240,240,240,.9),0 0 22px rgba(200,220,255,.5)">LOADOUTS</span></div>
     <div class="pw-sub">TOEGANGSCODE VEREIST</div>
     <input class="pw-input" id="pw-input" type="password" placeholder="••••••••" maxlength="32" />
     <button class="pw-btn" onclick="checkPW()">INLOGGEN</button>
@@ -803,8 +806,10 @@ function renderCard(w,idx,cat,game){
   if(wz) badges+=`<span class="mini-badge wz">${wz.tier}</span>`;
   if(hub) badges+=`<span class="mini-badge hub">${hub.tier}</span>`;
   const hubStripe = hub?'<div class="hub-stripe"></div>':'';
+  const codeStripe = w.build_code?'<div class="code-stripe"></div>':'';
+  const wzStripe = wz?'<div class="wz-stripe"></div>':'';
   return `<div class="${classes}" data-key="${key}" onclick="this.classList.add('cod-click');setTimeout(()=>this.classList.remove('cod-click'),400);openModalByKey(this.dataset.key)">
-    ${hubStripe}
+    ${codeStripe}${wzStripe}${hubStripe}
     <div class="weapon-name">${highlight(w.name,searchQ)}</div>
     <div class="weapon-meta">
       <span class="att-count">${buildLabel}</span>
