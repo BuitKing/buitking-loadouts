@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BuitKing's Loadouts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0b10;--bg2:#0f1018;--bg3:#181a24;
+  --amber:#7a1020;--amber2:#ae1c28;--amber3:#ff4455;
+  --nl-red:#ae1c28;--nl-white:#f0f0f0;--nl-blue:#21468b;
+  --green:#3a7d44;--green2:#4fa85a;
+  --blue:#2255aa;--blue2:#38a5ff;
+  --text:#cdd5d8;--text2:#8a9aaa;--text3:#505870;
+  --border:#1e2235;--border2:#2a3048;
+  --s-gold:#f0c040;--a-blue:#38a5ff;
+  --has-code:#3a7d44;--has-wz:#2255aa;--has-hub:#7a3d9a;
+}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);pointer-events:none;z-index:0}
+
+/* ── HEADER ── */
+.header{background:linear-gradient(135deg,#080910 0%,#0f1220 50%,#080910 100%);border-bottom:3px solid var(--nl-red);padding:14px 20px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--nl-blue);letter-spacing:2px;text-transform:uppercase}
+.logo span{color:var(--nl-red)}
+.logo em{color:var(--nl-white);font-style:normal}
+.updated{margin-left:auto;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text3);background:rgba(0,0,0,.4);padding:4px 10px;border:1px solid var(--border);border-radius:2px}
+
+/* ── GAME TABS ── */
+.game-tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 16px;gap:2px}
+.game-tab{padding:10px 20px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text3);border-bottom:3px solid transparent;transition:all .15s;position:relative;text-transform:uppercase}
+.game-tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.game-tab.active{color:var(--nl-red);border-bottom-color:var(--nl-red)}
+.badge{display:inline-flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);color:var(--text3);font-size:10px;font-family:'Share Tech Mono',monospace;padding:1px 5px;border-radius:10px;margin-left:6px;min-width:20px}
+.game-tab.active .badge{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
+
+/* ── FILTER BAR ── */
+.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:57px;z-index:90}
+.cat-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
+.cat-pill:hover{border-color:var(--border2);color:var(--text)}
+.cat-pill.active{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
+.filter-sep{width:1px;height:20px;background:var(--border2);margin:0 4px}
+.tier-pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;letter-spacing:.8px}
+.tier-pill.tier-all{background:var(--bg3);color:var(--text2)}
+.tier-pill.tier-all.active{background:rgba(255,255,255,.08);border-color:var(--text2);color:var(--text)}
+.tier-pill.tier-s{background:rgba(240,192,64,.07);color:var(--s-gold);border-color:rgba(240,192,64,.3)}
+.tier-pill.tier-s.active{background:rgba(240,192,64,.2);border-color:var(--s-gold);box-shadow:0 0 8px rgba(240,192,64,.2)}
+.tier-pill.tier-a{background:rgba(56,165,255,.07);color:var(--a-blue);border-color:rgba(56,165,255,.3)}
+.tier-pill.tier-a.active{background:rgba(56,165,255,.2);border-color:var(--a-blue);box-shadow:0 0 8px rgba(56,165,255,.2)}
+.search-box{margin-left:auto;position:relative}
+.search-box input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 12px 5px 30px;font-size:13px;font-family:'Rajdhani',sans-serif;border-radius:3px;width:180px;outline:none;transition:border .12s}
+.search-box input:focus{border-color:var(--border2)}
+.search-box::before{content:'🔍';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;pointer-events:none}
+.code-toggle{padding:5px 12px;background:rgba(56,165,255,.07);border:1px solid rgba(56,165,255,.25);border-radius:20px;font-size:12px;font-weight:600;color:#6699cc;cursor:pointer;transition:all .12s;white-space:nowrap}
+.code-toggle.active{background:rgba(56,165,255,.2);border-color:var(--blue2);color:var(--blue2)}
+
+/* ── LAYOUT ── */
+.main-layout{display:flex;align-items:flex-start;position:relative;z-index:1}
+.content{flex:1;min-width:0;padding:16px}
+.cat-section h2{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--nl-red);text-transform:uppercase;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.weapons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:16px}
+.weapon-card{background:var(--bg2);border:1px solid var(--border);padding:10px 12px;cursor:pointer;position:relative;transition:all .12s;overflow:hidden}
+.weapon-card:hover{background:var(--bg3);border-color:var(--border2);transform:translateY(-1px)}
+.weapon-card.has-code::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--has-code)}
+.weapon-card.has-wz::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--has-wz)}
+.weapon-card.has-hub .hub-stripe{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--has-hub)}
+.weapon-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text);text-transform:uppercase;margin-bottom:4px;padding-right:28px}
+.weapon-meta{display:flex;gap:5px;flex-wrap:wrap}
+.att-count{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace}
+.mini-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:2px;letter-spacing:.5px}
+.mini-badge.s{background:rgba(240,192,64,.15);color:var(--s-gold);border:1px solid rgba(240,192,64,.3)}
+.mini-badge.a{background:rgba(56,165,255,.12);color:var(--a-blue);border:1px solid rgba(56,165,255,.3)}
+.mini-badge.wz{background:rgba(56,165,255,.12);color:var(--blue2);border:1px solid rgba(56,165,255,.3)}
+.mini-badge.hub{background:rgba(160,90,200,.15);color:#c87aff;border:1px solid rgba(160,90,200,.3)}
+.code-indicator{position:absolute;top:8px;right:8px;font-size:9px;color:var(--green2);font-family:'Share Tech Mono',monospace}
+.mark{background:rgba(174,28,40,.3);color:var(--amber3)}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);width:min(720px,100%);max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.8)}
+.modal-header{background:linear-gradient(90deg,#080910,#0f1220);padding:14px 18px;border-bottom:2px solid var(--amber);display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.modal-gun-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--amber2);letter-spacing:2px;text-transform:uppercase;flex:1}
+.modal-cat{font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace;letter-spacing:1px}
+.modal-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
+.modal-close:hover{color:var(--text)}
+
+/* source tabs (TeeP / WZ Meta / WZHUB) */
+.src-tabs{display:flex;gap:2px;padding:10px 14px 0;background:var(--bg3);border-bottom:1px solid var(--border)}
+.src-tab{padding:7px 14px;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .12s;letter-spacing:.5px}
+.src-tab.active{color:var(--amber2);border-bottom-color:var(--amber)}
+.src-panel{display:none;padding:14px 18px}
+.src-panel.active{display:block}
+
+/* code row */
+.modal-code-row{background:var(--bg3);border:1px solid var(--border);padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.code-label{font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace;letter-spacing:1px}
+.code-value{font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--amber3);letter-spacing:2px;flex:1}
+.copy-btn{background:rgba(174,28,40,.15);border:1px solid var(--amber);color:var(--amber2);padding:4px 10px;font-size:11px;font-family:'Share Tech Mono',monospace;cursor:pointer;transition:all .1s;letter-spacing:.5px}
+.copy-btn:hover{background:rgba(174,28,40,.3)}
+
+/* build tabs within WZ Meta */
+.build-tabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+.build-tab{padding:4px 12px;background:var(--bg);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .1s;letter-spacing:.5px}
+.build-tab.active{background:rgba(174,28,40,.12);border-color:var(--amber);color:var(--amber2)}
+.build-rank{background:rgba(174,28,40,.2);color:var(--amber2);border:1px solid rgba(174,28,40,.35);font-family:'Share Tech Mono',monospace;font-size:9px;padding:1px 4px;border-radius:2px;margin-left:4px;display:inline-block;vertical-align:middle}
+.build-tab.active .build-rank{background:#1a1400;color:var(--s-gold);border-color:rgba(240,192,64,.5)}
+.build-panel{display:none}
+.build-panel.active{display:block}
+
+/* attachments grid */
+.att-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+.att-box{background:var(--bg);border:1px solid var(--border);padding:7px 9px}
+.att-slot{font-size:9px;color:var(--text3);font-family:'Share Tech Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.att-val{font-size:12px;font-weight:600;color:var(--text);letter-spacing:.3px;text-transform:uppercase}
+
+/* tier badge */
+.tier-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:1px}
+.tier-badge.s{background:rgba(240,192,64,.15);color:var(--s-gold);border:1px solid rgba(240,192,64,.4)}
+.tier-badge.a{background:rgba(56,165,255,.12);color:var(--a-blue);border:1px solid rgba(56,165,255,.35)}
+
+/* wzhub tier badge */
+.tier-badge.hub-s{background:rgba(160,90,200,.18);color:#cc88ff;border:1px solid rgba(160,90,200,.4)}
+.tier-badge.hub-a{background:rgba(100,140,200,.12);color:#88aaee;border:1px solid rgba(100,140,200,.3)}
+
+/* build note */
+.build-note{font-size:11px;color:var(--amber2);background:rgba(174,28,40,.08);border-left:2px solid var(--amber);padding:6px 10px;margin-top:8px;font-style:italic}
+
+/* no-data */
+.no-data{color:var(--text3);font-size:12px;font-family:'Share Tech Mono',monospace;padding:20px;text-align:center;letter-spacing:1px}
+
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--bg3);border:1px solid var(--green);color:var(--green2);padding:8px 18px;font-size:12px;font-family:'Share Tech Mono',monospace;z-index:9999;opacity:0;transition:all .25s;pointer-events:none;letter-spacing:.5px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* WZHUB code row */
+.hub-code-row{background:rgba(122,61,154,.1);border:1px solid rgba(122,61,154,.35);padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.hub-code-row .code-label{color:#a070cc}
+.hub-code-row .code-value{color:#cc88ff}
+.hub-code-row .copy-btn{background:rgba(122,61,154,.15);border-color:#7a3d9a;color:#cc88ff}
+.hub-code-row .copy-btn:hover{background:rgba(122,61,154,.3)}
+
+.empty{color:var(--text3);font-size:13px;text-align:center;padding:60px 20px;font-family:'Share Tech Mono',monospace;letter-spacing:1px}
+
+/* source filter pills */
+.src-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.8px}
+.src-pill:hover{border-color:var(--border2);color:var(--text)}
+.src-pill.active{background:rgba(255,255,255,.08);border-color:var(--text2);color:var(--text)}
+.src-pill.src-wz.active{background:rgba(56,165,255,.15);border-color:var(--blue2);color:var(--blue2)}
+.src-pill.src-hub.active{background:rgba(160,90,200,.18);border-color:#a060cc;color:#cc88ff}
+
+/* sort toggle */
+.sort-toggle{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
+.sort-toggle:hover{border-color:var(--border2);color:var(--text)}
+.sort-toggle.active{background:rgba(174,28,40,.15);border-color:var(--amber);color:var(--amber2)}
+
+/* tier section headers in sort view */
+.tier-section-head{font-size:14px;letter-spacing:4px;font-weight:700;padding:10px 0 7px}
+.tier-head-ss{color:#ffe080;border-bottom-color:rgba(255,224,128,.4)}
+.tier-head-s{color:var(--s-gold);border-bottom-color:rgba(240,192,64,.3)}
+.tier-head-aa{color:#80c8ff;border-bottom-color:rgba(128,200,255,.3)}
+.tier-head-a{color:var(--a-blue);border-bottom-color:rgba(56,165,255,.25)}
+.tier-head-none{color:var(--text3);border-bottom-color:var(--border)}
+/* ── PLAYLIST PANEL ── */
+.playlist-panel{width:280px;min-width:280px;max-width:280px;background:var(--bg2);border-left:1px solid var(--border);padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:1}
+.playlist-panel::-webkit-scrollbar{width:4px}
+.playlist-panel::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.pl-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;color:var(--nl-red);text-transform:uppercase;margin-bottom:4px}
+.pl-daterange{font-size:11px;color:var(--text2);font-family:'Share Tech Mono',monospace;margin-bottom:5px}
+.pl-season-bar{background:var(--bg3);border-radius:3px;height:5px;margin-bottom:3px;overflow:hidden}
+.pl-season-fill{height:100%;background:linear-gradient(90deg,var(--nl-red),#ff4455);border-radius:3px}
+.pl-season-label{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace;margin-bottom:10px;letter-spacing:.5px}
+.pl-divider{border:none;border-top:1px solid var(--border);margin:6px 0 10px}
+.pl-card{background:var(--bg3);border:1px solid var(--border);border-radius:3px;margin-bottom:8px;overflow:hidden}
+.pl-card.ltm{border-color:rgba(0,210,180,.25)}
+.pl-card-head{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 6px;border-bottom:1px solid var(--border)}
+.pl-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;color:var(--nl-blue);text-transform:uppercase;line-height:1.2}
+.pl-ltm{font-size:9px;font-weight:700;background:rgba(0,210,180,.12);color:#00d2b4;border:1px solid rgba(0,210,180,.35);padding:1px 5px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;margin-left:6px}
+.pl-modes{padding:4px 0}
+.pl-mode-row{display:flex;align-items:center;justify-content:space-between;padding:5px 10px;border-top:1px solid rgba(255,255,255,.05)}
+.pl-mode-row:first-child{border-top:none}
+.pl-mode-map{font-size:11px;color:var(--text);font-family:'Share Tech Mono',monospace;text-transform:uppercase}
+.pl-mode-type{font-size:11px;color:var(--text2);font-family:'Share Tech Mono',monospace;text-transform:uppercase}
+.pl-empty{font-size:11px;color:var(--text3);text-align:center;padding:20px 0;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
+  <div class="updated" id="lastUpdated">Bijgewerkt: 10/03/2026 16:01</div>
+</div>
+
+<div class="game-tabs" id="gameTabs"></div>
+<div class="filter-bar" id="filterBar"></div>
+<div class="main-layout">
+  <div class="content" id="content"></div>
+  <div class="playlist-panel" id="playlistPanel"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-gun-name" id="modalGunName"></div>
+        <div class="modal-cat" id="modalCat"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="src-tabs" id="srcTabs"></div>
+
+    <!-- TeeP panel -->
+    <div class="src-panel active" id="panelTeep">
+      <div class="modal-code-row" id="modalCodeRow" style="display:none">
+        <span class="code-label">BUILD CODE</span>
+        <span class="code-value" id="modalCode"></span>
+        <button class="copy-btn" id="copyBtn" onclick="copyCode()">KOPIEER</button>
+      </div>
+      <div class="att-grid" id="modalAtts"></div>
+    </div>
+
+    <!-- WZ Meta panel -->
+    <div class="src-panel" id="panelWz">
+      <div id="wzContent"></div>
+    </div>
+
+    <!-- WZHUB panel -->
+    <div class="src-panel" id="panelHub">
+      <div id="hubContent"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Build code gekopieerd</div>
+
+<script>
+/* TEEP_DATA_START */
+  const RAW = {"BO7": {"Assault Rifles": [{"name": "AK-227", "build_code": "", "attachments": {"Muzzle": "EMT3 COMPENSATOR", "Barrel": "17.6\" VANDAL HEAVY", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "EPITAPH EXTENDED MAG", "Optic": "FANG HOVERPOINT ELO", "Stock/Comb": "", "Rear Grip": "", "Fire Mod": "ENHANCED CYCLE SYSTEM"}}, {"name": "DS20 MIRAGE", "build_code": "A85-T449Z-RZFR1-1", "attachments": {"Muzzle": "", "Barrel": "17.1' ARDICATOR", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "ANDEAN EXTENDED", "Optic": "EAM XL REFLEX", "Stock/Comb": "WEIGHTED STOCK", "Rear Grip": "NEEDLETAIL GRIP", "Fire Mods": ""}}, {"name": "EGRT-17", "build_code": "A07-6K4JQ-VN11", "attachments": {"Muzzle": "LATTICE COMPENSATOR", "Barrel": "16.5\" BOWEN", "Underbarrel": "BOWEN SENTRY", "Laser": "", "Magazine": "VERTO FLIP MAG", "Optic": "", "Stock/Comb": "FRIGATE CONTROL STOCK", "Rear Grip": "", "Fire Mod": ""}}, {"name": "MADDOX RFB", "build_code": "A11-2JFA4-EK11", "attachments": {"Muzzle": "REDWELL 5.56 COMPENSATOR", "Barrel": "19\" VIRTUOUS", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "FANG HOVERPOINT ELO", "Stock/Comb": "FURROW CONTROL STOCK", "Rear Grip": "", "Fire Mod": "OVERPRESSURED"}}, {"name": "M15 MOD 0", "build_code": "", "attachments": {"Muzzle": "REDWELL 5.56", "Barrel": "20\" DELTA-F2 BARREL", "Underbarrel": "AXIS SHIFT VERTICAL", "Laser": "", "Ammunition": "", "Magazine": "MAYDAY EXTENDED", "Optic": "", "Stock/Comb": "", "Rear Grip": "PEREGRINE GRIP", "Fire Mod": ""}}, {"name": "MXR-17", "build_code": "A03-AV4J5-89JM1-1", "attachments": {"Muzzle": "REDWELL-90 COMPENSATOR", "Barrel": "17\" GREAVES SCOURGE BARREL", "Underbarrel": "LATERAL PRECISION", "Laser": "", "Ammunition": "", "Magazine": "VAULT EXTENDED", "Optic": "LETHAL TOOLS ELO", "Stock": "", "Rear Grip": "", "Fire Mods": ""}}], "SMGs": [{"name": "CARBON 57", "build_code": "", "attachments": {"Muzzle": "K&S COMPENSATOR", "Barrel": "", "Underbarrel": "SAPPER GUARD", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "HAMMER PLATOON PAD", "Rear Grip": "BOMBUS QUICK GRIP", "Fire Mod": "OVERPRESSURED"}}, {"name": "DRAVEC 45", "build_code": "", "attachments": {"Muzzle": "HAWKER SERIES 45", "Barrel": "14\" VERSE BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "FAST MAG I", "Optic": "", "Stock": "", "Rear Grip": "HERALD-Z1 GRIP", "Fire Mod": "OVERPRESSURED"}}, {"name": "KOGOT-7", "build_code": "S10-JJQ1Z-5GBTC-11", "attachments": {"Muzzle": "HAWKER PORTED", "Barrel": "8.5\" TARGIL", "Underbarrel": "", "Laser": "CONVERGENCE LASER", "Ammunition": "", "Magazine": "FORTUNE EXTENDED", "Optic": "", "Stock": "AKIMBO", "Rear Grip": ""}}, {"name": "MPC-25", "build_code": "S06-AV216-J9TC1-1", "attachments": {"Muzzle": "K&S COMPENSATOR", "Barrel": "", "Underbarrel": "FLOWGUARD FOREGRIP", "Laser": "", "Ammunition": "", "Magazine": "SUSTAIN-25 EXTENDED", "Optic": "LETHAL TOOLS ELO", "Stock": "", "Rear Grip": "PHOTONIC ADAPTIVE"}}, {"name": "RAZOR 9mm", "build_code": "S03-42HG2-7A11", "attachments": {"Muzzle": "H-9MM PRECISION", "Barrel": "12\" MFS SIDEWINDER BARREL", "Underbarrel": "EAM STEADY-90 GRIP", "Laser": "", "Magazine": "", "Optic": "", "Stock": "", "Rear Grip": "MICRODOT RECOVERY GRIP", "Fire Mods": ""}}, {"name": "REV-46", "build_code": "S09-2W25C-AL5F6-31", "attachments": {"Muzzle": "HAWKER SERIES 45", "Barrel": "", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "CAWDOR EXTENDED MAG", "Optic": "LTI MINI", "Stock": "", "Rear Grip": "TRAVERSAL GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "RYDEN 45K", "build_code": "S01-2JD6P-8IXAE-Q611", "attachments": {"Muzzle": "HAWKER SERIES", "Barrel": "", "Underbarrel": "FLOWGUARD FOREGRIP", "Laser": "", "Magazine": "TORCH EXTENDED", "Optic": "", "Stock": "", "Rear Grip": "ERUPTION GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "STURMWOLF 45", "build_code": "S07-6X65Y-FM31", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "", "Rear Grip": "", "Fire Mod": "BOLT CARRIER GROUP"}}], "LMGs": [{"name": "SOKOL 545", "build_code": "L04-5XHFE-G15Y1-1", "attachments": {"Muzzle": "EMT3 COMPENSATOR", "Barrel": "18.2\" PARLOUS", "Underbarrel": "LTI MISSIVE GRIP", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "LETHAL TOOLS ELO", "Stock": "", "Rear Grip": "PYTHIAN-VI GRIP", "Comb": ""}}], "Marksman Rifles": [{"name": "M8A1", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "M8A1 AUTOSTRIKE", "Underbarrel": "", "Laser": "", "Magazine": "REDLINE CAPACITOR", "Optic": "FANG HOVERPOINT ELO", "Stock": "", "Rear Grip": "", "Fire Mods": "OVERPRESSURED"}}], "Sniper Rifles": [{"name": "HAWKER-HX", "build_code": "R05-21WSG-IAEFH-6F11", "attachments": {"Muzzle": "", "Barrel": "MFS 25\" VOTIVE", "Underbarrel": "FLATTOP GRIP", "Laser": "", "Magazine": "FLATLOAD SPEED MAG", "Optic": "", "Stock": "", "Rear Grip": "AURORAL LIGHT GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "VS RECON", "build_code": "R01-21WSS-2XMTV-AK11", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "MFS R-STOP", "Laser": "INSTINCT LASER", "Ammunition": "", "Magazine": "DASHLINE SPEED", "Optic": "", "Stock": "", "Rear Grip": "R-1 SHELF GRIP", "Fire Mod": "OVERPRESSURED"}}]}, "BO6": {"Assault Rifles": [{"name": "ABR-A1", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "R&K MULTIZOOM SCOPE", "Stock": "INFILTRATOR STOCK", "Rear Grip": "", "Fire Mod": "OVERPRESSURED"}}, {"name": "AK-74", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG III", "Optic": "WILLIS 3x", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mod": "OVERPRESSURED"}}, {"name": "AMES 85", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "WILLIS 3x", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mod": "OVERPRESSURED"}}, {"name": "CR-56 AMAX", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "VOLZHSKIY REFLEX", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "CYPHER 091", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "DOBRYCH MF REFLEX", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "FFAR 1", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "JASON ARMORY 2x", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "GOBLIN MK 2", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "VOLZHSKIY REFLEX", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "GPR 91", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "KILO 141", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "WILLIS 3x", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "KRIG C", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "WILLIS 3x", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "MODEL L", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "REINFORCED BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "DOBRYCH MF REFLEX", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "XM4", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASERT", "Magazine": "EXTENDED MAG II", "Optic": "DOBRYCH MF REFLEX", "Stock": "", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}], "SMGs": [{"name": "C9", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "REINFORCED BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "STRELOK LASER", "Magazine": "EXTENDED MAG I", "Optic": "", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "DRESDEN 9mm", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "", "Laser": "STRELOK LASER", "Magazine": "EXTENDED MAG I", "Optic": "KEPLER MICROFLEX", "Stock": "INFILTRATOR STOCK", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "JACKAL PDW", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG I", "Optic": "", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "KOMPAKT 92", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "", "Underbarrel": "RANGER FOREGRIP", "Laser": "", "Magazine": "EXTENDED MAG II", "Optic": "", "Stock": "", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "KSV", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "RANGER FOREGRIP", "Laser": "", "Magazine": "EXTENDED MAG II", "Optic": "KEPLER MICROFLEX", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "LADRA", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "REINFORCED BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "", "Magazine": "EXTENDED MAG I", "Optic": "DOBRYCH MF REFLEX", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "LC10", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "REINFORCED BARREL", "Underbarrel": "RANGER FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG I", "Optic": "", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "PP-919", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "", "Laser": "TARGET LASER", "Magazine": "FAST MAG II", "Optic": "DOBRYCH MF REFLEX", "Stock": "INFILTRATOR STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "PPSH-41", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "RANGER FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG II", "Optic": "KEPLER MICROFLEX", "Stock": "COMBAT STOCK", "Rear Grip": "", "Fire Mods": "7.62x25MM TOKAREV OVERPRESSURED"}}, {"name": "SAUG", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "", "Underbarrel": "RANGER FOREGRIP", "Laser": "", "Magazine": "EXTENDED MAG I", "Optic": "", "Stock": "", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "RECOIL SPRINGS"}}, {"name": "GPMG-7", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "EXTENDED MAG I", "Optic": "VOLZHSKIY REFLEX", "Stock": "QUICKDRAW GRIP", "Rear Grip": "OVERPRESSURED", "Comb": ""}}, {"name": "XMG", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "", "Laser": "", "Magazine": "", "Optic": "", "Stock": "", "Rear Grip": "", "Fire Mods": "7.62 OVERPRESSURED", "Ammunition": ""}}], "Marksman Rifles": [{"name": "AEK-973", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "REINFORCED BARREL", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "", "Magazine": "EXTENDED MAG I", "Optic": "JASON ARMORY 2x", "Stock": "BALANCED STOCK", "Rear Grip": "ERGONOMIC GRIP", "Fire Mods": "RAPID FIRE"}}, {"name": "DM-10", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "REINFORCED BARREL", "Underbarrel": "WEIGHTED HANDGUARD", "Laser": "", "Magazine": "FLIP MAG", "Optic": "WILLIS 3x", "Stock": "BUFFER WEIGHT STOCK", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "OVERPRESSURED"}}, {"name": "SWAT 5.56 (GRAU)", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "", "Underbarrel": "VERTICAL FOREGRIP", "Laser": "TARGET LASER", "Magazine": "FULL AUTO EXTENDED", "Optic": "VOLZHSKIY REFLEX", "Stock": "INFILTRATOR STOCK", "Rear Grip": "QUICKDRAW GRIP", "Fire Mods": "SWAT 5.56 GRAU CONVERSION KIT"}}, {"name": "TR2", "build_code": "", "attachments": {"Muzzle": "COMPENSATOR", "Barrel": "", "Underbarrel": "RANGER FOREGRIP", "Laser": "", "Magazine": "FULL AUTO EXTENDED", "Optic": "", "Stock": "INFILTRATOR STOCK", "Rear Grip": "", "Fire Mods": "CQB AUTO CONVERSION"}}], "Sniper Rifles": [{"name": "HDR", "build_code": "", "attachments": {"Muzzle": "MONOLITHIC SUPPRESSOR", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "LIGHTWEIGHT BIPOD", "Laser": "TARGET LASER", "Magazine": "FAST MAG II", "Optic": "", "Stock": "BALANCED STOCK", "Rear Grip": "QUICKDRAW GRIP", "Fire Mod": "OVERPRESSURED"}}, {"name": "LR 7.62", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "LIGHTWEIGHT HANDGUARD", "Laser": "TARGET LASER", "Magazine": "FAST MAG II", "Optic": "BLANDWELL 7x SCOPE", "Stock": "HEAVY STOCK", "Rear Grip": "QUICKDRAW GRIP", "Fire Mod": "OVERPRESSURED"}}, {"name": "LW3A1 FROSTLINE", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "GAIN-TWIST BARREL", "Underbarrel": "", "Laser": "TARGET LASER", "Magazine": "FAST MAG I", "Optic": "BLANDWELL 7x SCOPE", "Stock": "HEAVY STOCK", "Comb": "QUICKDRAW RISER", "Fire Mods": "7.62 NATO OVERPRESSURED"}}], "Pistols": [{"name": "SIRIN 9mm", "build_code": "", "attachments": {"Muzzle": "SUPPRESSOR", "Barrel": "LONG BARREL"}}, {"name": "UNDERBAREREL", "build_code": "", "attachments": {"Laser": "", "Magazine": "EXTENDED MAG I", "Optic": "IRON SIGHT", "Stock": "", "Rear Grip": ""}}]}, "MW3": {"Assault Rifles": [{"name": "BAL-27", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "CROWN-H3 BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "JAK GLASSLESS OPTIC", "Stock/Comb": "ARDENT TAC-STOCK", "Rear Grip": ""}}, {"name": "BP50", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "LORE-9 HEAVY BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "45 ROUND MAG", "Optic": "", "Stock/Comb": "", "Rear Grip": ""}}, {"name": "DG-56", "build_code": "", "attachments": {"Muzzle": "VT-7 SPIRITFIRE SUPPRESSOR", "Barrel": "DG-56 LS18 BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "40 ROUND MAG", "Optic": "CORIO EAGLESEYE 2.5x", "Stock/Comb": "EXTENDED TP-9", "Rear Grip": ""}}, {"name": "FR 5.56", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "600MM FR LONGBORE", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "60 ROUND MAG", "Magazine": "", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}, {"name": "HOLGER 556", "build_code": "", "attachments": {"Muzzle": "L4R FLASH HIDER", "Barrel": "", "Underbarrel": "KIMURA RYN-03 VERTICAL GRIP", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "CRONEN INTLAS", "Stock": "", "Rear Grip": ""}}, {"name": "MCW", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "16.5\" MCW CYCLONE", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}, {"name": "MTZ-556", "build_code": "", "attachments": {"Muzzle": "VLK KOLOSS FLASH HIDER", "Barrel": "MTZ CLINCH PRO BARREL", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND DRUM", "Optic": "", "Stock": "", "Rear Grip": "BRUEN TR-24 ASSAULT GRIP"}}, {"name": "RAM-7", "build_code": "", "attachments": {"Muzzle": "CASUS BREAK", "Barrel": "CRONEN HEADWIND LONG BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND DRUM", "Optic": "", "Stock": "HVS 3.4 PAD", "Rear Grip": ""}}, {"name": "STG44", "build_code": "", "attachments": {"Muzzle": "VLK KOLOS FLASH HIDER", "Barrel": "FERNGEWEHR 792", "Underbarrel": "", "Laser": "", "Ammunition": "50 ROUND DRUM", "Magazine": "", "Optic": "CORIO EAGLESEYE 2.5x", "Stock": "DR79 COMBO STOCK", "Rear Grip": ""}}, {"name": "SVA 545", "build_code": "", "attachments": {"Muzzle": "VLK KOLOSS FLASH HIDER", "Barrel": "STV PRECISION BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "60 ROUND DRUM", "Optic": "", "Stock": "SMOOTH FIRE SNIPER STOCK", "Rear Grip": ""}}], "SMGs": [{"name": "AMR9", "build_code": "", "attachments": {"Muzzle": "PURIFIER MUZZLE", "Barrel": "", "Underbarrel": "DR-6 HANDSTOP", "Laser": "", "Ammunition": "9mm HIGH VELOCITY", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "PHANTOM GRIP"}}, {"name": "FJX HORUS", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "JAK GLASSLESS OPTIC", "Stock": "RIPPER LIGHT STOCK", "Rear Grip": ""}}, {"name": "HRM-9", "build_code": "", "attachments": {"Muzzle": "SPIRAL V3.5 FLASH HIDER", "Barrel": "THORN-90 BARREL", "Underbarrel": "", "Laser": "KIMURA RYL33 LASER LIGHT", "Ammunition": "9mm HIGH GRAIN ROUNDS", "Magazine": "50 ROUND DRUM", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "RAM-9", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "ARMISTICE LIGHT BARREL", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "HVS 3.4 PAD", "Comb": "", "Rear Grip": ""}}, {"name": "RIVAL-9", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "RIVAL-38E FIRE STAR", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "HIGH VELOCITY", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "STATIC-HV", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "AUGER 840 LIGHT BARREL", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "NO STOCK", "Rear Grip": "V1.2 GRIP"}}, {"name": "STRIKER", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "48 ROUND MAG", "Optic": "", "Stock": "NO STOCK", "Rear Grip": ""}}, {"name": "STRIKER 9", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "JAK SLASH", "Laser": "KIMURA RYL33 LASER LIGHT", "Ammunition": "9mm HIGH GRAIN", "Magazine": "50 ROUND DRUM", "Optic": "", "Stock": "STRIKER FACTORY STOCK", "Rear Grip": ""}}, {"name": "SUPERI 46", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "BORE 99 SHORT BARREL", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "4.6mm HIGH GRAIN", "Magazine": "40 ROUND MAG", "Optic": "", "Stock": "RESCUE-9 STOCK", "Rear Grip": ""}}, {"name": "WSP SWARM", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "WSP INFILTRATOR", "Underbarrel": "", "Laser": "", "Ammunition": "9mm HIGH GRAIN", "Magazine": "100 ROUND MAG", "Optic": "SLATE REFLECTOR", "Stock": "FSS FORTRESS HEAVY", "Rear Grip": ""}}, {"name": "WSP-9", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "HISS SHORT LIGHT BARREL", "Underbarrel": "JAK SLASH", "Laser": "", "Ammunition": "", "Magazine": "40 ROUND MAG", "Optic": "", "Stock": "NO STOCK", "Rear Grip": ""}}], "LMGs": [{"name": "BRUEN MK9", "build_code": "", "attachments": {"Muzzle": "ZEHMN35 COMPENSATOR", "Barrel": "23\" XRK HORIZON", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "5.56 NATO HIGH GRAIN", "Magazine": "", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": "", "Comb": ""}}, {"name": "DG-58 LSW", "build_code": "", "attachments": {"Muzzle": "ECHOLESS 80", "Barrel": "WUDI LONG BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "", "Magazine": "HIGH GRAIN", "Optic": "", "Stock": "ASCENT LORD STOCK", "Rear Grip": "", "Comb": ""}}, {"name": "HOLGER 26", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "HOLGER FACTORY BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}, {"name": "KASTOV LSW", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "BOMBAST T54 SHORT BARREL", "Underbarrel": "BRACEFIRE-HC GRIP", "Laser": "CORVUS PEQ BEAM-5", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "NO STOCK", "Rear Grip": "STATE50 GRIP"}}, {"name": "PULEMYOT 762", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "BRACEFIRE-HC GRIP", "Laser": "SL RAZORHAWK LASER LIGHT", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "RUBBER RECOIL PAD", "Rear Grip": "TRUE-TAC GRIP"}}, {"name": "TAQ ERADICATOR", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "CONQUER-70 LONG BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "JAK GLASSLESS OPTIC", "Stock": "TACVERTE CORE STOCK", "Rear Grip": "FSS COMBAT GRIP"}}, {"name": "TAQ EVOLVERE", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "BRACEFIRE-HC GRIP", "Laser": "CORVUS PEQ BEAM-5", "Ammunition": "", "Magazine": "200 ROUND 556-BELT", "Optic": "", "Stock": "ASSAULT 60 STOCK", "Rear Grip": "FSS COMBAT GRIP"}}], "Marksman Rifles": [{"name": "DM56", "build_code": "", "attachments": {"Muzzle": "JAK BFB", "Barrel": "PRIME LORD HEAVY BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "5.56 NATO HIGH GRAIN ROUNDS", "Magazine": "40 ROUND MAG", "Optic": "CORIO EAGLESEYE 2.5x", "Stock/Comb": "", "Rear Grip": ""}}, {"name": "KAR98K", "build_code": "", "attachments": {"Muzzle": "SONIC SUPPRESSOR L", "Barrel": "PRAZISIONSGEWEHR 762 LONG BARREL", "Underbarrel": "", "Laser": "RAZORHAWK LASER LIGHT", "Ammunition": "7.92x57MM HIGH GRAIN", "Magazine": "", "Optic": "CORIO 13x VRS", "Stock": "", "Rear Grip": ""}}, {"name": "KVD ENFORCER", "build_code": "", "attachments": {"Muzzle": "VT-7 SPIRITFIRE SUPPRESSOR", "Barrel": "KAS-10 584MM MOD BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "", "Magazine": "20 ROUND MAG", "Optic": "CORIO EAGLESEYE 2.5x", "Stock": "", "Rear Grip": ""}}, {"name": "MCW 6.8", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "MCW CROWN-30 BARREL", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "6.8 WRATH SPIRE POINT", "Magazine": "60 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": ""}}], "Sniper Rifles": [{"name": "KATT-AMR", "build_code": "", "attachments": {"Muzzle": "SONIC SUPPRESSOR XL", "Barrel": "ZANG-34 BARREL", "Underbarrel": "", "Laser": "", "Ammunition": ".50 CAL HIGH VELOCITY", "Magazine": "", "Optic": "", "Stock": "TACTICAL STOCK PAD", "Rear Grip": ""}}, {"name": "KV INHIBITOR", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "DR-6 HANDSTOP", "Laser": "FSS OLE-V LASER", "Ammunition": "", "Magazine": "", "Optic": "AKALINA LR STALK", "Stock": "IVANOV WOOD STOCK", "Rear Grip": "FSS STORMENDER"}}, {"name": "LONGBOW", "build_code": "", "attachments": {"Muzzle": "SONIC SUPPRESSOR", "Barrel": "PRO-99 LONG BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "7.62 HIGH GRAIN", "Magazine": "", "Optic": "", "Stock": "NO STOCK", "Rear Grip": "DEMO 650 GRIP"}}, {"name": "MORS", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "TONNE HEAVY BARREL", "Underbarrel": "", "Laser": "SL RAZORHAWK LASER", "Ammunition": "HVP ANTI-MATERIEL", "Magazine": "", "Optic": "AKALINA LR STALK", "Stock": "", "Rear Grip": ""}}, {"name": "XRK STALKER", "build_code": "", "attachments": {"Muzzle": "SONIC SUPPRESSOR XL", "Barrel": "FISSION 60 BARREL", "Underbarrel": "", "Laser": "SL RAZORHAWK LASER LIGHT", "Ammunition": ".50 CAL HIGH GRAIN", "Magazine": "", "Optic": "SP-X 80 6.6x", "Stock": "", "Rear Grip": ""}}], "Battle Rifles": [{"name": "BAS-B", "build_code": "", "attachments": {"Muzzle": "SONIC SUPPRESSOR", "Barrel": "BRUEN VENOM LONG BARREL", "Underbarrel": "", "Laser": "", "Ammunition": ".277 HIGH GRAIN", "Magazine": "", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}, {"name": "DTIR 30-06", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "EXTND-10 LONG BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "HIGH VELOCITY", "Magazine": "40 ROUND MAG", "Optic": "", "Stock": "RIFLEMAN 200 STOCK", "Rear Grip": ""}}, {"name": "MTZ-762", "build_code": "", "attachments": {"Muzzle": "QUARTERMASTER SUPPRESSOR", "Barrel": "MTZ-PRECISION BLACKTHORN", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "", "Magazine": "30 ROUND MAG", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}, {"name": "SOA SUBVERTER", "build_code": "", "attachments": {"Muzzle": "CASUS BRAKE", "Barrel": "", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "HIGH VELOCITY", "Magazine": "50 ROUND DRUM", "Optic": "", "Stock": "MOTION-V2 HEAVY STOCK", "Rear Grip": ""}}, {"name": "SIDEWINDER", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "TEMPUS PREDATOR", "Underbarrel": "", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "30 ROUND MAG", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}], "Shotguns": [{"name": "LOCKWOOD 680", "build_code": "", "attachments": {"Muzzle": "BRYSON IMPROVED CHOKE", "Barrel": "LOCKWOOD DEFENDER", "Underbarrel": "", "Laser": "", "Ammunition": ""}}, {"name": "GUARD", "build_code": "", "attachments": {"Optic": "", "Stock": "SAWED OFF MOD", "Rear Grip": ""}}], "Pistols": [{"name": "RENETTI", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "", "Trigger Action": "", "Laser": "KR HX-15 LASER", "Ammunition": "", "Magazine": "50 ROUND DRUM", "Optic": "NYDAR MODEL 2023", "Stock": "", "Rear Grip": ""}}, {"name": "TYR", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Trigger Action": "ULLR'S FURY", "Laser": "FJX DIOD-70", "Ammunition": "", "Magazine": "", "Optic": "SLATE REFLECTOR", "Stock": "", "Rear Grip": "", "Underbarrel": "DR-6 HANDSTOP"}}, {"name": "WSP STINGER", "build_code": "", "attachments": {"Muzzle": "S-37C DL BREACHER DEVICE", "Barrel": "HISS SHORT LIGHT BARREL", "Trigger Action": "", "Laser": "XTEN SIDEARM-L400", "Ammunition": "", "Magazine": "32 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "AKIMBO WSP STINGER", "Underbarrel": ""}}]}, "MW2": {"Assault Rifles": [{"name": "CHIMERA", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "PHASE-3 GRIP", "Laser": "VLK LZR 7MW", "Ammunition": ".300 BLK ARMOR PIERCING", "Magazine": "45 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "D37 GRIP"}}, {"name": "FR ADVANCER", "build_code": "", "attachments": {"Muzzle": "KOMODO HEAVY", "Barrel": "435MM FR435", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": ""}}, {"name": "ISO HEMLOCK", "build_code": "", "attachments": {"Muzzle": "HARBINGER D20", "Barrel": "FIELDER T-50", "Underbarrel": "", "Laser": "", "Ammunition": "5.56 HIGH VELOCITY", "Magazine": "45 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": ""}}, {"name": "KASTOV 545", "build_code": "", "attachments": {"Muzzle": "KOMODO HEAVY", "Barrel": "IG-K30 406MM", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "SZ RECHARGE-DX", "Stock": "", "Rear Grip": ""}}, {"name": "KASTOV 74-u", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "FTAC TIGER GRIP", "Laser": "FSS OLE-V LASER", "Ammunition": "5.56 HIGH VELOCITY", "Magazine": "45 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "TRUE-TAC GRIP"}}, {"name": "KASTOV 762", "build_code": "", "attachments": {"Muzzle": "PURIFIER MUZZLE", "Barrel": "KAS-10 584MM BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "", "Magazine": "40 ROUND MAG", "Optic": "CORIO EAGLESEYE 2.5x", "Stock": "", "Rear Grip": ""}}, {"name": "LACHMANN-556", "build_code": "", "attachments": {"Muzzle": "CASUS BREAK", "Barrel": "15.9\" LACHMANN RAPP BARREL", "Underbarrel": "BRUEN HEAVY SUPPORT", "Laser": "", "Ammunition": "5.56 HIGH VELOCITY", "Magazine": "60 ROUND MAGS", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "M13B", "build_code": "", "attachments": {"Muzzle": "CASUS BREAK", "Barrel": "14\" BRUEN ECHELON", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "HIGH VELOCITY", "Magazine": "60 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "M13C", "build_code": "", "attachments": {"Muzzle": "KOMODO HEAVY", "Barrel": "", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": "D37 GRIP"}}, {"name": "M16", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "5.56 NATO HIGH GRAIN", "Magazine": "60 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "M4", "build_code": "", "attachments": {"Muzzle": "SAKIN TREAD-40", "Barrel": "HIGHTOWER 20\" BARREL", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": ""}}, {"name": "STB 556", "build_code": "", "attachments": {"Muzzle": "CASUS BREAK", "Barrel": "FTAC FB20", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "42 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "TAQ-56", "build_code": "", "attachments": {"Muzzle": "KOLOSS FLASH HIDER", "Barrel": "17.5\" TUNDRA PRO BARREL", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "", "Stock": "TACTIQUE BRUTE STOCK", "Rear Grip": ""}}, {"name": "TEMPUS RAZOR BACK", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "18\" TACK-2L", "Underbarrel": "DM PROTO-GRIP", "Laser": "", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "ERG-X1"}}, {"name": "TR-76 GEIST", "build_code": "", "attachments": {"Muzzle": "CASUS BREAK", "Barrel": "BRUEN BRIDLE HEAVY", "Underbarrel": "BRUEN HEAVY SUPPORT GRIP", "Laser": "", "Ammunition": "", "Magazine": "45 ROUND MAG", "Optic": "JAK GLASSLESS OPTIC", "Stock/Comb": "", "Rear Grip": ""}}], "SMGs": [{"name": "BAS-P", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "6.5 BRUEN DRAKE", "Underbarrel": "", "Laser": "VLK LZR 7MW", "Ammunition": "", "Magazine": "50 ROUND DRUM", "Optic": "", "Stock": "BRUEN FLASH V4 STOCK", "Rear Grip": "BRUEN FLASH GRIP"}}, {"name": "FENNEC-45", "build_code": "", "attachments": {"Muzzle": "PURIFIER MUZZLE", "Barrel": "", "Underbarrel": "DR-6 HANDSTOP", "Laser": "VLK LZR 7MW", "Ammunition": "", "Magazine": "FENNEC MAG 45", "Optic": "", "Stock": "", "Rear Grip": "FENNEC RUBBER GRIP"}}, {"name": "FSS HURRICANE", "build_code": "", "attachments": {"Muzzle": "BRUEN PENDULUM", "Barrel": "", "Underbarrel": "FSS SHARKIN 90", "Laser": "FSS OLE-V LASER", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "DEMO QUICKSILVER STOCK", "Rear Grip": "XTEN REAR GRIP"}}, {"name": "ISO 45", "build_code": "", "attachments": {"Muzzle": "SPIRAL FLASH HIDER", "Barrel": "9\" PTX TRAINER", "Underbarrel": "", "Laser": "VLK LZR 7MW", "Ammunition": "", "Magazine": "45 ROUND DRUM", "Optic": "", "Stock": "", "Rear Grip": "EXP SHEAR"}}, {"name": "ISO 9mm", "build_code": "", "attachments": {"Muzzle": "PURIFIER MUZZLE", "Barrel": "7\" EX RAPTOR-V2", "Underbarrel": "DR-6 HANDSTOP", "Laser": "VLK LZR 7MW", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "LACHMANN SUB", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "", "Underbarrel": "XTEN PHANTOM-5", "Laser": "KIMURA RYL33 LASER", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "LM STOCKLESS MOD", "Rear Grip": ""}}, {"name": "LACHMANN SHROUD", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "", "Underbarrel": "JAK SLASH", "Laser": "KIMURA RYL33 LASER", "Ammunition": "", "Magazine": "40 ROUND MAG", "Optic": "", "Stock": "MEER RECOIL-56 FACTORY STOCK", "Rear Grip": ""}}, {"name": "MINIBAK", "build_code": "", "attachments": {"Muzzle": "XTEN RR-40", "Barrel": "BAK-9 279MM BARREL", "Underbarrel": "", "Laser": "FSS OLE-V LASER", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "OTREZAT STOCK", "Rear Grip": "TRUE-TAC GRIP"}}, {"name": "MX9", "build_code": "", "attachments": {"Muzzle": "FOX-202 FLASH HIDER", "Barrel": "16.5\" BRUEN S901", "Underbarrel": "", "Laser": "KIMURA RYL33 LASER LIGHT", "Ammunition": "", "Magazine": "EXTENDED MAG", "Optic": "", "Comb": "FTAC C11 RISER", "Rear Grip": ""}}, {"name": "PDSW 528", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "FOX-202 FLASH HIDER", "Underbarrel": "FTAC SERIES IX 14.5\"", "Laser": "", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "CQB STOCK", "Rear Grip": "STIP-40 GRIP"}}, {"name": "VAZNEV-9K", "build_code": "", "attachments": {"Muzzle": "PURIFIER MUZZLE", "Barrel": "", "Underbarrel": "DR-6 HANDSTOP", "Laser": "", "Ammunition": "", "Magazine": "45 ROUND MAG", "Optic": "", "Stock": "OTREZAT STOCK", "Rear Grip": "DEMO X-2 GRIP"}}, {"name": "VEL 46", "build_code": "", "attachments": {"Muzzle": "FOX-202 FLASH HIDER", "Barrel": "", "Underbarrel": "JAK SLASH", "Laser": "KIMURA RYL33 LASER LIGHT", "Ammunition": "", "Magazine": "60 ROUND MAG", "Optic": "", "Stock": "DEMO RXT STOCK", "Rear Grip": ""}}], "LMGs": [{"name": "HCR 56", "build_code": "", "attachments": {"Muzzle": "KOMODO HEAVY", "Barrel": "FTAC HORNET 20\" BARREL", "Underbarrel": "", "Laser": "", "Ammunition": "5.56 HIGH VELOCITY", "Magazine": "", "Optic": "AIM OP-V4", "Comb": "BRUEN TS-30 COMB", "Rear Grip": ""}}, {"name": "RAAL MG", "build_code": "", "attachments": {"Muzzle": "VT-7 SPIRITFIRE SUPPRESSOR", "Barrel": "", "Underbarrel": "", "Laser": "", "Ammunition": ".338 MAG HIGH VELOCITY", "Magazine": "50 ROUND BELT", "Optic": "CORIO EAGLESEYE 2.5x", "Stock": "", "Rear Grip": ""}}, {"name": "RAPP H", "build_code": "", "attachments": {"Muzzle": "TEMPUS GH50", "Barrel": "ROMEO FT 16\" BARREL", "Underbarrel": "HOUND-9G GRIP", "Laser": "FSS OLE-V LASER", "Ammunition": "7.62 HIGH VELOCITY", "Magazine": "", "Optic": "", "Stock": "", "Rear Grip": ""}}, {"name": "RPK", "build_code": "", "attachments": {"Muzzle": "ZLR TALON 5", "Barrel": "", "Underbarrel": "FTAC RIPPER 56", "Laser": "FSS OLE-V LASER", "Ammunition": "", "Magazine": "", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": "DEMO-X2 GRIP"}}, {"name": "SAKIN MG38", "build_code": "", "attachments": {"Muzzle": "ZLR TALON 5", "Barrel": "20\" BRUEN SILVER SERIES BARREL", "Underbarrel": "", "Laser": "FSS OLE-V LASER", "Ammunition": "", "Magazine": "", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": "BRUEN Q900 GRIP"}}, {"name": "556 ICARUS", "build_code": "", "attachments": {"Muzzle": "HARBINGER D20", "Barrel": "", "Underbarrel": "PHASE-3 GRIP", "Laser": "", "Ammunition": "5.56 HIGH VELOCITY", "Magazine": "", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": "SAKIN ZX GRIP"}}], "Marksman Rifles": [{"name": "EBR-14", "build_code": "", "attachments": {"Muzzle": "SAKIN TREAD", "Barrel": "22\" BOREMASTER BARREL", "Underbarrel": "PHASE-3 GRIP", "Laser": "", "Ammunition": "", "Magazine": "20 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": ""}}, {"name": "SA-B 50", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "18.5\" XRK RESONATE", "Underbarrel": "", "Laser": "FSS OLE-V LASER", "Ammunition": ".308 HIGH VELOCITY", "Magazine": "", "Optic": "", "Stock": "XRK SPECTER MOD", "Rear Grip": "SCHLAGER MATCH GRIP"}}, {"name": "TAQ-M", "build_code": "", "attachments": {"Muzzle": "ZLR TALON 5", "Barrel": "", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "6.5MM HIGH VELOCITY", "Magazine": "20 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": ""}}, {"name": "TEMPUS TORRENT", "build_code": "", "attachments": {"Muzzle": "CASUS BRAKE", "Barrel": "24\" OUTREACH 4", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "HIGH GRAIN", "Magazine": "50 ROUND MAG", "Optic": "", "Rear Grip": ""}}], "Sniper Rifles": [{"name": "CARRACK .300", "build_code": "", "attachments": {"Muzzle": "FTAC REAPER", "Barrel": "30\" FLINTLINE", "Underbarrel": "", "Laser": "", "Ammunition": ".300 HIGH VELOCITY", "Magazine": "", "Optic": "SCHLAGER NIGHT VIEW", "Stock": "", "Rear Grip": "CARRACK PALM"}}, {"name": "FJX IMPERIUM", "build_code": "", "attachments": {"Muzzle": "FTAC REAPER", "Barrel": "FARENHEIT 29\"", "Laser": "KIMURA RYL33 LASERLIGHT", "Ammunition": ".408 HIGH VELOCITY", "Magazine": "", "Optic": "SP-X 80 6.6x", "Rear Grip": ""}}, {"name": "MCPR-300", "build_code": "", "attachments": {"Muzzle": "NILSOUND 90", "Barrel": "22\" OMX-456", "Underbarrel": "", "Laser": "FSS OLE-V LASER", "Ammunition": ".300 MAG EXPLOSIVE", "Magazine": "", "Optic": "AKALINA LR STALK", "Stock": "", "Rear Grip": ""}}, {"name": "SIGNAL 50", "build_code": "", "attachments": {"Muzzle": "BRUEN L40 KOBRA", "Barrel": "29\" TV KILO-50", "Underbarrel": "", "Laser": "", "Ammunition": ".50 CAL HIGH VELOCITY", "Magazine": "", "Optic": "SCHLAGER NIGHT VIEW", "Stock": "FSS ECHO STOCK", "Rear Grip": ""}}, {"name": "SP-X 80", "build_code": "", "attachments": {"Muzzle": "NILSOUND 90", "Barrel": "", "Underbarrel": "", "Laser": "FSS OLE-V LASER", "Ammunition": ".300 INCENDIARY", "Magazine": "", "Optic": "", "Stock": "MAX DMR PRECISION", "Rear Grip": "SCHLAGER MATCH GRIP"}}, {"name": "VICTUS", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "MACK 8 33.5 SUPER", "Underbarrel": "", "Laser": "VLK LZR 7MW", "Ammunition": ".50 CAL EXPLOSIVE", "Magazine": "", "Optic": "", "Stock": "", "Rear Grip": "BRUEN Q900 GRIP"}}], "Battle Rifles": [{"name": "CRONEN SQUALL", "build_code": "", "attachments": {"Muzzle": "TEMPUS GH50", "Barrel": "HR 6.8 BARREL", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND DRUM", "Optic": "SZ RECHARGE-DX", "Stock": "", "Rear Grip": ""}}, {"name": "LACHMANN-762", "build_code": "", "attachments": {"Muzzle": "TY-LR8", "Barrel": "ROMEO FT 16\" BARREL", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "AIM OP-V4", "Stock": "", "Rear Grip": ""}}, {"name": "SO-14", "build_code": "", "attachments": {"Muzzle": "TY-LR8", "Barrel": "22\" BOREMASTER BARREL", "Underbarrel": "FTAC RIPPER 56", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND DRUM", "Optic": "SZ RECHARGE-DX", "Stock": "", "Rear Grip": ""}}, {"name": "TAQ-V", "build_code": "", "attachments": {"Muzzle": "ZEHMN COMPENSATOR", "Barrel": "18\" PRECISION-6 BARREL", "Underbarrel": "BRUEN PIVOT VERTICAL GRIP", "Laser": "", "Ammunition": "", "Magazine": "50 ROUND DRUM", "Optic": "JAK GLASSLESS OPTIC", "Stock": "", "Rear Grip": ""}}], "Shotguns": [{"name": "KV BROADSIDE", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "RANGE TWELVE", "Underbarrel": "VX PINEAPPLE", "Laser": "POINT-G3P 04", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "VLK STOCKLESS", "Rear Grip": ""}}, {"name": "MX GUARDIAN", "build_code": "", "attachments": {"Muzzle": "BRYSON CHOKE", "Barrel": "MX-G MOBILE", "Underbarrel": "", "Laser": "KIMURA RYL-33 LASER LIGHT", "Ammunition": "DRAGON'S BREATH", "Magazine": "", "Optic": "", "Stock": "EXF IMPACT PAD", "Trigger Action": ""}}], "Pistols": [{"name": "BASILISK", "build_code": "", "attachments": {"Muzzle": "", "Barrel": "10.5\" FTAC ARROW", "Trigger Action": "BRYSON HTA", "Laser": "REVO-LSD 7MW", "Ammunition": ".500 SNAKESHOT", "Optic": "", "Stock": "", "Rear Grip": "AKIMBO"}}, {"name": "FTAC SIEGE", "build_code": "", "attachments": {"Muzzle": "SPIRAL FLASH HIDER", "Barrel": "CMRN-50", "Trigger Action": "", "Laser": "FJX DIOD-70", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "FTAC STEAD"}}, {"name": "P890", "build_code": "", "attachments": {"Muzzle": "FT STEEL FIRE", "Barrel": "", "Trigger Action": "BRUEN EXPRESS", "Laser": "1MW PISTOL LASER", "Ammunition": "", "Magazine": "12 ROUND MAG", "Optic": "", "Stock": "", "Rear Grip": "AKIMBO P890"}}, {"name": "X12", "build_code": "", "attachments": {"Muzzle": "FT STEEL FIRE", "Barrel": "XRK SIDEWINDER-6 SLIDE", "Trigger Action": "XRK LIGHTNING FIRE", "Laser": "FJX DIOD-70", "Ammunition": "", "Magazine": "", "Optic": "", "Stock": "", "Rear Grip": "CRONEN LIMA-6"}}, {"name": "X13", "build_code": "", "attachments": {"Muzzle": "CORVUS SERIES-D", "Barrel": "IMPACT POINT", "Trigger Action": "", "Laser": "FJX DIOD-70", "Ammunition": "", "Magazine": "50 ROUND MAG", "Optic": "", "Stock": "XRK BAR STOCK", "Rear Grip": ""}}]}};
+  /* TEEP_DATA_END */
+
+/* WZ_META_START */
+  const WZ_META = {"M8A1": {"tier": "S", "builds": [{"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "M8A1 Autostrike-X8 Conversion", "Optic": "FANG HoverPoint ELO", "Magazine": "Redline Capacity Drum", "Fire Mods": "5.56 NATO Overpressured"}, "note": "You absolutely need to unlock the full auto barrel. This gun isn't worth using in burst mode.", "rank": "#1"}, {"label": "Sniper Support", "attachments": {"Muzzle": "VAS 5.56 Suppressor", "Barrel": "M8A1 Autostrike-X8 Conversion", "Stock": "MFS Striker Tactical Stock", "Magazine": "Redline Capacity Drum", "Rear Grip": "K&S Raze Grip"}, "note": "", "rank": ""}]}, "REV-46": {"tier": "S", "builds": [{"label": "Close Range", "attachments": {"Muzzle": "Hawker Series 45", "Barrel": "Caudal Target Barrel", "Optic": "Lethal Tools ELO", "Magazine": "Komodo Drum Mag", "Fire Mods": "Recoil Sync Unit"}, "note": "", "rank": "#1"}, {"label": "Sniper Support", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "Caudal Target Barrel", "Optic": "FANG HoverPoint ELO", "Magazine": "Komodo Drum Mag", "Fire Mods": "Recoil Sync Unit"}, "note": "", "rank": ""}]}, "Hawker HX": {"tier": "S", "builds": [{"label": "Sniper", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "23.7\" Composite-11 Barrel", "Magazine": "Flatload Speed Mag", "Rear Grip": "Auroral Light Grip", "Fire Mods": ".338 LM Overpressured"}, "note": "", "rank": "#1"}]}, "M15 Mod 0": {"tier": "A", "builds": [{"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "16\" Reticulated Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "Bowen Linchpin Stock", "Magazine": "Bowen Bulwark Mag"}, "note": "", "rank": "#2"}, {"label": "Sniper Support", "attachments": {"Muzzle": "VAS 5.56 Suppressor", "Stock": "Telescopic Stock", "Underbarrel": "EAM Steady-90 Grip", "Magazine": "Mayday Extended Mag", "Rear Grip": "Hexcut Grip"}, "note": "", "rank": ""}]}, "Ryden 45K": {"tier": "A", "builds": [{"label": "Close Range", "attachments": {"Barrel": "12\" Vienna Barrel", "Optic": "Lethal Tools ELO", "Stock": "Collapsible Stock", "Magazine": "Forward Breach Mag", "Rear Grip": "Bounty Grip"}, "note": "", "rank": "#2"}, {"label": "Sniper Support", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "12\" Vienna Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "VAS Interlock Stock", "Magazine": "Forward Breach Mag"}, "note": "", "rank": ""}]}, "Carbon 57": {"tier": "A", "builds": [{"label": "Close Range", "attachments": {"Muzzle": "K&S Compensator", "Barrel": "14\" Rockleigh Barrel", "Underbarrel": "Sapper Guard Handstop", "Rear Grip": "Bombus Quick Grip", "Fire Mods": "Accelerated Recoil System"}, "note": "", "rank": "#3"}]}, "Maddox RFB": {"tier": "A", "builds": [{"label": "Sniper Support", "attachments": {"Muzzle": "Redwell Shade-X Suppressor", "Barrel": "21\" Turbine Booster Barrel", "Optic": "FANG HoverPoint ELO", "Magazine": "Billing Extended Mag", "Rear Grip": "VAS Spire Grip"}, "note": "", "rank": "#1"}, {"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "19\" Virtuous-Op Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "Furrow Control Stock", "Magazine": "Billing Extended Mag"}, "note": "", "rank": ""}]}, "EGRT-17": {"tier": "A", "builds": [{"label": "Sniper Support", "attachments": {"Muzzle": "Redwell Shade-X Suppressor", "Barrel": "19.1\" XR-Compulsion Barrel", "Magazine": "EAM Acute Mag", "Rear Grip": "Nanite Grip", "Fire Mods": "Buffer Springs"}, "note": "", "rank": "#2"}, {"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "16.5\" Bowen Resistor Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "Frigate Control Stock", "Magazine": "Fuel Cell-X3 Mag"}, "note": "", "rank": ""}]}, "AK-27": {"tier": "A", "builds": [{"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "17.6\" Vandal Heavy Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "Pugil Heavy Stock", "Magazine": "Saber Pack Heavy Drum"}, "note": "", "rank": "#3"}, {"label": "Sniper Support", "attachments": {"Muzzle": "EMT3 Compensator", "Underbarrel": "Flowguard Foregrip", "Magazine": "Epitaph Extended Mag", "Rear Grip": "Garin Advanced Grip", "Fire Mods": "Buffer Spring"}, "note": "", "rank": ""}]}, "Kogot-7": {"tier": "A", "builds": [{"label": "Close Range", "attachments": {"Muzzle": "Hawker Series 45", "Barrel": "13.5\" Canis-05 Barrel", "Stock": "F7-Howl Stock", "Magazine": "Vex Expanse Mag", "Fire Mods": "Buffer Spring"}, "note": "", "rank": "#4"}, {"label": "Sniper Support", "attachments": {"Muzzle": "Hawker Series 45", "Barrel": "13.5\" Canis-05 Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "EMT3 Radlx Stock", "Magazine": "Vex Expanse Mag"}, "note": "", "rank": ""}]}, "VS Recon": {"tier": "A", "builds": [{"label": "Sniper", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "23\" G-Force Barrel", "Underbarrel": "MFS R-Stop Handguard", "Rear Grip": "R-1 Shelf Grip", "Fire Mods": "7.62 NATO Overpressured"}, "note": "", "rank": "#2"}]}, "HDR": {"tier": "A", "builds": [{"label": "Sniper", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "Gain-Twist Barrel", "Underbarrel": "Lighweight Bipod", "Rear Grip": "Quickdraw Grip", "Fire Mods": "108mm Overpressured"}, "note": "The HDR is the best sniper in the game right now and not even close. With an infinite range & still good bullet velocity.", "rank": "#3"}]}, "X9 Maverick": {"tier": "A", "builds": [{"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "16\" OS-Density Barrel", "Optic": "FANG HoverPoint ELO", "Rear Grip": "Pillory Grip", "Fire Mods": "4.73 Caseless Overpressured"}, "note": "", "rank": "#6"}]}, "MK.78": {"tier": "A", "builds": [{"label": "Long Range", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "25\" EAM Heavy Barrel", "Optic": "FANG HoverPoint ELO", "Stock": "Shock Shield Stock", "Underbarrel": "Bowen Sentry Foregrip"}, "note": "", "rank": "#7"}]}, "Dravec 45": {"tier": "A", "builds": [{"label": "Close Range", "attachments": {"Barrel": "19\" EAM Horizon Barrel", "Stock": "EAM Heritage Stock", "Magazine": "Gator Extended Mag", "Rear Grip": "Herald-Z1 Grip", "Fire Mods": ".45 Cal Overpressured"}, "note": "", "rank": "#5"}, {"label": "Sniper Support", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "19\" EAM Horizon Barrel", "Optic": "FANG HoverPoint ELO", "Magazine": "Lockjaw Extended Mag", "Fire Mods": "Accelerated Recoil System"}, "note": "", "rank": ""}]}};
+  /* WZ_META_END */
+
+/* WZHUB_META_START */
+  const WZHUB_META = {"Maddox RFB": {"tier": "S", "build_code": "A11-26ERW-58TA3-11", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "Monolithic Suppressor", "Barrel": "19\" Virtuous-OP Barrel", "Magazine": "Billing Extended Mag", "Stock": "Furrow Control Stock"}}, "M8A1": {"tier": "S", "build_code": "M01-QMCXN-KZ1U1-1", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "Monolithic Suppressor", "Barrel": "M8A1 Autostrike-X8 Conversion", "Magazine": "Redline Capacity Drum", "Stock": "Gridlock Stock"}}, "REV-46": {"tier": "S", "build_code": "S09-AUXZ7-Y8HL3-1", "attachments": {"Optic": "Lethal Tools ELO", "Muzzle": "Hawker Series 45", "Barrel": "Caudal Target Barrel", "Magazine": "Cawdor Extended Mag", "Fire Mods": "Recoil Sync Unit"}}, "Hawker HX": {"tier": "S", "build_code": "R05-21WSG-FI4AI-XN11", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "27.4\" Teleos Range Barrel", "Magazine": "Amrita Fast Mag", "Rear Grip": "Auroral Light Grip", "Fire Mods": ".338 LM Overpressured"}}, "EGRT-17": {"tier": "A", "build_code": "A07-26ERW-3NHX3-11", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "EAM Finset Brake", "Barrel": "16.5\" Bowen Resistor Barrel", "Magazine": "Fuel Cell-X3 Mag", "Stock": "Frigate Control Stock"}}, "DS20 Mirage": {"tier": "A", "build_code": "A05-26ERW-58SXJ-51", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "Monolithic Suppressor", "Barrel": "17.1\" Abdicator Barrel", "Magazine": "Griffon Reserve Extended II", "Fire Mods": "Recoil Sync Unit"}}, "Sturmwolf 45": {"tier": "A", "build_code": "S07-6WVQS-9Y11", "attachments": {"Barrel": "14.8\" Perigee Barrel", "Underbarrel": "Envoy Foregrip", "Magazine": "B-45 Roar Drum", "Rear Grip": "Selene Rover Grip", "Stock": "Itinerant Light Stock"}}, "Sokol 545": {"tier": "A", "build_code": "L04-T43XE-V6NQ5-1", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "Monolithic Suppressor", "Barrel": "18.2\" Parlous Heavy Barrel", "Stock": "Taction Control Stock", "Fire Mods": "Buffer Spring"}}, "MPC-25": {"tier": "A", "build_code": "S06-8E7B3-FD51", "attachments": {"Muzzle": "K&S Compensator", "Underbarrel": "Zero Shift Handstop", "Magazine": "MPC Overload Drum", "Rear Grip": "Magnate Grip", "Fire Mods": "Recoil Sync Unit"}}, "KOGOT-7": {"tier": "A", "build_code": "S10-56XPL-8B31", "attachments": {"Muzzle": "Hawker Series 45", "Barrel": "13.5\" Canis-05 Barrel", "Underbarrel": "VAS Drift Lock Foregrip", "Magazine": "VEX Expanse Mag", "Fire Mods": "Buffer Spring"}}, "M15 MOD 0": {"tier": "A", "build_code": "A01-AUXZ7-Y5BD1-1", "attachments": {"Optic": "Lethal Tools ELO", "Muzzle": "Monolithic Suppressor", "Barrel": "20\" Delta-F2 Barrel", "Magazine": "Bowen Bulwark Mag", "Stock": "Bowen Linchpin Stock"}}, "VS Recon": {"tier": "A", "build_code": "R01-21WSG-IAMA1-2N11", "attachments": {"Muzzle": "Monolithic Suppressor", "Barrel": "23\" G-Force Barrel", "Underbarrel": "Stetig-C Handguard", "Rear Grip": "R-1 Shelf Grip", "Fire Mods": "7.62 NATO Overpressured"}}, "Razor 9MM": {"tier": "A", "build_code": "S03-AUXZ3-92J95-1", "attachments": {"Optic": "Lethal Tools ELO", "Muzzle": "H-9MM Precision Comp", "Barrel": "12\" MFS Sidewinder Barrel", "Magazine": "Zealot Extended Mag II", "Fire Mods": "Accelerated Recoil System"}}, "MK.78": {"tier": "A", "build_code": "L01-T49HC-595Q5-1", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "RL-7.62 Compensator", "Barrel": "25\" EAM Heavy Barrel", "Underbarrel": "Bowen Sentry Foregrip", "Fire Mods": "Accelerated Recoil System"}}, "Carbon 57": {"tier": "A", "build_code": "S05-6R2ZL-7L51", "attachments": {"Muzzle": "K&S Compensator", "Barrel": "14\" Rockleigh Barrel", "Underbarrel": "Sapper Guard Handstop", "Rear Grip": "Dulcet Control Grip", "Fire Mods": "Accelerated Recoil System"}}, "AK-27": {"tier": "A", "build_code": "A02-AV4J9-XA871-1", "attachments": {"Optic": "Lethal Tools ELO", "Muzzle": "Monolithic Suppressor", "Barrel": "17.6\" Vandal Heavy Barrel", "Underbarrel": "Lateral Precision Grip", "Magazine": "Saber Pack Heavy Drum"}}, "XR-3 ION": {"tier": "A", "build_code": "R03-2JDTU-ZRTEK-J911", "attachments": {"Optic": "Greaves Accuspot 3X", "Muzzle": "LTI Triad Suppressor", "Barrel": "20\" ION Trinity Barrel", "Underbarrel": "Zero-S Handguard", "Fire Mods": "7.62 NATO Overpressured"}}};
+  /* WZHUB_META_END */
+
+/* PLAYLIST_START */
+  const PLAYLIST_DATA = {"date_range": "", "season_label": "Season 3", "season_pct": 0, "playlists": [{"name": "BATTLE ROYALE", "modes": ["VERDANSK - SOLO", "VERDANSK - DUOS", "VERDANSK - TRIOS", "VERDANSK - QUADS"], "ltm": false}, {"name": "RESURGENCE", "modes": ["REBIRTH ISLAND - SOLO", "REBIRTH ISLAND - DUOS", "REBIRTH ISLAND - TRIOS", "REBIRTH ISLAND - QUADS"], "ltm": false}, {"name": "BATTLE ROYALE CASUAL", "modes": ["VERDANSK - DUOS", "VERDANSK - QUADS"], "ltm": false}, {"name": "RESURGENCE CASUAL", "modes": ["REBIRTH ISLAND - DUOS", "REBIRTH ISLAND - QUADS"], "ltm": false}, {"name": "LOADED RESURGENCE", "modes": ["REBIRTH ISLAND - TRIOS"], "ltm": true}]};
+  /* PLAYLIST_END */
+
+// ─── STATE ───────────────────────────────────────────────────────────────
+let activeGame   = Object.keys(RAW)[0];
+let activeCat    = 'all';
+let activeTier   = 'all';
+let activeSource = 'all'; // 'all' | 'wz' | 'hub'
+let sortByTier   = false;
+let codeOnly     = false;
+let searchQ      = '';
+let lastCard     = null;
+
+// ─── FUZZY MATCH ─────────────────────────────────────────────────────────
+function norm(s){ return s.toLowerCase().replace(/[\-\s]/g,''); }
+
+function getWzEntry(name){
+  for(const [k,v] of Object.entries(WZ_META)){
+    if(norm(k)===norm(name)) return v;
+  }
+  return null;
+}
+
+function getHubEntry(name){
+  for(const [k,v] of Object.entries(WZHUB_META)){
+    if(norm(k)===norm(name)) return v;
+  }
+  return null;
+}
+
+function tierFromAny(name){
+  const wz  = getWzEntry(name);
+  const hub = getHubEntry(name);
+  if(activeSource==='wz')  return wz  ? wz.tier  : null;
+  if(activeSource==='hub') return hub ? hub.tier : null;
+  if(wz)  return wz.tier;
+  if(hub) return hub.tier;
+  return null;
+}
+
+// ─── GAME TABS ───────────────────────────────────────────────────────────
+function renderGameTabs(){
+  const el = document.getElementById('gameTabs');
+  el.innerHTML = Object.entries(RAW).map(([g,cats])=>{
+    const count = Object.values(cats).reduce((s,ws)=>s+ws.length,0);
+    const active = g===activeGame?'active':'';
+    return `<div class="game-tab ${active}" onclick="setGame('${g}')">${g}<span class="badge">${count}</span></div>`;
+  }).join('');
+}
+
+function setGame(g){
+  activeGame=g; activeCat='all';
+  renderGameTabs(); renderCatBar(); renderCards();
+}
+
+// ─── FILTER BAR ──────────────────────────────────────────────────────────
+function renderCatBar(){
+  const cats = Object.keys(RAW[activeGame]||{});
+  const el = document.getElementById('filterBar');
+  const pills = [
+    `<div class="cat-pill ${activeCat==='all'?'active':''}" onclick="setCat('all')">Alle</div>`,
+    ...cats.map(c=>`<div class="cat-pill ${activeCat===c?'active':''}" onclick="setCat('${c}')">${c}</div>`)
+  ].join('');
+  el.innerHTML = pills +
+    `<div class="filter-sep"></div>` +
+    `<div class="tier-pill tier-all ${activeTier==='all'?'active':''}" onclick="setTier('all')">ALLE TIERS</div>` +
+    `<div class="tier-pill tier-s ${activeTier==='S'?'active':''}" onclick="setTier('S')">S-TIER</div>` +
+    `<div class="tier-pill tier-a ${activeTier==='A'?'active':''}" onclick="setTier('A')">A-TIER</div>` +
+    `<div class="filter-sep"></div>` +
+    `<div class="src-pill ${activeSource==='all'?'active':''}" onclick="setSource('all')">ALLE BRONNEN</div>` +
+    `<div class="src-pill src-wz ${activeSource==='wz'?'active':''}" onclick="setSource('wz')">WZ META</div>` +
+    `<div class="src-pill src-hub ${activeSource==='hub'?'active':''}" onclick="setSource('hub')">WZHUB</div>` +
+    `<div class="filter-sep"></div>` +
+    `<div class="sort-toggle ${sortByTier?'active':''}" onclick="toggleSort()">↕ TIER SORTERING</div>` +
+    `<div class="filter-sep"></div>` +
+    `<div class="code-toggle ${codeOnly?'active':''}" onclick="toggleCode()">BUILD CODE</div>` +
+    `<div class="search-box"><input type="text" placeholder="Zoek wapen..." value="${searchQ}" oninput="setSearch(this.value)"></div>`;
+}
+
+function setCat(c){ activeCat=c; renderCatBar(); renderCards(); }
+function setTier(t){ activeTier=t; renderCatBar(); renderCards(); }
+function setSource(s){ activeSource=s; renderCatBar(); renderCards(); }
+function toggleSort(){ sortByTier=!sortByTier; renderCatBar(); renderCards(); }
+function toggleCode(){ codeOnly=!codeOnly; renderCatBar(); renderCards(); }
+function setSearch(v){ searchQ=v; renderCards(); }
+
+// ─── CARDS ───────────────────────────────────────────────────────────────
+function highlight(text,q){
+  if(!q) return text;
+  return text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
+    '<span class="mark">$1</span>');
+}
+
+function hasAnyData(w){
+  // weapon must have at least 1 filled attachment OR appear in WZ Meta OR WZHUB
+  const filledAtts = Object.values(w.attachments).some(v => v && v.trim());
+  return filledAtts || !!getWzEntry(w.name) || !!getHubEntry(w.name);
+}
+
+function tierScore(name){
+  const wz  = getWzEntry(name);
+  const hub = getHubEntry(name);
+  const wzTier  = wz  ? wz.tier  : null;
+  const hubTier = hub ? hub.tier : null;
+  const sCount = (wzTier==='S'?1:0) + (hubTier==='S'?1:0);
+  const aCount = (wzTier==='A'?1:0) + (hubTier==='A'?1:0);
+  if(sCount >= 2) return 0;   // S on both
+  if(sCount === 1) return 1;  // S on one
+  if(aCount >= 2) return 2;   // A on both
+  if(aCount === 1) return 3;  // A on one
+  return 4;                   // no tier
+}
+
+function filterWeapon(w){
+  if(!hasAnyData(w)) return false;
+  if(codeOnly && !w.build_code) return false;
+  if(activeSource==='wz'  && !getWzEntry(w.name))  return false;
+  if(activeSource==='hub' && !getHubEntry(w.name)) return false;
+  if(activeTier!=='all' && tierFromAny(w.name)!==activeTier) return false;
+  if(searchQ && !w.name.toLowerCase().includes(searchQ.toLowerCase())) return false;
+  return true;
+}
+
+function renderCards(){
+  const data = RAW[activeGame]||{};
+  const cats = activeCat==='all' ? Object.keys(data) : [activeCat];
+  let html='';
+
+  if(sortByTier){
+    let all = [];
+    for(const cat of cats){
+      for(const w of (data[cat]||[])){
+        if(filterWeapon(w)) all.push({w, cat});
+      }
+    }
+    all.sort((a,b) => tierScore(a.w.name) - tierScore(b.w.name));
+
+    const groups = [
+      { label:'S+S-TIER',  cls:'ss',   items: all.filter(x => tierScore(x.w.name)===0) },
+      { label:'S-TIER',    cls:'s',    items: all.filter(x => tierScore(x.w.name)===1) },
+      { label:'A+A-TIER',  cls:'aa',   items: all.filter(x => tierScore(x.w.name)===2) },
+      { label:'A-TIER',    cls:'a',    items: all.filter(x => tierScore(x.w.name)===3) },
+      { label:'GEEN TIER', cls:'none', items: all.filter(x => tierScore(x.w.name)===4) },
+    ];
+
+    for(const g of groups){
+      if(!g.items.length) continue;
+      const cards = g.items.map(({w,cat},i)=>renderCard(w,i,cat)).join('');
+      html += `<div class="cat-section">
+        <h2 class="tier-section-head tier-head-${g.cls}">${g.label}</h2>
+        <div class="weapons-grid">${cards}</div>
+      </div>`;
+    }
+  } else {
+    for(const cat of cats){
+      let weapons = (data[cat]||[]).filter(filterWeapon);
+      if(!weapons.length) continue;
+      weapons = [...weapons].sort((a,b) => tierScore(a.name) - tierScore(b.name));
+      const cards = weapons.map((w,i)=>renderCard(w,i,cat)).join('');
+      html+=`<div class="cat-section"><h2>${cat}</h2><div class="weapons-grid">${cards}</div></div>`;
+    }
+  }
+
+  document.getElementById('content').innerHTML = html||`<div class="empty">GEEN WAPENS GEVONDEN</div>`;
+}
+
+// ─── CARD CLICK REGISTRY ────────────────────────────────────────────────
+const _cardRegistry = {};
+
+function renderCard(w,idx,cat){
+  const key = `${activeGame}_${cat}_${idx}`;
+  _cardRegistry[key] = {w, cat};
+  const wz  = getWzEntry(w.name);
+  const hub = getHubEntry(w.name);
+  const teepBuilds = Object.values(w.attachments).some(v=>v&&v.trim()) ? 1 : 0;
+  const wzBuilds   = wz  ? (wz.builds ? wz.builds.length : 1) : 0;
+  const hubBuilds  = hub ? 1 : 0;
+  const totalBuilds = teepBuilds + wzBuilds + hubBuilds;
+  const buildLabel  = totalBuilds === 1 ? '1 build' : `${totalBuilds} builds`;
+  let classes='weapon-card';
+  if(w.build_code) classes+=' has-code';
+  if(wz)           classes+=' has-wz';
+  if(hub)          classes+=' has-hub';
+  let badges='';
+  if(wz) badges+=`<span class="mini-badge wz">${wz.tier}</span>`;
+  if(hub) badges+=`<span class="mini-badge hub">${hub.tier}</span>`;
+  const hubStripe = hub?'<div class="hub-stripe"></div>':'';
+  return `<div class="${classes}" data-key="${key}" onclick="openModalByKey(this.dataset.key)">
+    ${hubStripe}
+    <div class="weapon-name">${highlight(w.name,searchQ)}</div>
+    <div class="weapon-meta">
+      <span class="att-count">${buildLabel}</span>
+      ${badges}
+    </div>
+    ${w.build_code?'<div class="code-indicator">►CODE</div>':''}
+  </div>`;
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────
+function openModalByKey(key){
+  const entry = _cardRegistry[key];
+  if(entry) openModal(entry.w, entry.cat);
+}
+
+function openModal(weapon,cat){
+  if(typeof weapon==='string') weapon=JSON.parse(weapon);
+  lastCard=weapon;
+  document.getElementById('modalGunName').textContent=weapon.name;
+  document.getElementById('modalCat').textContent=cat.toUpperCase();
+
+  // Decide which tabs to show
+  const wz  = getWzEntry(weapon.name);
+  const hub = getHubEntry(weapon.name);
+  const tabs=[];
+  tabs.push({id:'teep',label:'🎯 TeeP\'s Build'});
+  if(wz)  tabs.push({id:'wz',  label:'🌐 WZ Meta'});
+  if(hub) tabs.push({id:'hub', label:'📊 WZHUB'});
+
+  document.getElementById('srcTabs').innerHTML = tabs.map(t=>
+    `<div class="src-tab ${t.id==='teep'?'active':''}" id="tab_${t.id}" onclick="switchSrc('${t.id}')">${t.label}</div>`
+  ).join('');
+
+  // TeeP panel
+  const code = weapon.build_code||'';
+  const codeRow = document.getElementById('modalCodeRow');
+  codeRow.style.display = code ? 'flex' : 'none';
+  document.getElementById('modalCode').textContent = code;
+  const atts = Object.entries(weapon.attachments).filter(([,v])=>v&&v.trim());
+  document.getElementById('modalAtts').innerHTML = atts.map(([s,v])=>
+    `<div class="att-box"><div class="att-slot">${s}</div><div class="att-val">${v.toUpperCase()}</div></div>`
+  ).join('')||`<div class="no-data">— GEEN ATTACHMENTS —</div>`;
+
+  // WZ Meta panel
+  populateWzMeta(weapon.name);
+
+  // WZHUB panel
+  populateWzHub(weapon.name);
+
+  // Activate teep by default
+  switchSrc('teep');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function switchSrc(src){
+  document.querySelectorAll('.src-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.src-panel').forEach(p=>p.classList.remove('active'));
+  const tab = document.getElementById('tab_'+src);
+  if(tab) tab.classList.add('active');
+  const panelMap = {teep:'panelTeep',wz:'panelWz',hub:'panelHub'};
+  const panel = document.getElementById(panelMap[src]);
+  if(panel) panel.classList.add('active');
+  // Hide build code row on non-teep panels
+  document.getElementById('modalCodeRow').style.display =
+    (src==='teep' && lastCard && lastCard.build_code) ? 'flex' : 'none';
+}
+
+function populateWzMeta(weaponName){
+  const entry = getWzEntry(weaponName);
+  const el = document.getElementById('wzContent');
+  if(!entry){
+    el.innerHTML=`<div class="no-data">— GEEN WZ META DATA —</div>`;return;
+  }
+  const tierCls = entry.tier==='S'?'s':'a';
+  let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <span class="tier-badge ${tierCls}">${entry.tier}-TIER</span>
+    <span style="font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace">warzoneloadout.games</span>
+  </div>`;
+  if(entry.builds&&entry.builds.length>1){
+    html+=`<div class="build-tabs">` +
+      entry.builds.map((b,i)=>`<div class="build-tab ${i===0?'active':''}" id="wztab_${i}" onclick="switchWzBuild(${i})">${b.label}${b.rank?`<span class="build-rank">${b.rank}</span>`:''}
+      </div>`).join('')+`</div>`;
+  }
+  html += entry.builds.map((b,i)=>{
+    const atts=Object.entries(b.attachments).filter(([,v])=>v&&v.trim());
+    return `<div class="build-panel ${i===0?'active':''}" id="wzpanel_${i}">
+      <div class="att-grid">${atts.map(([s,v])=>`<div class="att-box"><div class="att-slot">${s}</div><div class="att-val">${v.toUpperCase()}</div></div>`).join('')}</div>
+      ${b.note?`<div class="build-note">${b.note}</div>`:''}
+    </div>`;
+  }).join('');
+  el.innerHTML=html;
+}
+
+function switchWzBuild(idx){
+  document.querySelectorAll('[id^=wztab_]').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('[id^=wzpanel_]').forEach(p=>p.classList.remove('active'));
+  const tab=document.getElementById('wztab_'+idx);
+  const panel=document.getElementById('wzpanel_'+idx);
+  if(tab) tab.classList.add('active');
+  if(panel) panel.classList.add('active');
+}
+
+function populateWzHub(weaponName){
+  const entry = getHubEntry(weaponName);
+  const el = document.getElementById('hubContent');
+  if(!entry){
+    el.innerHTML=`<div class="no-data">— GEEN WZHUB DATA —</div>`;return;
+  }
+  const tierCls = entry.tier==='S'?'hub-s':'hub-a';
+  const tierLabel = entry.tier==='S'?'S-TIER':'A-TIER';
+  let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <span class="tier-badge ${tierCls}">${tierLabel}</span>
+    <span style="font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace">wzhub.gg</span>
+  </div>`;
+  if(entry.build_code){
+    html+=`<div class="hub-code-row">
+      <span class="code-label">BUILD CODE</span>
+      <span class="code-value">${entry.build_code}</span>
+      <button class="copy-btn" onclick="copyText('${entry.build_code}')">KOPIEER</button>
+    </div>`;
+  }
+  const atts=Object.entries(entry.attachments).filter(([,v])=>v&&v.trim());
+  html+=`<div class="att-grid">${atts.map(([s,v])=>`<div class="att-box"><div class="att-slot">${s}</div><div class="att-val">${v.toUpperCase()}</div></div>`).join('')}</div>`;
+  el.innerHTML=html;
+}
+
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
+
+function copyCode(){
+  const code=document.getElementById('modalCode').textContent;
+  copyText(code);
+}
+function copyText(text){
+  navigator.clipboard.writeText(text);
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+// ─── PLAYLIST PANEL ──────────────────────────────────────────────────────
+function renderPlaylist(){
+  var el = document.getElementById('playlistPanel');
+  if(!el) return;
+  var d = PLAYLIST_DATA;
+  if(!d || !d.playlists || !d.playlists.length){
+    el.innerHTML = '<div class="pl-title">\u{1F3AE} WZ PLAYLISTS</div><div class="pl-empty">Nog niet geladen.<br>Draai wz_update_all.py</div>';
+    return;
+  }
+  var out = '<div class="pl-title">\u{1F3AE} WZ PLAYLISTS</div>';
+  if(d.date_range){ out += '<div class="pl-daterange">' + d.date_range + '</div>'; }
+  out += '<hr class="pl-divider">';
+  var playlists = d.playlists;
+  for(var i = 0; i < playlists.length; i++){
+    var pl      = playlists[i];
+    var isLTM   = pl.ltm ? true : false;
+    var cClass  = isLTM ? 'pl-card ltm' : 'pl-card';
+    var ltmSpan = isLTM ? '<span class="pl-ltm">LTM</span>' : '';
+    out += '<div class="' + cClass + '">';
+    out += '<div class="pl-card-head"><span class="pl-name">' + pl.name + '</span>' + ltmSpan + '</div>';
+    var modes = pl.modes;
+    if(modes && modes.length){
+      out += '<div class="pl-modes">';
+      for(var j = 0; j < modes.length; j++){
+        var mstr  = modes[j];
+        var sep   = mstr.lastIndexOf(' - ');
+        var left  = sep > 0 ? mstr.substring(sep + 3) : mstr;
+        var right = sep > 0 ? mstr.substring(0, sep)  : '';
+        out += '<div class="pl-mode-row"><span class="pl-mode-map">' + left + '</span>';
+        if(right){ out += '<span class="pl-mode-type">' + right + '</span>'; }
+        out += '</div>';
+      }
+      out += '</div>';
+    }
+    out += '</div>';
+  }
+  el.innerHTML = out;
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+try {
+  renderGameTabs();
+  renderCatBar();
+  renderCards();
+  renderPlaylist();
+} catch(e) {
+  document.body.innerHTML += `<div style="color:#ff4455;background:#1a0a0a;padding:20px;font-family:monospace;position:fixed;bottom:0;left:0;right:0;z-index:9999;border-top:2px solid #ff4455">
+    <b>SCRIPT FOUT:</b> ${e.message}<br><small>${e.stack||''}</small>
+  </div>`;
+}
+</script>
+</body>
+</html>
