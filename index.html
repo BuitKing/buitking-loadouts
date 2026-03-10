@@ -17,7 +17,7 @@
   --text:#cdd5d8;--text2:#8a9aaa;--text3:#505870;
   --border:#1e2235;--border2:#2a3048;
   --s-gold:#f0c040;--a-blue:#38a5ff;
-  --has-code:#3a7d44;--has-wz:#2255aa;--has-hub:#7a3d9a;
+  --has-code:#00ff88;--has-wz:#3d8fff;--has-hub:#cc44ff;
 }
 body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;min-height:100vh;overflow-x:hidden;zoom:1.25}
 body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);pointer-events:none;z-index:0}
@@ -38,7 +38,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .game-tab.active .badge{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
 
 /* ── FILTER BAR ── */
-.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:57px;z-index:90}
+.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;flex-wrap:nowrap;gap:6px;align-items:center;position:sticky;top:57px;z-index:90;overflow-x:auto;scrollbar-width:none}.filter-bar::-webkit-scrollbar{display:none}
 .cat-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
 .cat-pill:hover{border-color:var(--border2);color:var(--text)}
 .cat-pill.active{background:rgba(174,28,40,.15);border-color:var(--nl-red);color:var(--nl-red)}
@@ -50,23 +50,23 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .tier-pill.tier-s.active{background:rgba(240,192,64,.2);border-color:var(--s-gold);box-shadow:0 0 8px rgba(240,192,64,.2)}
 .tier-pill.tier-a{background:rgba(56,165,255,.07);color:var(--a-blue);border-color:rgba(56,165,255,.3)}
 .tier-pill.tier-a.active{background:rgba(56,165,255,.2);border-color:var(--a-blue);box-shadow:0 0 8px rgba(56,165,255,.2)}
-.search-box{margin-left:auto;position:relative}
-.search-box input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 12px 5px 30px;font-size:13px;font-family:'Rajdhani',sans-serif;border-radius:3px;width:180px;outline:none;transition:border .12s}
+.search-box{position:relative;flex-shrink:0}
+.search-box input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 12px 5px 30px;font-size:13px;font-family:'Rajdhani',sans-serif;border-radius:3px;width:150px;outline:none;transition:border .12s}
 .search-box input:focus{border-color:var(--border2)}
 .search-box::before{content:'🔍';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;pointer-events:none}
 .code-toggle{padding:5px 12px;background:rgba(56,165,255,.07);border:1px solid rgba(56,165,255,.25);border-radius:20px;font-size:12px;font-weight:600;color:#6699cc;cursor:pointer;transition:all .12s;white-space:nowrap}
 .code-toggle.active{background:rgba(56,165,255,.2);border-color:var(--blue2);color:var(--blue2)}
 
 /* ── LAYOUT ── */
-.main-layout{display:flex;align-items:flex-start;position:relative;z-index:1}
+.main-layout{display:flex;align-items:flex-start;position:relative}
 .content{flex:1;min-width:0;padding:16px}
 .cat-section h2{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--nl-red);text-transform:uppercase;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:10px}
 .weapons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:16px}
 .weapon-card{background:var(--bg2);border:1px solid var(--border);padding:10px 12px;cursor:pointer;position:relative;transition:all .12s;overflow:hidden}
 .weapon-card:hover{background:var(--bg3);border-color:var(--border2);transform:translateY(-1px)}
-.weapon-card.has-code::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--has-code)}
-.weapon-card.has-wz::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--has-wz)}
-.weapon-card.has-hub .hub-stripe{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--has-hub)}
+.weapon-card.has-code::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--has-code);box-shadow:0 0 8px var(--has-code),0 0 16px rgba(0,255,136,.3)}
+.weapon-card.has-wz::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--has-wz);box-shadow:0 0 8px var(--has-wz),0 0 16px rgba(61,143,255,.3)}
+.weapon-card.has-hub .hub-stripe{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--has-hub);box-shadow:0 0 8px var(--has-hub),0 0 16px rgba(204,68,255,.3)}
 .weapon-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text);text-transform:uppercase;margin-bottom:4px;padding-right:28px}
 .weapon-meta{display:flex;gap:5px;flex-wrap:wrap}
 .att-count{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace}
@@ -152,6 +152,15 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .src-pill.src-wz.active{background:rgba(56,165,255,.15);border-color:var(--blue2);color:var(--blue2)}
 .src-pill.src-hub.active{background:rgba(160,90,200,.18);border-color:#a060cc;color:#cc88ff}
 
+/* game filter pills */
+.game-pill{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:0;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.8px}
+.game-pill:hover{border-color:var(--border2);color:var(--text)}
+.game-pill.active{background:rgba(33,70,139,.2);border-color:var(--nl-blue);color:#6699ff;box-shadow:0 0 6px rgba(33,70,139,.3)}
+
+/* game section header (bij "alle games" weergave) */
+.game-section{margin-bottom:4px}
+.game-section-head{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:6px;color:var(--nl-blue);text-transform:uppercase;padding:12px 0 7px;border-bottom:2px solid rgba(33,70,139,.25);border-left:3px solid var(--nl-blue);padding-left:10px;margin-bottom:10px;margin-top:8px;background:rgba(33,70,139,.04)}
+
 /* sort toggle */
 .sort-toggle{padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap;letter-spacing:.5px}
 .sort-toggle:hover{border-color:var(--border2);color:var(--text)}
@@ -174,8 +183,8 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .pl-season-fill{height:100%;background:linear-gradient(90deg,var(--nl-red),#ff4455);border-radius:3px}
 .pl-season-label{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace;margin-bottom:10px;letter-spacing:.5px}
 .pl-divider{border:none;border-top:1px solid var(--border);margin:6px 0 10px}
-.pl-card{background:var(--bg3);border:1px solid var(--border);border-radius:3px;margin-bottom:8px;overflow:hidden}
-.pl-card.ltm{border-color:rgba(0,210,180,.25)}
+.pl-card{background:var(--bg3);border:1px solid rgba(33,70,139,.45);border-radius:3px;margin-bottom:8px;overflow:hidden;box-shadow:0 0 8px rgba(33,70,139,.12)}
+.pl-card.ltm{border-color:rgba(0,210,180,.55);box-shadow:0 0 8px rgba(0,210,180,.12)}
 .pl-card-head{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 6px;border-bottom:1px solid var(--border)}
 .pl-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;color:var(--nl-blue);text-transform:uppercase;line-height:1.2}
 .pl-ltm{font-size:9px;font-weight:700;background:rgba(0,210,180,.12);color:#00d2b4;border:1px solid rgba(0,210,180,.35);padding:1px 5px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;margin-left:6px}
@@ -185,6 +194,259 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .pl-mode-map{font-size:11px;color:var(--text);font-family:'Share Tech Mono',monospace;text-transform:uppercase}
 .pl-mode-type{font-size:11px;color:var(--text2);font-family:'Share Tech Mono',monospace;text-transform:uppercase}
 .pl-empty{font-size:11px;color:var(--text3);text-align:center;padding:20px 0;font-style:italic}
+
+/* ══════════════════════════════════════════════
+   COD TACTICAL STYLE UPGRADES
+   ══════════════════════════════════════════════ */
+
+/* Tactische grid-overlay over de hele pagina */
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(33,70,139,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(33,70,139,.03) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
+
+/* HEADER — scherpe diagonale accent + glow */
+.header{background:linear-gradient(135deg,#050608 0%,#0c0e18 40%,#080910 100%);border-bottom:none;box-shadow:0 2px 20px rgba(174,28,40,.25),0 0 40px rgba(0,0,0,.8);position:relative}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--nl-red) 0%,var(--nl-red) 18%,rgba(240,240,240,.6) 38%,var(--nl-white) 50%,rgba(240,240,240,.6) 62%,var(--nl-blue) 82%,var(--nl-blue) 100%);opacity:.85}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;position:relative}
+.logo::before{content:'//';font-size:12px;color:var(--nl-red);margin-right:6px;opacity:.7;font-family:'Share Tech Mono',monospace}
+.updated{border:none;border-left:2px solid var(--nl-red);border-radius:0;background:rgba(174,28,40,.08);letter-spacing:1.5px;padding:4px 12px}
+
+/* GAME TABS — verborgen */
+.game-tabs{display:none!important}
+
+/* GAME TABS — onderstreep met glow */
+.game-tab.active{color:var(--nl-red);border-bottom-color:var(--nl-red);text-shadow:0 0 8px rgba(174,28,40,.5)}
+.game-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--nl-red);box-shadow:0 0 8px rgba(174,28,40,.6)}
+
+/* FILTER BAR — dunne rode accentlijn links */
+.filter-bar{border-left:3px solid rgba(174,28,40,.4);border-bottom:1px solid var(--border)}
+.cat-pill.active{clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);border-radius:0}
+.tier-pill{border-radius:0;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+
+/* WEAPON CARDS — CoD hoek-decoraties + clip corners */
+.weapon-card{
+  clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);
+  border-radius:0;
+  transition:all .15s;
+  position:relative;
+}
+.weapon-card::before{
+  content:'';position:absolute;
+  top:0;left:0;
+  width:8px;height:8px;
+  background:var(--border2);
+  clip-path:polygon(0 0,100% 0,0 100%);
+  z-index:2;
+  transition:background .15s;
+}
+.weapon-card:hover::before{background:var(--nl-red)}
+.weapon-card:hover{
+  background:var(--bg3);
+  border-color:rgba(174,28,40,.4);
+  box-shadow:0 0 12px rgba(174,28,40,.15),inset 0 0 20px rgba(174,28,40,.03);
+  transform:translateY(-2px);
+}
+.weapon-name{font-size:13px;letter-spacing:2px;font-weight:700}
+
+/* Categorie headers — tactische stijl */
+.cat-section h2{
+  font-size:11px;
+  letter-spacing:5px;
+  color:var(--nl-red);
+  padding:6px 0 6px 10px;
+  border-bottom:1px solid rgba(174,28,40,.3);
+  border-left:3px solid var(--nl-red);
+  background:rgba(174,28,40,.04);
+  position:relative;
+  box-shadow:inset 3px 0 12px rgba(174,28,40,.15),0 0 8px rgba(174,28,40,.08);
+  text-shadow:0 0 10px rgba(174,28,40,.8),0 0 20px rgba(174,28,40,.4);
+}
+.cat-section h2::after{content:'';position:absolute;bottom:-1px;left:0;width:60px;height:1px;background:linear-gradient(90deg,var(--nl-red),transparent);box-shadow:0 0 6px var(--nl-red)}
+
+/* MODAL — CoD HUD look */
+.modal{
+  clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);
+  border:1px solid var(--border2);
+  box-shadow:0 0 40px rgba(0,0,0,.9),0 0 20px rgba(174,28,40,.1);
+}
+.modal-header{
+  background:linear-gradient(90deg,rgba(174,28,40,.12),#0a0c14,#0a0c14);
+  border-bottom:1px solid rgba(174,28,40,.4);
+  position:relative;
+}
+.modal-header::before{content:'▶';color:var(--nl-red);font-size:10px;margin-right:4px;opacity:.7}
+.modal-gun-name{letter-spacing:4px;font-size:20px}
+
+/* ATTACHMENT BOXES — tactische hoeken */
+.att-box{
+  clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px);
+  border-radius:0;
+  border-color:rgba(255,255,255,.06);
+  transition:border-color .12s;
+}
+.att-box:hover{border-color:rgba(33,70,139,.4)}
+.att-slot{color:var(--nl-blue);opacity:.8;font-size:8px;letter-spacing:2px}
+.att-val{font-size:11px;letter-spacing:.5px}
+
+/* PLAYLIST PANEL — militaire stijl */
+.playlist-panel{border-left:2px solid rgba(33,70,139,.3)}
+.pl-card{
+  clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px);
+  border-radius:0;
+  border-color:rgba(33,70,139,.2);
+  margin-bottom:10px;
+}
+.pl-card-head{background:rgba(33,70,139,.08);border-bottom:1px solid rgba(33,70,139,.2)}
+.pl-name{letter-spacing:2px;font-size:11px}
+.pl-title{
+  letter-spacing:5px;
+  font-size:11px;
+  padding-left:8px;
+  border-left:3px solid var(--nl-red);
+  margin-bottom:8px;
+}
+.pl-mode-row{padding:4px 10px}
+.pl-mode-map{color:var(--text2);font-size:10px;letter-spacing:1px}
+.pl-mode-type{color:var(--nl-blue);font-size:10px;letter-spacing:1px;opacity:.9}
+
+/* LEGENDA */
+.pl-legend-card{background:var(--bg3);border:1px solid rgba(33,70,139,.45);border-radius:3px;margin-bottom:12px;overflow:hidden;box-shadow:0 0 8px rgba(33,70,139,.12)}
+.pl-legend{background:rgba(0,0,0,.25);border:1px solid var(--border2);padding:10px 12px;margin-bottom:10px;border-radius:2px}
+.pl-legend-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:4px;color:var(--text2);margin-bottom:8px;text-transform:uppercase}
+.pl-legend-section{font-size:9px;letter-spacing:3px;color:var(--text3);font-family:'Share Tech Mono',monospace;margin:8px 0 5px;text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:3px}
+.pl-legend-section:first-of-type{margin-top:0}
+.pl-legend-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.pl-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.tier-s-dot{background:rgba(240,192,64,.2);border:1px solid rgba(240,192,64,.6);box-shadow:0 0 6px rgba(240,192,64,.4)}
+.tier-a-dot{background:rgba(56,165,255,.15);border:1px solid rgba(56,165,255,.5);box-shadow:0 0 6px rgba(56,165,255,.3)}
+.pl-legend-label{font-size:10px;font-weight:700;font-family:'Share Tech Mono',monospace;flex-shrink:0;width:44px}
+.s-label{color:var(--s-gold);text-shadow:0 0 6px rgba(240,192,64,.5)}
+.a-label{color:var(--a-blue);text-shadow:0 0 6px rgba(56,165,255,.4)}
+.pl-legend-desc{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace;line-height:1.3}
+.pl-legend-stripe{display:block;flex-shrink:0;border-radius:1px}
+.stripe-code{width:4px;height:22px;background:var(--has-code);box-shadow:0 0 6px var(--has-code),0 0 12px rgba(0,255,136,.3)}
+.stripe-wz{width:4px;height:22px;background:var(--has-wz);box-shadow:0 0 6px var(--has-wz),0 0 12px rgba(61,143,255,.3)}
+.stripe-hub{width:22px;height:4px;background:var(--has-hub);box-shadow:0 0 6px var(--has-hub),0 0 12px rgba(204,68,255,.3)}
+
+/* SCROLLBAR — tactisch smal */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(174,28,40,.4);border-radius:0}
+::-webkit-scrollbar-thumb:hover{background:var(--nl-red)}
+
+/* BUILD CODE ROW — groener/feller */
+.modal-code-row{
+  clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px);
+  border-color:rgba(174,28,40,.3);
+}
+.code-value{letter-spacing:3px;font-size:13px}
+
+/* SOURCE TABS */
+.src-tab.active{text-shadow:0 0 6px rgba(174,28,40,.4)}
+
+/* TIER BADGES — scherpe hoeken */
+.mini-badge,.tier-badge,.build-rank{border-radius:0}
+
+/* TOAST */
+.toast{border-radius:0;clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px)}
+
+/* WACHTWOORD SCHERM — CoD stijl */
+.pw-box{
+  border-radius:0;
+  clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);
+  border:1px solid rgba(33,70,139,.5);
+  box-shadow:0 0 40px rgba(33,70,139,.2),0 0 80px rgba(0,0,0,.8);
+  background:#0c0e18;
+}
+.pw-logo::before{content:'//';font-size:14px;color:var(--nl-red);margin-right:6px;font-family:'Share Tech Mono',monospace;opacity:.7}
+.pw-input{border-radius:0;clip-path:polygon(4px 0%,100% 0%,100% calc(100% - 4px),calc(100% - 4px) 100%,0% 100%,0% 4px)}
+.pw-btn{
+  border-radius:0;
+  clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);
+  letter-spacing:4px;
+  font-size:13px;
+}
+
+/* SCANLINE ANIMATIE op header */
+@keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+.header::before{content:'';position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(174,28,40,.015) 50%);background-size:100% 4px;pointer-events:none;z-index:0}
+
+
+/* ══════════════════════════════════════════════
+   COD WEAPON SELECT ANIMATIES
+   ══════════════════════════════════════════════ */
+
+/* Overlay — rustige fade in */
+@keyframes overlayIn{
+  0%  {opacity:0}
+  100%{opacity:1}
+}
+.modal-overlay.open{animation:overlayIn .35s ease forwards}
+
+/* Modal — slide-in van onderaf + scale */
+@keyframes modalIn{
+  0%  {opacity:0;transform:translateY(30px) scale(.97);filter:brightness(2) contrast(2)}
+  10% {opacity:1;filter:brightness(1.4)}
+  30% {transform:translateY(-4px) scale(1.002)}
+  100%{transform:translateY(0) scale(1);filter:brightness(1)}
+}
+.modal.cod-open{animation:modalIn .5s cubic-bezier(.16,1,.3,1) forwards}
+
+/* Wapennaam — decrypt/glitch effect */
+@keyframes decrypt{
+  0%  {opacity:0;letter-spacing:12px;filter:blur(4px)}
+  40% {opacity:.6;letter-spacing:6px;filter:blur(1px)}
+  70% {opacity:.9;letter-spacing:5px;filter:blur(0)}
+  100%{opacity:1;letter-spacing:4px;filter:blur(0)}
+}
+.modal-gun-name.cod-decrypt{animation:decrypt .7s ease forwards}
+
+/* Rode scan-lijn die over het modal heen veegt */
+@keyframes scanLine{
+  0%  {top:-4px;opacity:.9}
+  100%{top:110%;opacity:0}
+}
+.modal-scan{
+  position:absolute;inset-inline:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--nl-red),var(--nl-red),transparent);
+  box-shadow:0 0 12px var(--nl-red),0 0 24px rgba(174,28,40,.4);
+  pointer-events:none;z-index:20;
+  animation:scanLine .6s ease-in forwards;
+}
+
+/* Hoekmarkers die intekenen */
+@keyframes cornerTL{0%{width:0;height:0;opacity:0}40%{opacity:1}60%{width:16px;height:2px}100%{width:16px;height:16px}}
+@keyframes cornerBR{0%{width:0;height:0;opacity:0}40%{opacity:1}60%{width:16px;height:2px}100%{width:16px;height:16px}}
+
+.modal-corner{position:absolute;width:16px;height:16px;pointer-events:none;z-index:15}
+.modal-corner.tl{top:0;left:0;border-top:2px solid var(--nl-red);border-left:2px solid var(--nl-red);animation:cornerTL .55s ease forwards}
+.modal-corner.tr{top:0;right:0;border-top:2px solid var(--nl-red);border-right:2px solid var(--nl-red);animation:cornerTL .55s .08s ease forwards}
+.modal-corner.bl{bottom:0;left:0;border-bottom:2px solid var(--nl-blue);border-left:2px solid var(--nl-blue);animation:cornerBR .55s .12s ease forwards}
+.modal-corner.br{bottom:0;right:0;border-bottom:2px solid var(--nl-blue);border-right:2px solid var(--nl-blue);animation:cornerBR .55s .18s ease forwards}
+
+/* Attachment boxes — staggered fade-in */
+@keyframes attIn{
+  0%  {opacity:0;transform:translateX(-8px)}
+  100%{opacity:1;transform:translateX(0)}
+}
+.att-box.cod-in{animation:attIn .3s ease forwards;opacity:0}
+
+/* Weapon card — pulse bij klikken */
+@keyframes cardPulse{
+  0%  {box-shadow:0 0 0 0 rgba(174,28,40,.7)}
+  50% {box-shadow:0 0 0 6px rgba(174,28,40,.1)}
+  100%{box-shadow:0 0 0 0 rgba(174,28,40,0)}
+}
+.weapon-card.cod-click{animation:cardPulse .55s ease forwards}
+
+/* Status balk bovenin modal — progress bar stijl */
+@keyframes statusBar{0%{width:0}100%{width:100%}}
+.modal-status-bar{
+  height:2px;
+  background:linear-gradient(90deg,var(--nl-red),var(--nl-blue));
+  position:absolute;bottom:0;left:0;
+  animation:statusBar .6s ease forwards;
+  box-shadow:0 0 6px rgba(174,28,40,.5);
+}
+
 </style>
 </head>
 <body>
@@ -240,14 +502,14 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 
 <div class="header">
   <div class="logo"><span>BUIT</span><em>KING'S</em> LOADOUTS</div>
-  <div class="updated" id="lastUpdated">Bijgewerkt: 10/03/2026 16:47</div>
+  <div class="updated" id="lastUpdated">Bijgewerkt: 10/03/2026 16:01</div>
 </div>
 
 <div class="game-tabs" id="gameTabs"></div>
 <div class="filter-bar" id="filterBar"></div>
 <div class="main-layout">
   <div class="content" id="content"></div>
-  <div class="playlist-panel" id="playlistPanel"><div class="pl-title">🎮 WZ PLAYLISTS</div><hr class="pl-divider"><div class="pl-card"><div class="pl-card-head"><span class="pl-name">BATTLE ROYALE</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">SOLO</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">DUOS</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">TRIOS</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">VERDANSK</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">RESURGENCE</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">SOLO</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div><div class="pl-mode-row"><span class="pl-mode-map">DUOS</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">BATTLE ROYALE CASUAL</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">VERDANSK</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">RESURGENCE CASUAL</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div></div></div><div class="pl-card ltm"><div class="pl-card-head"><span class="pl-name">LOADED RESURGENCE</span><span class="pl-ltm">LTM</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">REBIRTH ISLAND</span></div></div></div></div>
+  <div class="playlist-panel" id="playlistPanel"></div>
 
 <!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
@@ -299,11 +561,12 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
   /* WZHUB_META_END */
 
 /* PLAYLIST_START */
-  const PLAYLIST_DATA = {"date_range": "", "season_label": "Season 2- 60%\n      (22 days)", "season_pct": 60, "playlists": [{"name": "BATTLE ROYALE", "modes": ["VERDANSK - SOLO", "VERDANSK - DUOS", "VERDANSK - TRIOS", "VERDANSK - QUADS"], "ltm": false}, {"name": "RESURGENCE", "modes": ["HAVEN\u2019S HOLLOW & REBIRTH ISLAND - SOLO", "HAVEN\u2019S HOLLOW & REBIRTH ISLAND - DUOS", "HAVEN\u2019S HOLLOW & REBIRTH ISLAND - QUADS"], "ltm": false}, {"name": "BATTLE ROYALE CASUAL", "modes": ["VERDANSK - QUADS"], "ltm": false}, {"name": "RESURGENCE CASUAL", "modes": ["HAVEN\u2019S HOLLOW & REBIRTH ISLAND - QUADS"], "ltm": false}, {"name": "LOADED RESURGENCE", "modes": ["REBIRTH ISLAND - QUADS"], "ltm": true}]};
+  const PLAYLIST_DATA = {"date_range": "", "season_label": "Season 3", "season_pct": 0, "playlists": [{"name": "BATTLE ROYALE", "modes": ["VERDANSK - SOLO", "VERDANSK - DUOS", "VERDANSK - TRIOS", "VERDANSK - QUADS"], "ltm": false}, {"name": "RESURGENCE", "modes": ["REBIRTH ISLAND - SOLO", "REBIRTH ISLAND - DUOS", "REBIRTH ISLAND - TRIOS", "REBIRTH ISLAND - QUADS"], "ltm": false}, {"name": "BATTLE ROYALE CASUAL", "modes": ["VERDANSK - DUOS", "VERDANSK - QUADS"], "ltm": false}, {"name": "RESURGENCE CASUAL", "modes": ["REBIRTH ISLAND - DUOS", "REBIRTH ISLAND - QUADS"], "ltm": false}, {"name": "LOADED RESURGENCE", "modes": ["REBIRTH ISLAND - TRIOS"], "ltm": true}]};
   /* PLAYLIST_END */
 
 // ─── STATE ───────────────────────────────────────────────────────────────
-let activeGame   = Object.keys(RAW)[0];
+let activeGame       = Object.keys(RAW)[0];
+let activeGameFilter = 'all'; // 'all' | 'BO7' | 'BO6' | ...
 let activeCat    = 'all';
 let activeTier   = 'all';
 let activeSource = 'all'; // 'all' | 'wz' | 'hub'
@@ -356,17 +619,34 @@ function setGame(g){
 
 // ─── FILTER BAR ──────────────────────────────────────────────────────────
 function renderCatBar(){
-  const cats = Object.keys(RAW[activeGame]||{});
+  // Verzamel categorieën over alle games (of geselecteerde game)
+  const allCats = new Set();
+  const gamesToCheck = activeGameFilter === 'all' ? Object.keys(RAW) : [activeGameFilter];
+  for(const g of gamesToCheck){
+    for(const c of Object.keys(RAW[g]||{})) allCats.add(c);
+  }
+  const cats = Array.from(allCats);
+  const games = Object.keys(RAW);
+
   const el = document.getElementById('filterBar');
-  const pills = [
+
+  const catPills = [
     `<div class="cat-pill ${activeCat==='all'?'active':''}" onclick="setCat('all')">Alle</div>`,
     ...cats.map(c=>`<div class="cat-pill ${activeCat===c?'active':''}" onclick="setCat('${c}')">${c}</div>`)
   ].join('');
-  el.innerHTML = pills +
+
+  const gamePills = [
+    `<div class="game-pill ${activeGameFilter==='all'?'active':''}" onclick="setGameFilter('all')">ALLE</div>`,
+    ...games.map(g=>`<div class="game-pill ${activeGameFilter===g?'active':''}" onclick="setGameFilter('${g}')">${g}</div>`)
+  ].join('');
+
+  el.innerHTML = catPills +
     `<div class="filter-sep"></div>` +
     `<div class="tier-pill tier-all ${activeTier==='all'?'active':''}" onclick="setTier('all')">ALLE TIERS</div>` +
     `<div class="tier-pill tier-s ${activeTier==='S'?'active':''}" onclick="setTier('S')">S-TIER</div>` +
     `<div class="tier-pill tier-a ${activeTier==='A'?'active':''}" onclick="setTier('A')">A-TIER</div>` +
+    `<div class="filter-sep"></div>` +
+    gamePills +
     `<div class="filter-sep"></div>` +
     `<div class="src-pill ${activeSource==='all'?'active':''}" onclick="setSource('all')">ALLE BRONNEN</div>` +
     `<div class="src-pill src-wz ${activeSource==='wz'?'active':''}" onclick="setSource('wz')">WZ META</div>` +
@@ -381,6 +661,7 @@ function renderCatBar(){
 function setCat(c){ activeCat=c; renderCatBar(); renderCards(); }
 function setTier(t){ activeTier=t; renderCatBar(); renderCards(); }
 function setSource(s){ activeSource=s; renderCatBar(); renderCards(); }
+function setGameFilter(g){ activeGameFilter=g; activeCat='all'; renderCatBar(); renderCards(); }
 function toggleSort(){ sortByTier=!sortByTier; renderCatBar(); renderCards(); }
 function toggleCode(){ codeOnly=!codeOnly; renderCatBar(); renderCards(); }
 function setSearch(v){ searchQ=v; renderCards(); }
@@ -392,12 +673,6 @@ function highlight(text,q){
     '<span class="mark">$1</span>');
 }
 
-function hasAnyData(w){
-  // weapon must have at least 1 filled attachment OR appear in WZ Meta OR WZHUB
-  const filledAtts = Object.values(w.attachments).some(v => v && v.trim());
-  return filledAtts || !!getWzEntry(w.name) || !!getHubEntry(w.name);
-}
-
 function tierScore(name){
   const wz  = getWzEntry(name);
   const hub = getHubEntry(name);
@@ -405,15 +680,16 @@ function tierScore(name){
   const hubTier = hub ? hub.tier : null;
   const sCount = (wzTier==='S'?1:0) + (hubTier==='S'?1:0);
   const aCount = (wzTier==='A'?1:0) + (hubTier==='A'?1:0);
-  if(sCount >= 2) return 0;   // S on both
-  if(sCount === 1) return 1;  // S on one
-  if(aCount >= 2) return 2;   // A on both
-  if(aCount === 1) return 3;  // A on one
-  return 4;                   // no tier
+  if(sCount >= 2) return 0;   // S op beide
+  if(sCount === 1) return 1;  // S op één
+  if(aCount >= 2) return 2;   // A op beide
+  if(aCount === 1) return 3;  // A op één
+  return 4;                   // geen tier
 }
 
 function filterWeapon(w){
-  if(!hasAnyData(w)) return false;
+  // Alleen tonen als er WZ Meta OF WZHUB data is (TeeP-only verborgen)
+  if(!getWzEntry(w.name) && !getHubEntry(w.name)) return false;
   if(codeOnly && !w.build_code) return false;
   if(activeSource==='wz'  && !getWzEntry(w.name))  return false;
   if(activeSource==='hub' && !getHubEntry(w.name)) return false;
@@ -423,15 +699,18 @@ function filterWeapon(w){
 }
 
 function renderCards(){
-  const data = RAW[activeGame]||{};
-  const cats = activeCat==='all' ? Object.keys(data) : [activeCat];
+  const gamesToShow = activeGameFilter === 'all' ? Object.keys(RAW) : [activeGameFilter];
   let html='';
 
   if(sortByTier){
     let all = [];
-    for(const cat of cats){
-      for(const w of (data[cat]||[])){
-        if(filterWeapon(w)) all.push({w, cat});
+    for(const game of gamesToShow){
+      const data = RAW[game]||{};
+      const cats = activeCat==='all' ? Object.keys(data) : [activeCat];
+      for(const cat of cats){
+        for(const w of (data[cat]||[])){
+          if(filterWeapon(w)) all.push({w, cat, game});
+        }
       }
     }
     all.sort((a,b) => tierScore(a.w.name) - tierScore(b.w.name));
@@ -444,21 +723,49 @@ function renderCards(){
       { label:'GEEN TIER', cls:'none', items: all.filter(x => tierScore(x.w.name)===4) },
     ];
 
-    for(const g of groups){
-      if(!g.items.length) continue;
-      const cards = g.items.map(({w,cat},i)=>renderCard(w,i,cat)).join('');
+    for(const grp of groups){
+      if(!grp.items.length) continue;
+      const cards = grp.items.map(({w,cat,game},i)=>renderCard(w,i,cat,game)).join('');
       html += `<div class="cat-section">
-        <h2 class="tier-section-head tier-head-${g.cls}">${g.label}</h2>
+        <h2 class="tier-section-head tier-head-${grp.cls}">${grp.label}</h2>
         <div class="weapons-grid">${cards}</div>
       </div>`;
     }
   } else {
-    for(const cat of cats){
-      let weapons = (data[cat]||[]).filter(filterWeapon);
-      if(!weapons.length) continue;
-      weapons = [...weapons].sort((a,b) => tierScore(a.name) - tierScore(b.name));
-      const cards = weapons.map((w,i)=>renderCard(w,i,cat)).join('');
-      html+=`<div class="cat-section"><h2>${cat}</h2><div class="weapons-grid">${cards}</div></div>`;
+    // Verzamel alle categorieën over alle games en merge wapens per categorie
+    const allCatsOrdered = [];
+    for(const game of gamesToShow){
+      for(const cat of Object.keys(RAW[game]||{})){
+        if(!allCatsOrdered.includes(cat)) allCatsOrdered.push(cat);
+      }
+    }
+    const catsToShow = activeCat==='all' ? allCatsOrdered : [activeCat];
+
+    for(const cat of catsToShow){
+      let weapons = [];
+      let cardIdx = 0;
+      let catHtml = '';
+      for(const game of gamesToShow){
+        const ws = (RAW[game]||{})[cat]||[];
+        for(const w of ws){
+          if(filterWeapon(w)){
+            catHtml += renderCard(w, cardIdx++, cat, game);
+          }
+        }
+      }
+      if(!catHtml) continue;
+      // Sorteer op tier via DOM is niet mogelijk hier, dus we bouwen een array
+      let entries = [];
+      let cardIdx2 = 0;
+      for(const game of gamesToShow){
+        const ws = (RAW[game]||{})[cat]||[];
+        for(const w of ws){
+          if(filterWeapon(w)) entries.push({w, game});
+        }
+      }
+      entries.sort((a,b) => tierScore(a.w.name) - tierScore(b.w.name));
+      const cards = entries.map(({w,game},i) => renderCard(w,i,cat,game)).join('');
+      html += `<div class="cat-section"><h2>${cat}</h2><div class="weapons-grid">${cards}</div></div>`;
     }
   }
 
@@ -468,8 +775,9 @@ function renderCards(){
 // ─── CARD CLICK REGISTRY ────────────────────────────────────────────────
 const _cardRegistry = {};
 
-function renderCard(w,idx,cat){
-  const key = `${activeGame}_${cat}_${idx}`;
+function renderCard(w,idx,cat,game){
+  game = game || activeGame;
+  const key = `${game}_${cat}_${idx}`;
   _cardRegistry[key] = {w, cat};
   const wz  = getWzEntry(w.name);
   const hub = getHubEntry(w.name);
@@ -486,7 +794,7 @@ function renderCard(w,idx,cat){
   if(wz) badges+=`<span class="mini-badge wz">${wz.tier}</span>`;
   if(hub) badges+=`<span class="mini-badge hub">${hub.tier}</span>`;
   const hubStripe = hub?'<div class="hub-stripe"></div>':'';
-  return `<div class="${classes}" data-key="${key}" onclick="openModalByKey(this.dataset.key)">
+  return `<div class="${classes}" data-key="${key}" onclick="this.classList.add('cod-click');setTimeout(()=>this.classList.remove('cod-click'),400);openModalByKey(this.dataset.key)">
     ${hubStripe}
     <div class="weapon-name">${highlight(w.name,searchQ)}</div>
     <div class="weapon-meta">
@@ -509,16 +817,18 @@ function openModal(weapon,cat){
   document.getElementById('modalGunName').textContent=weapon.name;
   document.getElementById('modalCat').textContent=cat.toUpperCase();
 
-  // Decide which tabs to show
+  // Decide which tabs to show — WZ Meta en WZHUB eerst, TeeP als laatste
   const wz  = getWzEntry(weapon.name);
   const hub = getHubEntry(weapon.name);
   const tabs=[];
-  tabs.push({id:'teep',label:'🎯 TeeP\'s Build'});
   if(wz)  tabs.push({id:'wz',  label:'🌐 WZ Meta'});
   if(hub) tabs.push({id:'hub', label:'📊 WZHUB'});
+  tabs.push({id:'teep',label:'🎯 TeeP\'s Build'});
+
+  const defaultSrc = tabs[0].id; // WZ Meta > WZHUB > TeeP
 
   document.getElementById('srcTabs').innerHTML = tabs.map(t=>
-    `<div class="src-tab ${t.id==='teep'?'active':''}" id="tab_${t.id}" onclick="switchSrc('${t.id}')">${t.label}</div>`
+    `<div class="src-tab ${t.id===defaultSrc?'active':''}" id="tab_${t.id}" onclick="switchSrc('${t.id}')">${t.label}</div>`
   ).join('');
 
   // TeeP panel
@@ -537,9 +847,54 @@ function openModal(weapon,cat){
   // WZHUB panel
   populateWzHub(weapon.name);
 
-  // Activate teep by default
-  switchSrc('teep');
-  document.getElementById('modalOverlay').classList.add('open');
+  // Activeer eerste beschikbare tab (WZ Meta > WZHUB > TeeP)
+  switchSrc(tabs[0].id);
+  var overlay = document.getElementById('modalOverlay');
+  var modal   = document.getElementById('modal');
+  var gunName = document.getElementById('modalGunName');
+
+  // Reset animatie-klassen
+  modal.classList.remove('cod-open');
+  gunName.classList.remove('cod-decrypt');
+  void modal.offsetWidth; // reflow forceren
+
+  overlay.classList.add('open');
+  modal.classList.add('cod-open');
+  gunName.classList.add('cod-decrypt');
+
+  // Scan-lijn injecteren
+  var oldScan = modal.querySelector('.modal-scan');
+  if(oldScan) oldScan.remove();
+  var scan = document.createElement('div');
+  scan.className = 'modal-scan';
+  modal.appendChild(scan);
+  setTimeout(function(){ scan.remove(); }, 700);
+
+  // Hoekmarkers injecteren
+  modal.querySelectorAll('.modal-corner').forEach(function(c){ c.remove(); });
+  ['tl','tr','bl','br'].forEach(function(pos){
+    var c = document.createElement('div');
+    c.className = 'modal-corner ' + pos;
+    modal.appendChild(c);
+  });
+
+  // Status bar in header
+  var hdr = document.getElementById('modalOverlay').querySelector('.modal-header');
+  var oldBar = hdr.querySelector('.modal-status-bar');
+  if(oldBar) oldBar.remove();
+  var bar = document.createElement('div');
+  bar.className = 'modal-status-bar';
+  hdr.appendChild(bar);
+
+  // Attachment boxes staggered animeren
+  setTimeout(function(){
+    document.querySelectorAll('.att-box').forEach(function(box, i){
+      box.classList.remove('cod-in');
+      void box.offsetWidth;
+      box.style.animationDelay = (i * 60) + 'ms';
+      box.classList.add('cod-in');
+    });
+  }, 220);
 }
 
 function switchSrc(src){
@@ -616,7 +971,14 @@ function populateWzHub(weaponName){
 
 function closeModal(e){
   if(e&&e.target!==document.getElementById('modalOverlay')) return;
-  document.getElementById('modalOverlay').classList.remove('open');
+  var overlay = document.getElementById('modalOverlay');
+  overlay.style.transition='opacity .25s';
+  overlay.style.opacity='0';
+  setTimeout(function(){
+    overlay.classList.remove('open');
+    overlay.style.opacity='';
+    overlay.style.transition='';
+  }, 250);
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
@@ -638,12 +1000,24 @@ function renderPlaylist(){
   if(!el) return;
   var d = PLAYLIST_DATA;
   if(!d || !d.playlists || !d.playlists.length){
-    el.innerHTML = '<div class="pl-title">\u{1F3AE} WZ PLAYLISTS</div><div class="pl-empty">Nog niet geladen.<br>Draai wz_update_all.py</div>';
+    el.innerHTML = '<div class="pl-title">WZ PLAYLISTS</div><div class="pl-empty">Nog niet geladen.<br>Draai wz_update_all.py</div>';
     return;
   }
-  var out = '<div class="pl-title">\u{1F3AE} WZ PLAYLISTS</div>';
-  if(d.date_range){ out += '<div class="pl-daterange">' + d.date_range + '</div>'; }
+  var out = '';
+  out += `<div class="pl-title">LEGENDA</div>
+  <div class="pl-legend-card">
+    <div style="padding:8px 10px">
+      <div class="pl-legend-section">TIER</div>
+      <div class="pl-legend-row"><span class="pl-legend-dot tier-s-dot"></span><span class="pl-legend-label s-label">S-TIER</span><span class="pl-legend-desc">Top meta wapen</span></div>
+      <div class="pl-legend-row"><span class="pl-legend-dot tier-a-dot"></span><span class="pl-legend-label a-label">A-TIER</span><span class="pl-legend-desc">Sterke keuze</span></div>
+      <div class="pl-legend-section">KAART BALKEN</div>
+      <div class="pl-legend-row"><span class="pl-legend-stripe stripe-code"></span><span class="pl-legend-desc">Links — Build code</span></div>
+      <div class="pl-legend-row"><span class="pl-legend-stripe stripe-wz"></span><span class="pl-legend-desc">Rechts — WZ Meta</span></div>
+      <div class="pl-legend-row"><span class="pl-legend-stripe stripe-hub"></span><span class="pl-legend-desc">Onder — WZHUB</span></div>
+    </div>
+  </div>`;
   out += '<hr class="pl-divider">';
+  out += '<div class="pl-title">WZ PLAYLISTS</div>';
   var playlists = d.playlists;
   for(var i = 0; i < playlists.length; i++){
     var pl      = playlists[i];
@@ -673,7 +1047,6 @@ function renderPlaylist(){
 
 // ─── INIT ─────────────────────────────────────────────────────────────────
 try {
-  renderGameTabs();
   renderCatBar();
   renderCards();
   renderPlaylist();
