@@ -2,7 +2,7 @@ name: Update BuitKing's Loadouts
 
 on:
   schedule:
-    - cron: '0 8 * * *'   # Elke dag om 08:00 UTC (09:00 NL zomertijd)
+    - cron: '30 5 * * *'  # Elke dag om 05:30 UTC (07:30 NL zomertijd)
   workflow_dispatch:        # Ook handmatig te starten via GitHub
 
 jobs:
