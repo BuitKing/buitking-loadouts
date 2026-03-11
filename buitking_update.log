@@ -51,3 +51,55 @@ Call log:
 2026-03-10 16:47:42  INFO  
 BuitKing's Loadouts bijgewerkt!
 2026-03-10 16:47:42  INFO  =======================================================
+2026-03-11 07:53:03  INFO  =======================================================
+2026-03-11 07:53:03  INFO  BuitKing's Loadout Updater gestart
+2026-03-11 07:53:03  INFO  Datum: 11/03/2026 07:53
+2026-03-11 07:53:03  INFO  
+[1/4] Excel downloaden & parseren...
+2026-03-11 07:53:04  INFO        OK: 152 wapens over 4 games
+2026-03-11 07:53:04  INFO  
+[2/5] WZ Meta scrapen (warzoneloadout.games)...
+2026-03-11 07:53:04  INFO    Ophalen: https://warzoneloadout.games/warzone-meta/
+2026-03-11 07:53:04  INFO      + M8A1 (S)
+2026-03-11 07:53:04  INFO      + REV-46 (S)
+2026-03-11 07:53:04  INFO      + Hawker HX (S)
+2026-03-11 07:53:04  INFO      + M15 Mod 0 (A)
+2026-03-11 07:53:04  INFO      + Ryden 45K (A)
+2026-03-11 07:53:04  INFO      + Kogot-7 (A)
+2026-03-11 07:53:04  INFO      + Maddox RFB (A)
+2026-03-11 07:53:04  INFO      + EGRT-17 (A)
+2026-03-11 07:53:04  INFO      + AK-27 (A)
+2026-03-11 07:53:04  INFO      + VS Recon (A)
+2026-03-11 07:53:04  INFO      + Carbon 57 (A)
+2026-03-11 07:53:04  INFO      + HDR (A)
+2026-03-11 07:53:04  INFO      + MK.78 (A)
+2026-03-11 07:53:04  INFO      + Dravec 45 (A)
+2026-03-11 07:53:04  INFO    Totaal: 14 wapens
+2026-03-11 07:53:04  INFO        OK: 14 wapens
+2026-03-11 07:53:04  INFO  
+[3/5] WZHUB Meta scrapen (wzhub.gg)...
+2026-03-11 07:53:05  INFO    Browser openen: https://wzhub.gg/loadouts
+2026-03-11 07:53:37  WARNING    [FOUT] Playwright: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://wzhub.gg/loadouts", waiting until "networkidle"
+
+2026-03-11 07:53:37  INFO    Totaal: 0 wapens van wzhub.gg
+2026-03-11 07:53:37  INFO        OK: 0 wapens
+2026-03-11 07:53:37  INFO  
+[4/5] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...
+2026-03-11 07:53:37  INFO    Ophalen: https://wzhub.gg/playlist/wz
+2026-03-11 07:53:37  INFO      + LOADED RESURGENCE (ltm=True, modes=1)
+2026-03-11 07:53:37  INFO      + RESURGENCE CASUAL (ltm=False, modes=1)
+2026-03-11 07:53:37  INFO      + BATTLE ROYALE CASUAL (ltm=False, modes=1)
+2026-03-11 07:53:37  INFO      + BATTLE ROYALE (ltm=False, modes=4)
+2026-03-11 07:53:37  INFO      + RESURGENCE (ltm=False, modes=3)
+2026-03-11 07:53:37  INFO    Totaal: 5 playlists, seizoen: Season 2- 61%
+      (21 days)
+2026-03-11 07:53:37  INFO        OK: 5 playlists
+2026-03-11 07:53:37  INFO  
+[5/5] HTML updaten...
+2026-03-11 07:53:37  WARNING    [WAARSCHUWING] WZHUB leeg -- bestaande data behouden
+2026-03-11 07:53:37  INFO        OK: Bijgewerkt op 11/03/2026 07:53
+2026-03-11 07:53:37  INFO  
+BuitKing's Loadouts bijgewerkt!
+2026-03-11 07:53:37  INFO  =======================================================
