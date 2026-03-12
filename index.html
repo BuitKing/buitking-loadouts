@@ -50,6 +50,8 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .tier-pill.tier-s.active{background:rgba(240,192,64,.2);border-color:var(--s-gold);box-shadow:0 0 8px rgba(240,192,64,.2)}
 .tier-pill.tier-a{background:rgba(56,165,255,.07);color:var(--a-blue);border-color:rgba(56,165,255,.3)}
 .tier-pill.tier-a.active{background:rgba(56,165,255,.2);border-color:var(--a-blue);box-shadow:0 0 8px rgba(56,165,255,.2)}
+.tier-pill.tier-b{background:rgba(255,170,0,.07);color:#ffaa00;border-color:rgba(255,170,0,.3)}
+.tier-pill.tier-b.active{background:rgba(255,170,0,.2);border-color:#ffaa00;box-shadow:0 0 8px rgba(255,170,0,.2)}
 .search-box{position:relative;flex-shrink:0}
 .search-box input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 10px 4px 26px;font-size:12px;font-family:'Rajdhani',sans-serif;border-radius:3px;width:130px;outline:none;transition:border .12s}
 .search-box input:focus{border-color:var(--border2)}
@@ -75,6 +77,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .mini-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:2px;letter-spacing:.5px}
 .mini-badge.s{background:rgba(240,192,64,.15);color:var(--s-gold);border:1px solid rgba(240,192,64,.3)}
 .mini-badge.a{background:rgba(56,165,255,.12);color:var(--a-blue);border:1px solid rgba(56,165,255,.3)}
+.mini-badge.b{background:rgba(255,170,0,.12);color:#ffaa00;border:1px solid rgba(255,170,0,.3)}
 .mini-badge.wz{background:rgba(56,165,255,.12);color:var(--blue2);border:1px solid rgba(56,165,255,.3)}
 .mini-badge.hub{background:rgba(160,90,200,.15);color:#c87aff;border:1px solid rgba(160,90,200,.3)}
 .code-indicator{position:absolute;top:8px;right:8px;font-size:9px;color:var(--green2);font-family:'Share Tech Mono',monospace}
@@ -123,10 +126,12 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .tier-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:1px}
 .tier-badge.s{background:rgba(240,192,64,.15);color:var(--s-gold);border:1px solid rgba(240,192,64,.4)}
 .tier-badge.a{background:rgba(56,165,255,.12);color:var(--a-blue);border:1px solid rgba(56,165,255,.35)}
+.tier-badge.b{background:rgba(255,170,0,.12);color:#ffaa00;border:1px solid rgba(255,170,0,.4)}
 
 /* wzhub tier badge */
 .tier-badge.hub-s{background:rgba(160,90,200,.18);color:#cc88ff;border:1px solid rgba(160,90,200,.4)}
 .tier-badge.hub-a{background:rgba(100,140,200,.12);color:#88aaee;border:1px solid rgba(100,140,200,.3)}
+.tier-badge.hub-b{background:rgba(180,120,0,.12);color:#ddaa44;border:1px solid rgba(180,120,0,.35)}
 
 /* build note */
 .build-note{font-size:11px;color:var(--amber2);background:rgba(174,28,40,.08);border-left:2px solid var(--amber);padding:6px 10px;margin-top:8px;font-style:italic}
@@ -174,6 +179,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .tier-head-s{color:var(--s-gold);border-bottom-color:rgba(240,192,64,.3)}
 .tier-head-aa{color:#80c8ff;border-bottom-color:rgba(128,200,255,.3)}
 .tier-head-a{color:var(--a-blue);border-bottom-color:rgba(56,165,255,.25)}
+.tier-head-b{color:#ffaa00;border-bottom-color:rgba(255,170,0,.3)}
 .tier-head-none{color:var(--text3);border-bottom-color:var(--border)}
 /* ── PLAYLIST PANEL ── */
 .playlist-panel{width:280px;min-width:280px;max-width:280px;background:var(--bg2);border-left:1px solid var(--border);padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:1;flex-shrink:0}
@@ -521,7 +527,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 </div>
 <div class="main-layout">
   <div class="content" id="content"></div>
-  <div class="playlist-panel" id="playlistPanel"><div class="pl-title">🎮 WZ PLAYLISTS</div><hr class="pl-divider"><div class="pl-card"><div class="pl-card-head"><span class="pl-name">BATTLE ROYALE</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">SOLO</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">DUOS</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">TRIOS</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">VERDANSK</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">RESURGENCE</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">SOLO</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div><div class="pl-mode-row"><span class="pl-mode-map">DUOS</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">BATTLE ROYALE CASUAL</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">VERDANSK</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">RESURGENCE CASUAL</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">HAVEN’S HOLLOW & REBIRTH ISLAND</span></div></div></div><div class="pl-card ltm"><div class="pl-card-head"><span class="pl-name">LOADED RESURGENCE</span><span class="pl-ltm">LTM</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">REBIRTH ISLAND</span></div></div></div></div>
+  <div class="playlist-panel" id="playlistPanel"><div class="pl-title">🎮 WZ PLAYLISTS</div><hr class="pl-divider"><div class="pl-card"><div class="pl-card-head"><span class="pl-name">BATTLE ROYALE</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">SOLO</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">DUOS</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">TRIOS</span><span class="pl-mode-type">VERDANSK</span></div><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">VERDANSK</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">RESURGENCE</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">SOLO</span><span class="pl-mode-type">HAVEN'S HOLLOW & REBIRTH ISLAND</span></div><div class="pl-mode-row"><span class="pl-mode-map">DUOS</span><span class="pl-mode-type">HAVEN'S HOLLOW & REBIRTH ISLAND</span></div><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">HAVEN'S HOLLOW & REBIRTH ISLAND</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">BATTLE ROYALE CASUAL</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">VERDANSK</span></div></div></div><div class="pl-card"><div class="pl-card-head"><span class="pl-name">RESURGENCE CASUAL</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">HAVEN'S HOLLOW & REBIRTH ISLAND</span></div></div></div><div class="pl-card ltm"><div class="pl-card-head"><span class="pl-name">LOADED RESURGENCE</span><span class="pl-ltm">LTM</span></div><div class="pl-modes"><div class="pl-mode-row"><span class="pl-mode-map">QUADS</span><span class="pl-mode-type">REBIRTH ISLAND</span></div></div></div></div>
 
 <!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
@@ -660,7 +666,8 @@ function renderCatBar(){
     `<div class="filter-sep"></div>` +
     `<div class="tier-pill tier-all ${activeTier==='all'?'active':''}" onclick="setTier('all')">ALLE TIERS</div>` +
     `<div class="tier-pill tier-s ${activeTier==='S'?'active':''}" onclick="setTier('S')">S-TIER</div>` +
-    `<div class="tier-pill tier-a ${activeTier==='A'?'active':''}" onclick="setTier('A')">A-TIER</div>` +
+    `<div class="tier-pill tier-a ${activeTier==='A'?'active':''}\" onclick=\"setTier('A')\">A-TIER</div>` +
+    `<div class="tier-pill tier-b ${activeTier==='B'?'active':''}\" onclick=\"setTier('B')\">B-TIER</div>` +
     `<div class="filter-sep"></div>` +
     gamePills +
     `<div class="filter-sep"></div>` +
@@ -699,7 +706,9 @@ function tierScore(name){
   if(sCount === 1) return 1;  // S op één
   if(aCount >= 2) return 2;   // A op beide
   if(aCount === 1) return 3;  // A op één
-  return 4;                   // geen tier
+  const bCount=[getWzEntry(w.name),getHubEntry(w.name)].filter(e=>e&&e.tier==='B').length;
+  if(bCount >= 1) return 4;   // B tier
+  return 5;                   // geen tier
 }
 
 function filterWeapon(w){
@@ -708,7 +717,8 @@ function filterWeapon(w){
   // codeOnly-filter verwijderd (geen TeeP build codes meer)
   if(activeSource==='wz'  && !getWzEntry(w.name))  return false;
   if(activeSource==='hub' && !getHubEntry(w.name)) return false;
-  if(activeTier!=='all' && tierFromAny(w.name)!==activeTier) return false;
+  if(activeTier==='B' && ![getWzEntry(w.name),getHubEntry(w.name)].some(e=>e&&e.tier==='B')) return false;
+  else if(activeTier!=='all' && activeTier!=='B' && tierFromAny(w.name)!==activeTier) return false;
   if(searchQ && !w.name.toLowerCase().includes(searchQ.toLowerCase())) return false;
   return true;
 }
@@ -735,7 +745,8 @@ function renderCards(){
       { label:'S-TIER',    cls:'s',    items: all.filter(x => tierScore(x.w.name)===1) },
       { label:'A+A-TIER',  cls:'aa',   items: all.filter(x => tierScore(x.w.name)===2) },
       { label:'A-TIER',    cls:'a',    items: all.filter(x => tierScore(x.w.name)===3) },
-      { label:'GEEN TIER', cls:'none', items: all.filter(x => tierScore(x.w.name)===4) },
+      { label:'B-TIER',    cls:'b',    items: all.filter(x => tierScore(x.w.name)===4) },
+      { label:'GEEN TIER', cls:'none', items: all.filter(x => tierScore(x.w.name)===5) },
     ];
 
     for(const grp of groups){
@@ -806,7 +817,7 @@ function renderCard(w,idx,cat,game){
   if(wz)           classes+=' has-wz';
   if(hub)          classes+=' has-hub';
   let badges='';
-  if(wz) badges+=`<span class="mini-badge wz">${wz.tier}</span>`;
+  if(wz) badges+=`<span class="mini-badge ${wz.tier.toLowerCase()}">${wz.tier}</span>`;
   if(hub) badges+=`<span class="mini-badge hub">${hub.tier}</span>`;
   const hubStripe = hub?'<div class="hub-stripe"></div>':'';
   const codeStripe = w.build_code?'<div class="code-stripe"></div>':'';
@@ -933,7 +944,7 @@ function populateWzMeta(weaponName){
   if(!entry){
     el.innerHTML=`<div class="no-data">— GEEN WZ META DATA —</div>`;return;
   }
-  const tierCls = entry.tier==='S'?'s':'a';
+  const tierCls = entry.tier==='S'?'s':entry.tier==='B'?'b':'a';
   let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
     <span class="tier-badge ${tierCls}">${entry.tier}-TIER</span>
     <span style="font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace">warzoneloadout.games</span>
@@ -968,8 +979,8 @@ function populateWzHub(weaponName){
   if(!entry){
     el.innerHTML=`<div class="no-data">— GEEN WZHUB DATA —</div>`;return;
   }
-  const tierCls = entry.tier==='S'?'hub-s':'hub-a';
-  const tierLabel = entry.tier==='S'?'S-TIER':'A-TIER';
+  const tierCls = entry.tier==='S'?'hub-s':entry.tier==='B'?'hub-b':'hub-a';
+  const tierLabel = entry.tier==='S'?'S-TIER':entry.tier==='B'?'B-TIER':'A-TIER';
   let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
     <span class="tier-badge ${tierCls}">${tierLabel}</span>
     <span style="font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace">wzhub.gg</span>
@@ -1027,6 +1038,7 @@ function renderPlaylist(){
       <div class="pl-legend-section">TIER</div>
       <div class="pl-legend-row"><span class="pl-legend-dot tier-s-dot"></span><span class="pl-legend-label s-label">S-TIER</span><span class="pl-legend-desc">Top meta wapen</span></div>
       <div class="pl-legend-row"><span class="pl-legend-dot tier-a-dot"></span><span class="pl-legend-label a-label">A-TIER</span><span class="pl-legend-desc">Sterke keuze</span></div>
+      <div class="pl-legend-row"><span class="pl-legend-dot" style="background:rgba(255,170,0,.2);border:1px solid rgba(255,170,0,.6);box-shadow:0 0 6px rgba(255,170,0,.4)"></span><span class="pl-legend-label" style="color:#ffaa00;text-shadow:0 0 6px rgba(255,170,0,.5)">B-TIER</span><span class="pl-legend-desc">Contender</span></div>
       <div class="pl-legend-section">KAART BALKEN</div>
       <div class="pl-legend-row"><span class="pl-legend-stripe stripe-code"></span><span class="pl-legend-desc">Links — Build code</span></div>
       <div class="pl-legend-row"><span class="pl-legend-stripe stripe-wz"></span><span class="pl-legend-desc">Rechts — WZ Meta</span></div>
