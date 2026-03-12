@@ -205,3 +205,56 @@ Call log:
 2026-03-12 13:31:48  INFO  
 BuitKing's Loadouts bijgewerkt!
 2026-03-12 13:31:48  INFO  =======================================================
+2026-03-12 19:57:33  INFO     =======================================================
+2026-03-12 19:57:33  INFO     BuitKing's Loadout Updater gestart (v8 - geen TeeP)
+2026-03-12 19:57:33  INFO     Datum: 12/03/2026 19:57
+2026-03-12 19:57:33  INFO     
+[1/4] WZ Meta scrapen (warzoneloadout.games)...
+2026-03-12 19:57:33  INFO       Ophalen: https://warzoneloadout.games/warzone-meta/
+2026-03-12 19:57:34  INFO       + Peacekeeper Mk1 (S, Assault Rifles, BO7)
+2026-03-12 19:57:34  INFO       + Voyak KT-3 (S, Assault Rifles, BO7)
+2026-03-12 19:57:34  INFO       + Ryden 45K (S, SMGs, BO7)
+2026-03-12 19:57:34  INFO       + Hawker HX (S, Sniper Rifles, BO7)
+2026-03-12 19:57:34  INFO       + Razor 9mm (S, SMGs, BO7)
+2026-03-12 19:57:34  INFO       + Kogot-7 (A, SMGs, BO7)
+2026-03-12 19:57:34  INFO       + Maddox RFB (A, Assault Rifles, BO7)
+2026-03-12 19:57:34  INFO       + EGRT-17 (A, Assault Rifles, BO7)
+2026-03-12 19:57:34  INFO       + MK.78 (A, LMGs, BO7)
+2026-03-12 19:57:34  INFO       + REV-46 (A, SMGs, BO7)
+2026-03-12 19:57:34  INFO       + AK-27 (A, Assault Rifles, BO7)
+2026-03-12 19:57:34  INFO       + VS Recon (A, Sniper Rifles, BO7)
+2026-03-12 19:57:34  INFO       + HDR (A, , BO6)
+2026-03-12 19:57:34  INFO       Totaal: 13 wapens
+2026-03-12 19:57:34  INFO         OK: 13 wapens
+2026-03-12 19:57:34  INFO     
+[2/4] WZHUB Meta scrapen (wzhub.gg)...
+2026-03-12 19:57:34  INFO       Browser openen: https://wzhub.gg/loadouts
+2026-03-12 19:58:06  WARNING    [FOUT] Playwright: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://wzhub.gg/loadouts", waiting until "networkidle"
+
+2026-03-12 19:58:06  INFO       Totaal: 0 wapens van wzhub.gg
+2026-03-12 19:58:06  INFO         OK: 0 wapens
+2026-03-12 19:58:06  INFO     
+[3/4] RAW-data bouwen vanuit WZ Meta + WZHUB...
+2026-03-12 19:58:06  INFO       [SKIP] HDR: geen cat/game info in WZ Meta
+2026-03-12 19:58:06  INFO       RAW gebouwd: 12 wapens over 1 games
+2026-03-12 19:58:06  INFO     
+[4/4] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...
+2026-03-12 19:58:06  INFO       Ophalen: https://wzhub.gg/playlist/wz
+2026-03-12 19:58:07  INFO       + LOADED RESURGENCE (ltm=True, modes=1)
+2026-03-12 19:58:07  INFO       + RESURGENCE CASUAL (ltm=False, modes=1)
+2026-03-12 19:58:07  INFO       + BATTLE ROYALE CASUAL (ltm=False, modes=1)
+2026-03-12 19:58:07  INFO       + BATTLE ROYALE (ltm=False, modes=4)
+2026-03-12 19:58:07  INFO       + RESURGENCE (ltm=False, modes=3)
+2026-03-12 19:58:07  INFO       Totaal: 5 playlists, seizoen: Season 2- 64%
+      (20 days)
+2026-03-12 19:58:07  INFO         OK: 5 playlists
+2026-03-12 19:58:07  INFO     
+[5/5] HTML updaten...
+2026-03-12 19:58:07  INFO       [MIGRATIE] TeeP-code verwijderd uit HTML
+2026-03-12 19:58:07  WARNING    [WAARSCHUWING] WZHUB leeg -- bestaande data behouden
+2026-03-12 19:58:07  INFO         OK: Bijgewerkt op 12/03/2026 19:57
+2026-03-12 19:58:07  INFO     
+BuitKing's Loadouts bijgewerkt!
+2026-03-12 19:58:07  INFO     =======================================================
