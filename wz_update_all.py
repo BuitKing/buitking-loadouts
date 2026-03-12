@@ -221,7 +221,7 @@ def scrape_wz_meta():
             if atts:
                 builds.append({"label": label, "attachments": atts, "note": note, "rank": rank})
 
-        if builds and current_tier in ("S", "A"):
+        if builds and current_tier in ("S", "A", "B"):
             if name not in seen_names:
                 seen_names.add(name)
                 all_weapons[name] = {
@@ -307,15 +307,16 @@ def scrape_wzhub():
             tag = el.name
             if tag == "h2":
                 t = el.get_text(strip=True).lower()
-                if "absolute" in t: current_tier = "S"
-                elif t == "meta":   current_tier = "A"
-                else:               current_tier = "C"
+                if "absolute" in t:   current_tier = "S"
+                elif t == "meta":     current_tier = "A"
+                elif "contender" in t: current_tier = "B"
+                else:                 current_tier = "C"
                 continue
 
             if tag == "a":
                 href = el.get("href", "")
                 if "loadouts/bo7-" not in href: continue
-                if current_tier not in ("S","A"): continue
+                if current_tier not in ("S","A","B"): continue
 
                 name = el.get_text(strip=True).title()
                 if not name or len(name) < 2: continue
@@ -572,10 +573,41 @@ def migrate_html(content):
             'id="modalCodeRow" style="display:none"'
         )
 
+    # 6. B-TIER pill toevoegen na A-TIER (idempotent)
+    a_pill = "`<div class=\"tier-pill ${activeTier==='A'?'active':''}\" onclick=\"setTier('A')\">A-TIER</div>`"
+    b_pill = " +\n    `<div class=\"tier-pill ${activeTier==='B'?'active':''}\" onclick=\"setTier('B')\">B-TIER</div>`"
+    if a_pill in content and "setTier('B')" not in content:
+        content = content.replace(a_pill, a_pill + b_pill)
+        log("  [MIGRATIE] B-TIER pill toegevoegd aan filterbar")
+
+    # 7. B-tier badge CSS (idempotent)
+    b_css = '.mini-badge.b{background:#7a5500;color:#ffcc44;}'
+    if b_css not in content and '.mini-badge.a{' in content:
+        content = content.replace('.mini-badge.a{', b_css + '\n.mini-badge.a{')
+        log("  [MIGRATIE] B-tier badge CSS toegevoegd")
+
+    # 8. filterWeapon: B-tier filterregel toevoegen
+    hub_filter_line = "if(activeSource==='hub' && !getHubEntry(w.name))  return false;"
+    b_filter_line   = "\n  if(activeTier==='B'   && ![getWzEntry(w.name),getHubEntry(w.name)].some(e=>e&&e.tier==='B')) return false;"
+    if hub_filter_line in content and "activeTier==='B'" not in content:
+        content = content.replace(hub_filter_line, hub_filter_line + b_filter_line)
+        log("  [MIGRATIE] B-tier filterregel toegevoegd")
+
+    # 9. tierSort: return 4 (geen tier) -> B-tier op positie 4, geen tier op 5
+    no_tier_line = "  return 4;                   // geen tier"
+    if no_tier_line in content and 'bCount' not in content:
+        b_sort = (
+            "  const bCount = (wzTier==='B'?1:0) + (hubTier==='B'?1:0);\n"
+            "  if(bCount>=1) return 4;    // B tier\n"
+            "  return 5;                  // geen tier"
+        )
+        content = content.replace(no_tier_line, b_sort)
+        log("  [MIGRATIE] B-tier sortering toegevoegd")
+
     if content != original:
-        log("  [MIGRATIE] TeeP-code verwijderd uit HTML")
+        log("  [MIGRATIE] HTML succesvol bijgewerkt")
     else:
-        log("  [MIGRATIE] HTML al up-to-date (geen TeeP-code gevonden)")
+        log("  [MIGRATIE] HTML al up-to-date (geen wijzigingen nodig)")
     return content
 
 def update_html(path, raw_data, wz_meta, wzhub_data, playlist_data, timestamp):
