@@ -445,3 +445,70 @@ Call log:
 2026-03-12 22:33:06  INFO     
 BuitKing's Loadouts bijgewerkt!
 2026-03-12 22:33:06  INFO     =======================================================
+2026-03-13 07:54:24  INFO     =======================================================
+2026-03-13 07:54:24  INFO     BuitKing's Loadout Updater gestart (v8 - geen TeeP)
+2026-03-13 07:54:24  INFO     Datum: 13/03/2026 07:54
+2026-03-13 07:54:24  INFO     
+[1/4] WZ Meta scrapen (warzoneloadout.games)...
+2026-03-13 07:54:24  INFO       Ophalen: https://warzoneloadout.games/warzone-meta/
+2026-03-13 07:54:25  INFO       + Voyak KT-3 (S, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Peacekeeper Mk1 (S, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Ryden 45K (S, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + Hawker HX (S, Sniper Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Razor 9mm (S, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + Kogot-7 (A, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + EGRT-17 (A, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + MK.78 (A, LMGs, BO7)
+2026-03-13 07:54:25  INFO       + REV-46 (A, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + AK-27 (A, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + VS Recon (A, Sniper Rifles, BO7)
+2026-03-13 07:54:25  INFO       + HDR (A, , BO6)
+2026-03-13 07:54:25  INFO       + MXR-17 (B, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Dravec 45 (B, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + Carbon 57 (B, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + M15 Mod 0 (B, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Maddox RFB (B, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + XR-3 Ion (B, Sniper Rifles, BO7)
+2026-03-13 07:54:25  INFO       + X9 Maverick (B, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Sokol 545 (B, LMGs, BO7)
+2026-03-13 07:54:25  INFO       + Sturmwolf 45 (B, SMGs, BO7)
+2026-03-13 07:54:25  INFO       + DS20 Mirage (B, Assault Rifles, BO7)
+2026-03-13 07:54:25  INFO       + M8A1 (B, Marksman Rifles, BO7)
+2026-03-13 07:54:25  INFO       + Victus XMR (B, , MW2)
+2026-03-13 07:54:25  INFO       + MPC-25 (B, SMGs, BO7)
+2026-03-13 07:54:25  INFO       Totaal: 25 wapens
+2026-03-13 07:54:25  INFO         OK: 25 wapens
+2026-03-13 07:54:25  INFO     
+[2/4] WZHUB Meta scrapen (wzhub.gg)...
+2026-03-13 07:54:25  INFO       Browser openen: https://wzhub.gg/loadouts
+2026-03-13 07:54:57  WARNING    [FOUT] Playwright: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://wzhub.gg/loadouts", waiting until "networkidle"
+
+2026-03-13 07:54:57  INFO       Totaal: 0 wapens van wzhub.gg
+2026-03-13 07:54:57  INFO         OK: 0 wapens
+2026-03-13 07:54:57  INFO     
+[3/4] RAW-data bouwen vanuit WZ Meta + WZHUB...
+2026-03-13 07:54:57  INFO       [SKIP] HDR: geen cat/game info in WZ Meta
+2026-03-13 07:54:57  INFO       [SKIP] Victus XMR: geen cat/game info in WZ Meta
+2026-03-13 07:54:57  INFO       RAW gebouwd: 23 wapens over 1 games
+2026-03-13 07:54:57  INFO     
+[4/4] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...
+2026-03-13 07:54:57  INFO       Ophalen: https://wzhub.gg/playlist/wz
+2026-03-13 07:54:57  INFO       + LOADED RESURGENCE (ltm=True, modes=1)
+2026-03-13 07:54:57  INFO       + RESURGENCE CASUAL (ltm=False, modes=1)
+2026-03-13 07:54:57  INFO       + BATTLE ROYALE CASUAL (ltm=False, modes=1)
+2026-03-13 07:54:57  INFO       + BATTLE ROYALE (ltm=False, modes=4)
+2026-03-13 07:54:57  INFO       + RESURGENCE (ltm=False, modes=3)
+2026-03-13 07:54:57  INFO       Totaal: 5 playlists, seizoen: Season 2- 65%
+      (19 days)
+2026-03-13 07:54:57  INFO         OK: 5 playlists
+2026-03-13 07:54:57  INFO     
+[5/5] HTML updaten...
+2026-03-13 07:54:57  INFO       [MIGRATIE] B-tier badge CSS toegevoegd
+2026-03-13 07:54:57  INFO       [MIGRATIE] HTML succesvol bijgewerkt
+2026-03-13 07:54:57  WARNING    [WAARSCHUWING] WZHUB leeg -- bestaande data behouden
+2026-03-13 07:54:57  INFO         OK: Bijgewerkt op 13/03/2026 07:54
+2026-03-13 07:54:57  INFO     
+BuitKing's Loadouts bijgewerkt!
+2026-03-13 07:54:57  INFO     =======================================================
