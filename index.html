@@ -144,7 +144,8 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--bg3);border:1px solid var(--green);color:var(--green2);padding:8px 18px;font-size:12px;font-family:'Share Tech Mono',monospace;z-index:9999;opacity:0;transition:all .25s;pointer-events:none;letter-spacing:.5px}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* WZHUB code row */
+/* WZHUB rank badge in modal */
+.wzhub-rank{font-family:'Share Tech Mono',monospace;font-size:11px;font-weight:700;color:#cc44ff;background:rgba(180,50,255,.12);border:1px solid rgba(180,50,255,.35);padding:2px 7px;border-radius:2px;letter-spacing:1px}
 .hub-code-row{background:rgba(122,61,154,.1);border:1px solid rgba(122,61,154,.35);padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .hub-code-row .code-label{color:#a070cc}
 .hub-code-row .code-value{color:#cc88ff}
@@ -1028,8 +1029,10 @@ function populateWzHub(weaponName){
   }
   const tierCls = entry.tier==='S'?'hub-s':entry.tier==='B'?'hub-b':'hub-a';
   const tierLabel = entry.tier==='S'?'S-TIER':entry.tier==='B'?'B-TIER':'A-TIER';
+  const rankBadge = entry.rank ? `<span class="wzhub-rank">${entry.rank}</span>` : '';
   let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
     <span class="tier-badge ${tierCls}">${tierLabel}</span>
+    ${rankBadge}
     <span style="font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace">wzhub.gg</span>
   </div>`;
   if(entry.build_code){
