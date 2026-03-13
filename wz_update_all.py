@@ -674,11 +674,12 @@ def update_html(path, raw_data, wz_meta, wzhub_data, playlist_data, timestamp):
     else:
         log("  [WAARSCHUWING] Playlist leeg -- bestaande data behouden", "warning")
 
-    content = re.sub(
-        r'(id="lastUpdated"[^>]*>)[^<]*(<)',
-        rf'\1Bijgewerkt: {timestamp}\2',
-        content
-    )
+    # LAST_UPDATED JS variabele injecteren
+    LASTUPDATE_START = "/* LASTUPDATE_START */"
+    LASTUPDATE_END   = "/* LASTUPDATE_END */"
+    if LASTUPDATE_START in content:
+        content, _ = replace_between(content, LASTUPDATE_START, LASTUPDATE_END,
+            f'const LAST_UPDATED = "{timestamp}";')
 
     with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
