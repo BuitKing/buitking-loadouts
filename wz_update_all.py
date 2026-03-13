@@ -85,12 +85,30 @@ WZHUB_CAT_SLUGS = {
     'battle-rifle':   'Battle Rifles',
 }
 
+# Fallback: build_code prefix → categorie
+WZHUB_CODE_PREFIX_CAT = {
+    'A': 'Assault Rifles',
+    'S': 'SMGs',
+    'R': 'Sniper Rifles',
+    'L': 'LMGs',
+    'M': 'Marksman Rifles',
+    'P': 'Pistols',
+    'B': 'Battle Rifles',
+}
+
 def cat_from_wzhub_href(href):
     """Haal categorie op uit WZHUB URL: loadouts/bo7-assault-rifle-name"""
     for slug, name in WZHUB_CAT_SLUGS.items():
-        if f'bo7-{slug}-' in href:
+        if f'bo7-{slug}-' in href or f'bo7-{slug}/' in href:
             return name
     return ''
+
+def cat_from_build_code(build_code):
+    """Fallback: haal categorie uit build_code prefix (A=AR, S=SMG, etc.)"""
+    if not build_code:
+        return ''
+    prefix = build_code[0].upper()
+    return WZHUB_CODE_PREFIX_CAT.get(prefix, '')
 
 # ══════════════════════════════════════════════
 # DEEL 1: WARZONELOADOUT.GAMES SCRAPER
@@ -403,8 +421,11 @@ def build_raw(wz_meta, wzhub_data):
         if name.strip().upper() in seen:
             continue
         cat = hub.get('category', '')
+        # Fallback: als geen categorie uit URL, probeer build_code prefix
         if not cat:
-            log(f"  [SKIP] {name}: geen categorie-info in WZHUB")
+            cat = cat_from_build_code(hub.get('build_code', ''))
+        if not cat:
+            log(f"  [SKIP] {name}: geen categorie-info in WZHUB (ook geen build_code prefix)")
             continue
         game = 'BO7'  # WZHUB toont momenteel alleen BO7
         raw.setdefault(game, {}).setdefault(cat, []).append({
