@@ -341,6 +341,12 @@ def scrape_wzhub():
                     if re.match(r"^[A-Z][0-9]{2}-", line):
                         build_code = line; break
 
+                # Rank extractie (#1, #2 etc) — staat vaak als eerste regel
+                rank = ""
+                for line in lines_list:
+                    m = re.match(r'^(#\d+)(?:\s|$)', line.strip())
+                    if m: rank = m.group(1); break
+
                 atts = parse_wzhub_atts(lines_list)
                 if not atts:
                     i = 0
@@ -357,10 +363,12 @@ def scrape_wzhub():
                     all_weapons[name] = {
                         "tier":        current_tier,
                         "build_code":  build_code,
+                        "rank":        rank,
                         "attachments": atts,
-                        "category":    category,   # nieuw: uit URL
+                        "category":    category,
                     }
-                    log(f"  + {name} ({current_tier}, {category})")
+                    rank_str = f" {rank}" if rank else ""
+                    log(f"  + {name} ({current_tier}{rank_str}, {category})")
     except Exception as e:
         log(f"  [FOUT] Playwright: {e}", "warning")
 
