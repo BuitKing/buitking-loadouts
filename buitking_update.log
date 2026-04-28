@@ -3827,3 +3827,67 @@ Call log:
 2026-04-27 07:44:02  INFO     
 BuitKing's Loadouts bijgewerkt!
 2026-04-27 07:44:02  INFO     =======================================================
+2026-04-28 07:42:57  INFO     =======================================================
+2026-04-28 07:42:57  INFO     BuitKing's Loadout Updater gestart (v8 - geen TeeP)
+2026-04-28 07:42:57  INFO     Datum: 28/04/2026 07:42
+2026-04-28 07:42:57  INFO     
+[1/4] WZ Meta scrapen (warzoneloadout.games)...
+2026-04-28 07:42:57  INFO       Ophalen: https://warzoneloadout.games/warzone-meta/
+2026-04-28 07:43:02  INFO       + MK35 ISR (S, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + Razor 9mm (S, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + Strider 300 (S, Sniper Rifles, BO7)
+2026-04-28 07:43:02  INFO       + Hawker HX (A, Sniper Rifles, BO7)
+2026-04-28 07:43:02  INFO       + VST (A, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + Peacekeeper Mk1 (A, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + Dravec 45 (A, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + Voyak KT-3 (A, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + Carbon 57 (A, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + XR-3 Ion (A, Sniper Rifles, BO7)
+2026-04-28 07:43:02  INFO       + EGRT-17 (A, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + MK.78 (A, LMGs, BO7)
+2026-04-28 07:43:02  INFO       + Kogot-7 (A, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + X9 Maverick (B, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + AK-27 (B, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + VS Recon (B, Sniper Rifles, BO7)
+2026-04-28 07:43:02  INFO       + Ryden 45K (B, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + M15 Mod 0 (B, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + REV-46 (B, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + MXR-17 (B, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + DS20 Mirage (B, Assault Rifles, BO7)
+2026-04-28 07:43:02  INFO       + Sokol 545 (B, LMGs, BO7)
+2026-04-28 07:43:02  INFO       + Sturmwolf 45 (B, SMGs, BO7)
+2026-04-28 07:43:02  INFO       + Swordfish A1 (B, Marksman Rifles, BO7)
+2026-04-28 07:43:02  INFO       + TR2 (B, Marksman Rifles, BO6)
+2026-04-28 07:43:02  INFO       + LC10 (B, SMGs, BO6)
+2026-04-28 07:43:02  INFO       + M8A1 (B, Marksman Rifles, BO7)
+2026-04-28 07:43:02  INFO       Totaal: 27 wapens
+2026-04-28 07:43:02  INFO         OK: 27 wapens
+2026-04-28 07:43:02  INFO     
+[2/4] WZHUB Meta scrapen (wzhub.gg)...
+2026-04-28 07:43:02  INFO       Browser openen: https://wzhub.gg/loadouts
+2026-04-28 07:43:34  WARNING    [FOUT] Playwright: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://wzhub.gg/loadouts", waiting until "networkidle"
+
+2026-04-28 07:43:34  INFO       Totaal: 0 wapens van wzhub.gg
+2026-04-28 07:43:34  INFO         OK: 0 wapens
+2026-04-28 07:43:34  INFO     
+[3/4] RAW-data bouwen vanuit WZ Meta + WZHUB...
+2026-04-28 07:43:34  INFO       RAW gebouwd: 27 wapens over 2 games
+2026-04-28 07:43:34  INFO     
+[4/4] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...
+2026-04-28 07:43:34  INFO       Ophalen: https://wzhub.gg/playlist/wz
+2026-04-28 07:43:34  INFO       + BATTLE ROYALE (ltm=False, modes=1)
+2026-04-28 07:43:34  INFO       + RESURGENCE (ltm=False, modes=3)
+2026-04-28 07:43:34  INFO       + BATTLE ROYALE CASUAL (ltm=False, modes=1)
+2026-04-28 07:43:34  INFO       + RESURGENCE CASUAL (ltm=False, modes=1)
+2026-04-28 07:43:34  INFO       Totaal: 4 playlists, seizoen: 
+2026-04-28 07:43:34  INFO         OK: 4 playlists
+2026-04-28 07:43:34  INFO     
+[5/5] HTML updaten...
+2026-04-28 07:43:34  INFO       [MIGRATIE] HTML succesvol bijgewerkt
+2026-04-28 07:43:34  WARNING    [WAARSCHUWING] WZHUB leeg -- bestaande data behouden
+2026-04-28 07:43:34  INFO         OK: Bijgewerkt op 28/04/2026 07:42
+2026-04-28 07:43:34  INFO     
+BuitKing's Loadouts bijgewerkt!
+2026-04-28 07:43:34  INFO     =======================================================
