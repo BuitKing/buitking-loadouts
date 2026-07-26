@@ -10045,3 +10045,73 @@ BuitKing's Loadouts bijgewerkt!
 2026-07-25 07:30:40  INFO     
 BuitKing's Loadouts bijgewerkt!
 2026-07-25 07:30:40  INFO     =======================================================
+2026-07-26 07:53:14  INFO     =======================================================
+2026-07-26 07:53:14  INFO     BuitKing's Loadout Updater gestart (v8 - geen TeeP)
+2026-07-26 07:53:14  INFO     Datum: 26/07/2026 07:53
+2026-07-26 07:53:14  INFO     
+[1/4] WZ Meta scrapen (warzoneloadout.games)...
+2026-07-26 07:53:14  INFO       Ophalen: https://warzoneloadout.games/warzone-meta/
+2026-07-26 07:53:15  INFO       + FG42 (S, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + VST (S, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + MXR-17 (S, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Strider 300 (S, Sniper Rifles, BO7)
+2026-07-26 07:53:15  INFO       + REV-46 (A, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + AN-94 (A, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + VS Recon (A, Sniper Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Dravec 45 (A, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + VX Compact (A, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + DS20 Mirage (A, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Carbon 57 (A, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + Hawker HX (A, Sniper Rifles, BO7)
+2026-07-26 07:53:15  INFO       + M15 Mod 0 (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Peacekeeper Mk1 (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Sturmwolf 45 (B, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + EGRT-17 (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + MK35 ISR (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + AK-27 (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Kogot-7 (B, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + XR-3 Ion (B, Sniper Rifles, BO7)
+2026-07-26 07:53:15  INFO       + X9 Maverick (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + Voyak KT-3 (B, Assault Rifles, BO7)
+2026-07-26 07:53:15  INFO       + CBRS-3 (B, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + MPC-25 (B, SMGs, BO7)
+2026-07-26 07:53:15  INFO       + M8A1 (B, Marksman Rifles, BO7)
+2026-07-26 07:53:15  INFO       Totaal: 25 wapens
+2026-07-26 07:53:15  INFO         OK: 25 wapens
+2026-07-26 07:53:15  INFO     
+[2/4] WZHUB Meta scrapen (wzhub.gg)...
+2026-07-26 07:53:15  INFO       Browser openen: https://wzhub.gg/loadouts
+2026-07-26 07:53:24  INFO       Pagina geladen — parsen...
+2026-07-26 07:53:24  INFO       + Vst (S, )
+2026-07-26 07:53:24  INFO       + Mxr-17 (S, )
+2026-07-26 07:53:24  INFO       + Strider 300 (S, )
+2026-07-26 07:53:24  INFO       + Voyak Kt-3 (A, )
+2026-07-26 07:53:24  INFO       + Egrt-17 (A, )
+2026-07-26 07:53:24  INFO       + Hawker Hx (A, )
+2026-07-26 07:53:24  INFO       + Kogot-7 (A, )
+2026-07-26 07:53:24  INFO       + Vs Recon (A, )
+2026-07-26 07:53:24  INFO       + Ds20 Mirage (A, )
+2026-07-26 07:53:24  INFO       + Dravec 45 (A, )
+2026-07-26 07:53:24  INFO       + Carbon 57 (A, )
+2026-07-26 07:53:24  INFO       Totaal: 11 wapens van wzhub.gg
+2026-07-26 07:53:24  INFO         OK: 11 wapens
+2026-07-26 07:53:24  INFO     
+[3/4] RAW-data bouwen vanuit WZ Meta + WZHUB...
+2026-07-26 07:53:24  INFO       RAW gebouwd: 25 wapens over 1 games
+2026-07-26 07:53:24  INFO     
+[4/4] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...
+2026-07-26 07:53:24  INFO       Ophalen: https://wzhub.gg/playlist/wz
+2026-07-26 07:53:25  INFO       + RESURGENCE (ltm=False, modes=3)
+2026-07-26 07:53:25  INFO       + BATTLE ROYALE (ltm=False, modes=2)
+2026-07-26 07:53:25  INFO       + RANKED: RESURGENCE (ltm=False, modes=1)
+2026-07-26 07:53:25  INFO       + RESURGENCE CASUAL (ltm=False, modes=1)
+2026-07-26 07:53:25  INFO       + BATTLE ROYALE CASUAL (ltm=False, modes=1)
+2026-07-26 07:53:25  INFO       Totaal: 5 playlists, seizoen: 
+2026-07-26 07:53:25  INFO         OK: 5 playlists
+2026-07-26 07:53:25  INFO     
+[5/5] HTML updaten...
+2026-07-26 07:53:25  INFO       [MIGRATIE] HTML succesvol bijgewerkt
+2026-07-26 07:53:25  INFO         OK: Bijgewerkt op 26/07/2026 07:53
+2026-07-26 07:53:25  INFO     
+BuitKing's Loadouts bijgewerkt!
+2026-07-26 07:53:25  INFO     =======================================================
