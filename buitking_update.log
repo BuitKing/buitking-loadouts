@@ -12557,3 +12557,40 @@ Call log:
 2026-09-01 10:16:32  INFO     
 BuitKing's Loadouts bijgewerkt!
 2026-09-01 10:16:32  INFO     =======================================================
+2026-09-02 13:22:09  INFO  =======================================================
+2026-09-02 13:22:09  INFO  BuitKing's Loadout Updater gestart
+2026-09-02 13:22:09  INFO  Datum: 02/09/2026 13:22
+2026-09-02 13:22:09  INFO  
+[1/4] Excel downloaden & parseren...
+2026-09-02 13:22:11  INFO        OK: 157 wapens over 4 games
+2026-09-02 13:22:11  INFO  
+[2/5] WZ Meta scrapen (warzoneloadout.games)...
+2026-09-02 13:22:11  INFO    Ophalen: https://warzoneloadout.games/warzone-meta/
+2026-09-02 13:22:13  INFO    Totaal: 0 wapens
+2026-09-02 13:22:13  INFO        OK: 0 wapens
+2026-09-02 13:22:13  INFO  
+[3/5] WZHUB Meta scrapen (wzhub.gg)...
+2026-09-02 13:22:13  INFO    Ophalen: https://wzhub.gg/loadouts
+2026-09-02 13:22:14  INFO    Totaal: 0 wapens van wzhub.gg
+2026-09-02 13:22:14  INFO        OK: 0 wapens
+2026-09-02 13:22:14  INFO  
+[4/5] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...
+2026-09-02 13:22:14  INFO    Ophalen: https://wzhub.gg/playlist/wz
+2026-09-02 13:22:14  INFO      + CLASH (ltm=True, modes=0)
+2026-09-02 13:22:14  INFO      + RESURGENCE (ltm=False, modes=0)
+2026-09-02 13:22:14  INFO      + BATTLE ROYALE (ltm=False, modes=0)
+2026-09-02 13:22:14  INFO      + BLACK OPS ROYALE (ltm=False, modes=0)
+2026-09-02 13:22:14  INFO      + RANKED: RESURGENCE (ltm=False, modes=0)
+2026-09-02 13:22:14  INFO      + RESURGENCE CASUAL (ltm=False, modes=0)
+2026-09-02 13:22:14  INFO      + BATTLE ROYALE CASUAL (ltm=False, modes=0)
+2026-09-02 13:22:14  INFO    Totaal: 7 playlists, seizoen: Season 5- 66%
+      (21 days)
+2026-09-02 13:22:14  INFO        OK: 7 playlists
+2026-09-02 13:22:14  INFO  
+[5/5] HTML updaten...
+2026-09-02 13:22:14  WARNING    [WAARSCHUWING] WZ Meta leeg -- bestaande data behouden
+2026-09-02 13:22:14  WARNING    [WAARSCHUWING] WZHUB leeg -- bestaande data behouden
+2026-09-02 13:22:14  INFO        OK: Bijgewerkt op 02/09/2026 13:22
+2026-09-02 13:22:14  INFO  
+BuitKing's Loadouts bijgewerkt!
+2026-09-02 13:22:14  INFO  =======================================================
