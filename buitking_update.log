@@ -12873,3 +12873,119 @@ BuitKing's Loadouts bijgewerkt!
 2026-09-02 13:39:27  INFO  
 BuitKing's Loadouts bijgewerkt!
 2026-09-02 13:39:27  INFO  =======================================================
+2026-09-02 14:17:34  INFO  =======================================================
+2026-09-02 14:17:34  INFO  BuitKing's Loadout Updater gestart (v10)
+2026-09-02 14:17:34  INFO  Datum: 02/09/2026 14:17
+2026-09-02 14:17:34  INFO  
+[1/2] WZ Meta scrapen...
+2026-09-02 14:17:34  INFO    Browser: https://warzoneloadout.games/warzone-meta/ (poging 1)
+2026-09-02 14:17:43  INFO    Geladen len=1590274
+2026-09-02 14:17:44  INFO    weapon-acc cards: 0
+2026-09-02 14:17:44  INFO    Totaal WZ Meta: 0 wapens
+2026-09-02 14:17:44  INFO        OK: 0 wapens
+2026-09-02 14:17:44  INFO  
+[2/2] WZHUB scrapen...
+2026-09-02 14:17:44  INFO    Browser: https://wzhub.gg/loadouts (poging 1)
+2026-09-02 14:17:51  INFO    JS geklikt: 116
+2026-09-02 14:17:54  INFO    Geladen len=1907267
+2026-09-02 14:17:54  INFO      + VST (S) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Stock', 'Optic', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:17:54  INFO      + VOYAK KT-3 (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock', 'Rear Grip', 'Fire Mods', 'Underbarrel', 'Laser']
+2026-09-02 14:17:54  INFO    Totaal WZHUB: 2 wapens
+2026-09-02 14:17:54  INFO        OK: 2 wapens
+2026-09-02 14:17:54  INFO  
+[3/3] HTML updaten...
+2026-09-02 14:17:54  WARNING    [WAARSCHUWING] WZ Meta leeg — bestaande data behouden
+2026-09-02 14:17:54  INFO    WZHUB: 2 wapens bijgewerkt
+2026-09-02 14:17:54  INFO        OK: Bijgewerkt op 02/09/2026 14:17
+2026-09-02 14:17:54  INFO  
+BuitKing's Loadouts bijgewerkt!
+2026-09-02 14:17:54  INFO  =======================================================
+2026-09-02 14:23:42  INFO  =======================================================
+2026-09-02 14:23:42  INFO  BuitKing's Loadout Updater gestart (v11)
+2026-09-02 14:23:42  INFO  Datum: 02/09/2026 14:23
+2026-09-02 14:23:42  INFO  
+[1/2] WZ Meta scrapen...
+2026-09-02 14:23:42  INFO    Browser: https://warzoneloadout.games/warzone-meta/ (poging 1)
+2026-09-02 14:24:00  INFO    Geladen len=1590305
+2026-09-02 14:24:00  INFO    weapon-acc cards: 25
+2026-09-02 14:24:00  INFO    Totaal WZ Meta: 0 wapens
+2026-09-02 14:24:00  INFO        OK: 0 wapens
+2026-09-02 14:24:00  INFO  
+[2/2] WZHUB scrapen...
+2026-09-02 14:24:00  INFO    Browser: https://wzhub.gg/loadouts (poging 1)
+2026-09-02 14:24:13  INFO    JS geklikt: 116
+2026-09-02 14:24:16  INFO    Geladen len=1907267
+2026-09-02 14:24:16  INFO    bo7 wapennamen: 27
+2026-09-02 14:24:16  INFO      + VST (S) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Stock']
+2026-09-02 14:24:16  INFO      + MXR-17 (S) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock']
+2026-09-02 14:24:16  INFO      + STRIDER 300 (S) ['Muzzle', 'Barrel', 'Magazine', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:24:16  INFO      + VOYAK KT-3 (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock']
+2026-09-02 14:24:16  INFO      + EGRT-17 (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock']
+2026-09-02 14:24:16  INFO      + HAWKER HX (A) ['Muzzle', 'Barrel', 'Magazine', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:24:16  INFO      + KOGOT-7 (A) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Fire Mods']
+2026-09-02 14:24:16  INFO      + VS RECON (A) ['Muzzle', 'Barrel', 'Underbarrel', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:24:16  INFO      + DS20 MIRAGE (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Fire Mods']
+2026-09-02 14:24:16  INFO      + DRAVEC 45 (A) ['Muzzle', 'Barrel', 'Magazine', 'Laser', 'Fire Mods']
+2026-09-02 14:24:16  INFO      + CARBON 57 (A) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Fire Mods']
+2026-09-02 14:24:16  INFO    Totaal WZHUB: 11 wapens
+2026-09-02 14:24:16  INFO        OK: 11 wapens
+2026-09-02 14:24:16  INFO  
+[3/3] HTML updaten...
+2026-09-02 14:24:17  WARNING    [WAARSCHUWING] WZ Meta leeg — bestaande data behouden
+2026-09-02 14:24:17  INFO    WZHUB: 11 wapens bijgewerkt
+2026-09-02 14:24:17  INFO        OK: Bijgewerkt op 02/09/2026 14:23
+2026-09-02 14:24:17  INFO  
+BuitKing's Loadouts bijgewerkt!
+2026-09-02 14:24:17  INFO  =======================================================
+2026-09-02 14:25:16  INFO  =======================================================
+2026-09-02 14:25:16  INFO  BuitKing's Loadout Updater gestart (v12)
+2026-09-02 14:25:16  INFO  Datum: 02/09/2026 14:25
+2026-09-02 14:25:16  INFO  
+[1/2] WZ Meta scrapen...
+2026-09-02 14:25:16  INFO    Browser: https://warzoneloadout.games/warzone-meta/ (poging 1)
+2026-09-02 14:25:31  INFO    Geladen len=1590378
+2026-09-02 14:25:31  INFO    weapon-acc cards: 25
+2026-09-02 14:25:31  INFO      [dbg] AN-94 tier=S build_divs=0 li=10 hud=12 builds=1
+2026-09-02 14:25:31  INFO      + AN-94 (S) 1 builds
+2026-09-02 14:25:31  INFO      [dbg] REV-46 tier=S build_divs=0 li=10 hud=12 builds=1
+2026-09-02 14:25:31  INFO      + REV-46 (S) 1 builds
+2026-09-02 14:25:31  INFO      [dbg] VST tier=S build_divs=0 li=10 hud=12 builds=1
+2026-09-02 14:25:31  INFO      + VST (S) 1 builds
+2026-09-02 14:25:31  INFO      + Strider 300 (S) 1 builds
+2026-09-02 14:25:31  INFO      + MPC-25 (A) 1 builds
+2026-09-02 14:25:31  INFO      + MK35 ISR (A) 1 builds
+2026-09-02 14:25:31  INFO      + Ryden 45K (A) 1 builds
+2026-09-02 14:25:31  INFO      + VS Recon (A) 1 builds
+2026-09-02 14:25:31  INFO      + Dravec 45 (A) 1 builds
+2026-09-02 14:25:31  INFO      + Hawker HX (A) 1 builds
+2026-09-02 14:25:31  INFO      + EGRT-17 (A) 1 builds
+2026-09-02 14:25:31  INFO      + VX Compact (A) 1 builds
+2026-09-02 14:25:31  INFO    Totaal WZ Meta: 12 wapens
+2026-09-02 14:25:31  INFO        OK: 12 wapens
+2026-09-02 14:25:31  INFO  
+[2/2] WZHUB scrapen...
+2026-09-02 14:25:31  INFO    Browser: https://wzhub.gg/loadouts (poging 1)
+2026-09-02 14:25:44  INFO    JS geklikt: 116
+2026-09-02 14:25:47  INFO    Geladen len=1907275
+2026-09-02 14:25:48  INFO    bo7 wapennamen: 27
+2026-09-02 14:25:48  INFO      + VST (S) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Stock']
+2026-09-02 14:25:48  INFO      + MXR-17 (S) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock']
+2026-09-02 14:25:48  INFO      + STRIDER 300 (S) ['Muzzle', 'Barrel', 'Magazine', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:25:48  INFO      + VOYAK KT-3 (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock']
+2026-09-02 14:25:48  INFO      + EGRT-17 (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Stock']
+2026-09-02 14:25:48  INFO      + HAWKER HX (A) ['Muzzle', 'Barrel', 'Magazine', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:25:48  INFO      + KOGOT-7 (A) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Fire Mods']
+2026-09-02 14:25:48  INFO      + VS RECON (A) ['Muzzle', 'Barrel', 'Underbarrel', 'Rear Grip', 'Fire Mods']
+2026-09-02 14:25:48  INFO      + DS20 MIRAGE (A) ['Optic', 'Muzzle', 'Barrel', 'Magazine', 'Fire Mods']
+2026-09-02 14:25:48  INFO      + DRAVEC 45 (A) ['Muzzle', 'Barrel', 'Magazine', 'Laser', 'Fire Mods']
+2026-09-02 14:25:48  INFO      + CARBON 57 (A) ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Fire Mods']
+2026-09-02 14:25:48  INFO    Totaal WZHUB: 11 wapens
+2026-09-02 14:25:48  INFO        OK: 11 wapens
+2026-09-02 14:25:48  INFO  
+[3/3] HTML updaten...
+2026-09-02 14:25:48  INFO    WZ Meta: 12 wapens bijgewerkt
+2026-09-02 14:25:48  INFO    WZHUB: 11 wapens bijgewerkt
+2026-09-02 14:25:48  INFO        OK: Bijgewerkt op 02/09/2026 14:25
+2026-09-02 14:25:48  INFO  
+BuitKing's Loadouts bijgewerkt!
+2026-09-02 14:25:48  INFO  =======================================================
