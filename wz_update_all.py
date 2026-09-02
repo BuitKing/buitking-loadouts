@@ -7,8 +7,8 @@ Correct gebaseerd op echte HTML structuur van wzhub.gg en warzoneloadout.games
 import sys, os, json, logging, datetime, re
 
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-HTML_PATH    = r"D:\Documenten\GitHub\buitking-loadouts\index.html"
-LOG_PATH     = r"D:\Documenten\GitHub\buitking-loadouts\buitking_update.log"
+HTML_PATH    = os.path.join(SCRIPT_DIR, "index.html")
+LOG_PATH     = os.path.join(SCRIPT_DIR, "buitking_update.log")
 WZ_URL       = "https://warzoneloadout.games/warzone-meta/"
 WZHUB_URL    = "https://wzhub.gg/loadouts"
 
