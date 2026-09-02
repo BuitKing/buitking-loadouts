@@ -7,8 +7,10 @@ Correct gebaseerd op echte HTML structuur van wzhub.gg en warzoneloadout.games
 import sys, os, json, logging, datetime, re
 
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-HTML_PATH    = os.path.join(SCRIPT_DIR, "index.html")
-LOG_PATH     = os.path.join(SCRIPT_DIR, "buitking_update.log")
+LOCAL_DIR    = r"D:\Documenten\GitHub\buitking-loadouts"
+BASE_DIR     = LOCAL_DIR if os.path.isdir(LOCAL_DIR) else SCRIPT_DIR   # lokaal D:, anders (GitHub) scriptmap
+HTML_PATH    = os.path.join(BASE_DIR, "index.html")
+LOG_PATH     = os.path.join(BASE_DIR, "buitking_update.log")
 WZ_URL       = "https://warzoneloadout.games/warzone-meta/"
 WZHUB_URL    = "https://wzhub.gg/loadouts"
 
@@ -31,6 +33,38 @@ def ensure_deps():
 
 ensure_deps()
 from bs4 import BeautifulSoup
+
+CAT_MAP = [
+    (("assault rifle","assault rifles"," ar",), "Assault Rifles"),
+    (("smg","submachine","sub machine"), "SMGs"),
+    (("lmg","light machine"), "LMGs"),
+    (("marksman","dmr","mr"), "Marksman Rifles"),
+    (("sniper","sr"), "Sniper Rifles"),
+    (("shotgun","sg"), "Shotguns"),
+    (("pistol","handgun","hg"), "Pistols"),
+    (("battle rifle","br"), "Battle Rifles"),
+]
+def norm_cat(s):
+    t = (s or "").strip().lower()
+    if not t: return None
+    exact = {"ar":"Assault Rifles","smg":"SMGs","lmg":"LMGs","mr":"Marksman Rifles","dmr":"Marksman Rifles",
+             "sr":"Sniper Rifles","sg":"Shotguns","hg":"Pistols","br":"Battle Rifles",
+             "pistol":"Pistols","shotgun":"Shotguns","sniper":"Sniper Rifles","sniper rifle":"Sniper Rifles",
+             "assault rifle":"Assault Rifles","marksman rifle":"Marksman Rifles","battle rifle":"Battle Rifles",
+             "submachine gun":"SMGs","light machine gun":"LMGs","launcher":None,"melee":None}
+    if t in exact: return exact[t]
+    for keys, cat in CAT_MAP:
+        for k in keys:
+            if k.strip() and k.strip() in t: return cat
+    return None
+
+def norm_game(s):
+    t = (s or "").lower()
+    if "black ops 7" in t or "bo7" in t: return "BO7"
+    if "black ops 6" in t or "bo6" in t: return "BO6"
+    if "modern warfare iii" in t or "mw3" in t or "mwiii" in t: return "MW3"
+    if "modern warfare ii" in t or "mw2" in t or "mwii" in t: return "MW2"
+    return None
 
 PLAYWRIGHT_ARGS = ["--no-sandbox","--disable-setuid-sandbox","--disable-dev-shm-usage"]
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
@@ -134,7 +168,8 @@ def scrape_wzhub():
                     all_weapons[cur_name] = cur
                     log(f"    + {cur_name} ({cur['tier']}) {list(cur['attachments'].keys())}")
                 cur_name = line
-                cur = {"tier": current_tier, "build_code": "", "attachments": {}}
+                cat = norm_cat(lines[i + 1]) if i + 1 < len(lines) else None
+                cur = {"tier": current_tier, "build_code": "", "attachments": {}, "category": cat or "Overig", "game": "BO7"}
                 in_details = False
                 i += 1
                 continue
@@ -204,7 +239,24 @@ def scrape_wz_meta():
             continue
         name = texts[0]
 
-        # Tier: uit voorafgaande h3 ('SAbsolute MetaS Tier·4' / 'AMetaA Tier·8')
+        # Rank: "#","1"
+        rank = ""
+        if len(texts) > 2 and texts[1] == "#" and texts[2].isdigit():
+            rank = "#" + texts[2]
+
+        # Category & game uit de kop-teksten
+        category, game = None, None
+        for t in texts[1:12]:
+            if category is None:
+                nc = norm_cat(t)
+                if nc: category = nc
+            if game is None:
+                ng = norm_game(t)
+                if ng: game = ng
+        category = category or "Overig"
+        game = game or "BO7"
+
+        # Tier: uit voorafgaande h3
         tier = "?"
         h3 = card.find_previous("h3")
         if h3:
@@ -212,42 +264,39 @@ def scrape_wz_meta():
             if "absolute" in ht: tier = "S"
             elif "contender" in ht: tier = "B"
             elif "meta" in ht: tier = "A"
-        if tier == "?":
-            section = card.find_parent("section")
-            if section:
-                st = section.get_text(separator="|", strip=True)[:60].lower()
-                if "absolute" in st: tier = "S"
-                elif st.startswith("a|") or "|meta|" in st: tier = "A"
 
-        # Builds
+        # Builds: elke <ul> met hud-line li's is één build; label = eerste tekst van de parent
         builds = []
-        build_divs = card.find_all("div", class_=lambda k: k and "border-t" in " ".join(k) and "border-border" in " ".join(k))
-        containers = build_divs if build_divs else [card]
-        for bd in containers:
-            div_texts = [t.strip() for t in bd.get_text(separator="\n").split("\n") if t.strip()]
-            label = div_texts[0] if div_texts else "Build"
+        for ul in card.find_all("ul"):
             attachments = {}
-            for li in bd.find_all("li"):
+            for li in ul.find_all("li", recursive=False):
                 hud = li.find(class_="hud-line")
                 if not hud: continue
                 slot_text = hud.get_text(strip=True)
                 slot = SLOT_NORMALIZE.get(slot_text.lower())
                 if not slot: continue
                 value = li.get_text(separator="|", strip=True).replace(slot_text, "").replace("|", " ").strip()
-                if value:
-                    attachments[slot] = value
-            if attachments:
-                builds.append({"label": label, "attachments": attachments, "note": "", "rank": ""})
+                if value: attachments[slot] = value
+            if not attachments: continue
+            label = "Build"
+            par = ul.parent
+            for _ in range(3):
+                if par is None: break
+                pt = [t.strip() for t in par.get_text(separator="\n").split("\n") if t.strip()]
+                if pt and pt[0].lower() not in SLOT_NAMES and pt[0] != name:
+                    label = pt[0]; break
+                par = par.parent
+            builds.append({"label": label, "attachments": attachments, "note": "", "rank": rank if not builds else ""})
 
-        if dbg < 3:
+        if dbg < 2:
             dbg += 1
-            log(f"    [dbg] {name} tier={tier} build_divs={len(build_divs)} li={len(card.find_all('li'))} hud={len(card.find_all(class_='hud-line'))} builds={len(builds)}")
+            log(f"    [dbg] {name} tier={tier} cat={category} game={game} builds={len(builds)}")
 
         if tier not in ("S", "A"):
             continue
         if builds and name not in all_weapons:
-            all_weapons[name] = {"tier": tier, "builds": builds}
-            log(f"    + {name} ({tier}) {len(builds)} builds")
+            all_weapons[name] = {"tier": tier, "builds": builds, "category": category, "game": game}
+            log(f"    + {name} ({tier}, {category}) {len(builds)} builds")
 
     log(f"  Totaal WZ Meta: {len(all_weapons)} wapens")
     return all_weapons
@@ -296,7 +345,7 @@ def run():
     now = datetime.datetime.now()
     timestamp = now.strftime('%d/%m/%Y %H:%M')
     log("=" * 55)
-    log("BuitKing's Loadout Updater gestart (v12)")
+    log("BuitKing's Loadout Updater gestart (v13)")
     log(f"Datum: {timestamp}")
 
     if not os.path.exists(HTML_PATH):
