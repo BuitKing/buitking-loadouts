@@ -7,3 +7,6 @@ debug_scraper4.py
 debug_scraper3.py
 debug_wz.html
 debug_wzhub.html
+buitking_update.log
+__pycache__/
+debug_*.html
