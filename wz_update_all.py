@@ -1,28 +1,21 @@
 """
-BuitKing's Loadout Updater - v6
-=================================
-1. Downloadt TeeP's Excel en parseert loadouts
-2. Scrapet warzoneloadout.games/warzone-meta/ (WZ Meta)
-3. Scrapet wzhub.gg/loadouts (WZHUB Meta)
-4. Update buitking_loadouts.html
+BuitKing's Loadout Updater - v9 (GitHub Actions)
+==================================================
+1. Scrapet warzoneloadout.games (WZ Meta) via Playwright
+2. Scrapet wzhub.gg/loadouts (WZHUB Meta) via Playwright
+3. Update index.html
 
-Vereisten: pip install openpyxl requests beautifulsoup4
+Als een scraper 0 resultaten geeft => bestaande data in HTML behouden (geen abort).
 """
 
-import sys, os, json, logging, datetime, tempfile, re
+import sys, os, json, logging, datetime, re
 
-# ─────────────────────────────────────────────
-#  CONFIGURATIE
-# ─────────────────────────────────────────────
-
-EXCEL_URL      = "https://docs.google.com/spreadsheets/d/10uE2AoXbZpy6C9sdRdJ8GzQGPYNzg-xrNrEoM6V1-jE/export?format=xlsx"
-HTML_PATH      = r"D:\Documenten\GitHub\buitking-loadouts\index.html"
-LOG_PATH       = r"D:\Documenten\GitHub\buitking-loadouts\buitking_update.log"
-WZ_URL         = "https://warzoneloadout.games/warzone-meta/"
-WZHUB_URL      = "https://wzhub.gg/loadouts"
-PLAYLIST_URL   = "https://wzhub.gg/playlist/wz"
-
-# ─────────────────────────────────────────────
+SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
+HTML_PATH    = r"D:\Documenten\GitHub\buitking-loadouts\index.html"
+LOG_PATH     = r"D:\Documenten\GitHub\buitking-loadouts\buitking_update.log"
+WZ_URL       = "https://warzoneloadout.games/warzone-meta/"
+WZHUB_URL    = "https://wzhub.gg/loadouts"
+PLAYLIST_URL = "https://wzhub.gg/playlist/wz"
 
 logging.basicConfig(
     filename=LOG_PATH, level=logging.INFO,
@@ -35,8 +28,6 @@ def log(msg, level="info"):
 
 def ensure_deps():
     pkgs = []
-    try: import openpyxl
-    except ImportError: pkgs.append("openpyxl")
     try: import requests
     except ImportError: pkgs.append("requests")
     try: import bs4
@@ -46,102 +37,51 @@ def ensure_deps():
         subprocess.check_call([sys.executable, "-m", "pip", "install"] + pkgs + ["--quiet"])
 
 ensure_deps()
-import openpyxl, requests
+import requests
 from bs4 import BeautifulSoup
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-
-# ══════════════════════════════════════════════
-#  DEEL 1: EXCEL PARSER (TeeP)
-# ══════════════════════════════════════════════
-
-ATT_SLOTS = {
-    'MUZZLE','BARREL','UNDERBARREL','LASER','AMMUNITION','MAGAZINE','OPTIC',
-    'STOCK/COMB','REAR GRIP','FIRE MOD','FIRE MODS','STOCK','COMB',
-    'TRIGGER','TRIGGER ACTION','COMBO'
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7",
 }
-CAT_KW = [
-    'ASSAULT RIFLE','SUB MACHINE','SUBMACHINE','LIGHT MACHINE',
-    'MARKSMAN','SNIPER','SHOTGUN','PISTOL','HANDGUN','LMG','BATTLE RIFLE'
-]
-SKIP_NAMES = {
-    'PERK 1','PERK 2','CONVERSION KIT','BOLT','SLING','AFTERMARKET CONVERSION KIT',
-    'RAIL','STOCK PAD','AFTERMARKET PARTS','STOCK/GUARD',
-    'UNDERBARREL/CARRY HANDLE','MAGAZINE/LOADER'
-}
-SECTION_BOUNDS = [
-    (58,782,'BO7'),(783,1523,'BO6'),(1524,2282,'MW3'),(2283,9999,'MW2'),
-]
 
-def get_game(i):
-    for s,e,n in SECTION_BOUNDS:
-        if s<=i<=e: return n
+PLAYWRIGHT_ARGS = [
+    "--no-sandbox", "--disable-setuid-sandbox",
+    "--disable-blink-features=AutomationControlled",
+    "--disable-dev-shm-usage",
+]
+PLAYWRIGHT_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+
+def fetch_with_playwright(url, wait_ms=4000, timeout_ms=90000, retries=2):
+    from playwright.sync_api import sync_playwright
+    for attempt in range(1, retries + 1):
+        try:
+            log(f"  Browser openen: {url} (poging {attempt})")
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True, args=PLAYWRIGHT_ARGS)
+                ctx = browser.new_context(
+                    user_agent=PLAYWRIGHT_UA,
+                    viewport={"width": 1280, "height": 800},
+                    extra_http_headers={"Accept-Language": "nl-NL,nl;q=0.9,en-US;q=0.8"},
+                )
+                page = ctx.new_page()
+                page.goto(url, timeout=timeout_ms, wait_until="networkidle")
+                page.wait_for_timeout(wait_ms)
+                html = page.content()
+                browser.close()
+            log(f"  Geladen, len={len(html)}")
+            return html
+        except Exception as e:
+            log(f"  [FOUT] Playwright poging {attempt}: {e}", "warning")
     return None
 
-def norm_cat(s):
-    s = s.upper()
-    if 'ASSAULT' in s:                  return 'Assault Rifles'
-    if 'SUB' in s or 'SMG' in s:        return 'SMGs'
-    if 'LIGHT MACHINE' in s or s.strip()=='LMGS': return 'LMGs'
-    if 'MARKSMAN' in s:                 return 'Marksman Rifles'
-    if 'SNIPER' in s:                   return 'Sniper Rifles'
-    if 'SHOTGUN' in s:                  return 'Shotguns'
-    if 'PISTOL' in s or 'HANDGUN' in s: return 'Pistols'
-    if 'BATTLE' in s:                   return 'Battle Rifles'
-    return None
 
-def parse_excel(path):
-    wb = openpyxl.load_workbook(path)
-    ws = wb['WZ BUILDS']
-    rows = list(ws.iter_rows(values_only=True))
-    data, cur_cat = {}, None
-    for i, row in enumerate(rows):
-        game = get_game(i)
-        if not game: continue
-        a = str(row[0]).strip() if row[0] else ''
-        b = str(row[1]).strip() if row[1] else ''
-        if not a: continue
-        au = a.upper()
-        if any(kw in au for kw in CAT_KW):
-            cat = norm_cat(a)
-            if cat:
-                cur_cat = cat
-                if game not in data: data[game] = {}
-                if cat not in data[game]: data[game][cat] = []
-            continue
-        if a=='-' or 'WEAPONS' in au: continue
-        if au in ATT_SLOTS:
-            if cur_cat and game in data and data[game].get(cur_cat):
-                val = b.split('\n')[0].strip()
-                if val.startswith('='):  # Excel formula — skip
-                    val = ''
-                data[game][cur_cat][-1]['attachments'][a.strip().title()] = val
-            continue
-        if cur_cat and au not in SKIP_NAMES:
-            code = ''
-            if 'BUILD CODE' in b.upper():
-                code = b.upper().replace('BUILD CODE:','').replace('BUILD CODE :','').strip()
-            if game not in data: data[game] = {}
-            if cur_cat not in data[game]: data[game][cur_cat] = []
-            data[game][cur_cat].append({'name':a,'build_code':code,'attachments':{}})
-    cleaned = {}
-    for game,cats in data.items():
-        cleaned[game] = {}
-        for cat,wps in cats.items():
-            f = [w for w in wps if any(v and v.strip() for v in w['attachments'].values())]
-            if f: cleaned[game][cat] = f
-    return cleaned
-
-
-# ══════════════════════════════════════════════
-#  DEEL 2: WARZONELOADOUT.GAMES SCRAPER
-# ══════════════════════════════════════════════
-
+# === WZ META ===
 TIER_MAP = {
     "absolute meta": "S", "meta warzone": "A",
     "contender": "B", "average": "C", "weak": "D",
 }
-
 SLOT_NORMALIZE = {
     "muzzle":"Muzzle","barrel":"Barrel","underbarrel":"Underbarrel",
     "laser":"Laser","ammunition":"Ammunition","magazine":"Magazine",
@@ -186,29 +126,14 @@ def parse_build_pairs(lines, weapon_name):
         i += 1
     return atts
 
-def extract_note(lines, weapon_name, att_values):
-    for line in lines:
-        l = line.strip()
-        if (len(l) > 30 and not get_slot(l) and not is_junk(l)
-                and l != weapon_name and l not in att_values
-                and not l.lower().startswith(("bo7","bo6","mw3","mw2","#"))):
-            return l
-    return ""
-
 def scrape_wz_meta():
-    log(f"  Ophalen: {WZ_URL}")
-    try:
-        r = requests.get(WZ_URL, headers=HEADERS, timeout=20)
-        r.raise_for_status()
-    except Exception as e:
-        log(f"  [FOUT] {e}", "warning")
+    html = fetch_with_playwright(WZ_URL, wait_ms=6000)
+    if not html:
         return {}
-
-    soup = BeautifulSoup(r.text, "html.parser")
+    soup = BeautifulSoup(html, "html.parser")
     all_weapons = {}
     current_tier = "?"
-    seen_names = set()
-
+    seen = set()
     for el in soup.find_all(["h2","li"]):
         if el.name == "h2":
             current_tier = get_tier(el.get_text())
@@ -217,7 +142,6 @@ def scrape_wz_meta():
         if not h3: continue
         name = h3.get_text(strip=True)
         if not name or len(name) < 2: continue
-
         labels = []
         for ul in el.find_all("ul"):
             for item in ul.find_all("li"):
@@ -225,60 +149,31 @@ def scrape_wz_meta():
                 if "ttachment" in t:
                     label = re.sub(r'\s*-?\s*\d+\s*Attachments?', '', t, flags=re.I).strip()
                     if label: labels.append(label)
-
         text = el.get_text(separator="\n")
         raw_lines = [l.strip() for l in text.split("\n") if l.strip()]
-
-        rank_map = {}
-        for line in raw_lines:
-            m = re.match(r'^(#\d+)\s+(.+)$', line.strip())
-            if m:
-                rank_map[m.group(2).strip().lower()] = m.group(1)
-
-        chunks, cur_chunk = [], []
+        chunks, cur = [], []
         for line in raw_lines:
             if line.startswith("Updated:"):
-                if cur_chunk: chunks.append(cur_chunk); cur_chunk = []
+                if cur: chunks.append(cur); cur = []
             else:
-                cur_chunk.append(line)
-        if cur_chunk: chunks.append(cur_chunk)
-
+                cur.append(line)
+        if cur: chunks.append(cur)
         builds = []
         for ci, chunk in enumerate(chunks):
             label = labels[ci] if ci < len(labels) else f"Build {ci+1}"
-            atts  = parse_build_pairs(chunk, name)
-            note  = extract_note(chunk, name, set(atts.values()))
-            rank  = rank_map.get(label.lower(), "")
+            atts = parse_build_pairs(chunk, name)
             if atts:
-                builds.append({"label": label, "attachments": atts, "note": note, "rank": rank})
-
-        if builds and current_tier in ("S", "A"):
-            if name not in seen_names:
-                seen_names.add(name)
-                all_weapons[name] = {"tier": current_tier, "builds": builds}
-                log(f"    + {name} ({current_tier})")
-            else:
-                existing = {b["label"] for b in all_weapons[name]["builds"]}
-                for b in builds:
-                    if b["label"] not in existing:
-                        all_weapons[name]["builds"].append(b)
-
+                builds.append({"label": label, "attachments": atts, "note": "", "rank": ""})
+        if builds and current_tier in ("S","A") and name not in seen:
+            seen.add(name)
+            all_weapons[name] = {"tier": current_tier, "builds": builds}
+            log(f"    + {name} ({current_tier})")
     log(f"  Totaal: {len(all_weapons)} wapens")
     return all_weapons
 
 
-# ══════════════════════════════════════════════
-#  DEEL 3: WZHUB.GG SCRAPER
-#  https://wzhub.gg/loadouts -- Warzone meta, 1 pagina
-#  Absolute Meta -> S-tier, Meta -> A-tier
-#  Attachment formaat: WAARDE op lijn N, " Slot" (met spatie) op lijn N+1
-# ══════════════════════════════════════════════
-
-WZHUB_TIER_MAP = {
-    "absolute meta": "S",
-    "meta": "A",
-}
-
+# === WZHUB ===
+WZHUB_TIER_MAP = {"absolute meta": "S", "meta": "A"}
 WZHUB_SLOT_NORMALIZE = {
     "muzzle":"Muzzle","barrel":"Barrel","underbarrel":"Underbarrel",
     "laser":"Laser","ammunition":"Ammunition","magazine":"Magazine",
@@ -288,12 +183,6 @@ WZHUB_SLOT_NORMALIZE = {
 }
 
 def parse_wzhub_atts(lines):
-    """
-    wzhub.gg formaat: waarde eerst, dan " Slot" met voorloopspatie.
-    Voorbeeld:
-      "MONOLITHIC SUPPRESSOR"
-      " Muzzle"
-    """
     atts = {}
     i = 0
     while i < len(lines) - 1:
@@ -308,294 +197,111 @@ def parse_wzhub_atts(lines):
     return atts
 
 def scrape_wzhub():
-    log(f"  Ophalen: {WZHUB_URL}")
-    try:
-        r = requests.get(WZHUB_URL, headers=HEADERS, timeout=20)
-        r.raise_for_status()
-    except Exception as e:
-        log(f"  [FOUT] {e}", "warning")
+    html = fetch_with_playwright(WZHUB_URL, wait_ms=8000, timeout_ms=90000, retries=2)
+    if not html:
         return {}
-
-    soup = BeautifulSoup(r.text, "html.parser")
+    soup = BeautifulSoup(html, "html.parser")
     all_weapons = {}
     current_tier = "?"
-
-    for el in soup.find_all(["h2", "a"]):
+    for el in soup.find_all(["h2","a"]):
         if el.name == "h2":
             t = el.get_text(strip=True).lower()
             current_tier = WZHUB_TIER_MAP.get(t, "?")
             continue
-
-        if el.name != "a":
-            continue
-
+        if el.name != "a": continue
         href = el.get("href", "")
-        if not href.startswith("/loadouts/bo7-"):
-            continue
-
-        if current_tier not in ("S", "A"):
-            continue
-
+        if not href.startswith("/loadouts/bo7-"): continue
+        if current_tier not in ("S","A"): continue
         name = el.get_text(strip=True)
-        if not name or len(name) < 2:
-            continue
-
+        if not name or len(name) < 2: continue
         parent = el.find_parent()
-        if not parent:
-            continue
-
+        if not parent: continue
         text = parent.get_text(separator="\n")
         lines = text.split("\n")
-
         build_code = ""
         for i, line in enumerate(lines):
             if "loadout code" in line.lower() and i + 1 < len(lines):
-                candidate = lines[i + 1].strip()
+                candidate = lines[i+1].strip()
                 if re.match(r"^[A-Z0-9][0-9]{2}-", candidate):
                     build_code = candidate
                 break
-
         atts = parse_wzhub_atts(lines)
-        if not atts:
-            continue
-
+        if not atts: continue
         entry = {"tier": current_tier, "build_code": build_code, "attachments": atts}
-
         if name not in all_weapons:
             all_weapons[name] = entry
-            log(f"    + {name} ({current_tier}) -- {list(atts.keys())}")
+            log(f"    + {name} ({current_tier})")
         elif current_tier == "S" and all_weapons[name]["tier"] == "A":
             all_weapons[name] = entry
-
     log(f"  Totaal: {len(all_weapons)} wapens van wzhub.gg")
     return all_weapons
 
 
-# ══════════════════════════════════════════════
-#  DEEL 3b: WZHUB PLAYLIST SCRAPER
-# ══════════════════════════════════════════════
-
-def scrape_playlist():
-    log(f"  Ophalen: {PLAYLIST_URL}")
-    try:
-        r = requests.get(PLAYLIST_URL, headers=HEADERS, timeout=20)
-        r.raise_for_status()
-    except Exception as e:
-        log(f"  [FOUT] {e}", "warning")
-        return {}
-
-    soup = BeautifulSoup(r.text, "html.parser")
-
-    result = {
-        "date_range": "",
-        "season_label": "",
-        "season_pct": 0,
-        "playlists": []
-    }
-
-    # --- Date range ---
-    for el in soup.find_all(["p", "span", "div", "h2", "h3"]):
-        t = el.get_text(strip=True)
-        if re.match(r'^[A-Z][a-z]+ \d+ [-–] [A-Z][a-z]+ \d+$', t):
-            result["date_range"] = t
-            break
-
-    # --- Season bar ---
-    for el in soup.find_all(True):
-        t = el.get_text(strip=True)
-        m = re.search(r'(SEASON\s*\d+\s*[-–]\s*\d+%\s*\(\d+ DAYS?\))', t, re.IGNORECASE)
-        if m:
-            result["season_label"] = m.group(1).strip()
-            pct = re.search(r'(\d+)%', m.group(1))
-            if pct:
-                result["season_pct"] = int(pct.group(1))
-            break
-
-    # --- Playlist cards --- use class "playlist-card" containers
-    seen = set()
-    for card in soup.find_all(class_=re.compile(r'playlist-card')):
-        # Skip sub-elements
-        if any(c in (card.get('class') or []) for c in ['playlist-card__title', 'playlist-card__mode', 'playlist-card__item']):
-            continue
-
-        title_el = card.find(class_=re.compile(r'playlist-card__title'))
-        if not title_el:
-            continue
-
-        name = title_el.get_text(strip=True).upper()
-        if not name or len(name) < 3 or name in seen:
-            continue
-        seen.add(name)
-
-        # LTM badge
-        ltm = bool(card.find(string=re.compile(r'\bLTM\b', re.IGNORECASE)) or
-                   card.find(class_=re.compile(r'ltm', re.IGNORECASE)))
-
-        # Mode rows
-        modes = []
-        for mode_el in card.find_all(class_=re.compile(r'playlist-card__(mode|item|row)')):
-            t = mode_el.get_text(strip=True)
-            if t and len(t) > 2 and 'LTM' not in t.upper():
-                modes.append(t.upper())
-
-        result["playlists"].append({"name": name, "modes": modes, "ltm": ltm})
-        log(f"    + {name} (ltm={ltm}, modes={len(modes)})")
-
-    log(f"  Totaal: {len(result['playlists'])} playlists, seizoen: {result['season_label']}")
-    return result
-
-TEEP_START      = "/* TEEP_DATA_START */"
-TEEP_END        = "/* TEEP_DATA_END */"
-WZ_START        = "/* WZ_META_START */"
-WZ_END          = "/* WZ_META_END */"
-WZHUB_START     = "/* WZHUB_META_START */"
-WZHUB_END       = "/* WZHUB_META_END */"
-PLAYLIST_START  = "/* PLAYLIST_START */"
-PLAYLIST_END    = "/* PLAYLIST_END */"
+# === HTML UPDATE ===
+WZ_START    = "/* WZ_META_START */"
+WZ_END      = "/* WZ_META_END */"
+WZHUB_START = "/* WZHUB_META_START */"
+WZHUB_END   = "/* WZHUB_META_END */"
 
 def replace_between(content, start, end, new_code):
-    """Replace content between start and end markers using string operations (not regex)."""
     si = content.find(start)
     ei = content.find(end, si)
     if si == -1 or ei == -1:
         return content, 0
     replacement = f'{start}\n  {new_code}\n  {end}'
-    new_content = content[:si] + replacement + content[ei + len(end):]
-    return new_content, 1
+    return content[:si] + replacement + content[ei + len(end):], 1
 
-def update_html(path, teep_data, wz_meta, wzhub_data, playlist_data, timestamp):
+def update_html(path, wz_meta, wzhub_data):
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
-
-    if TEEP_START not in content or WZ_START not in content or WZHUB_START not in content:
-        log("FOUT: markers niet gevonden -- gebruik de nieuwste buitking_loadouts.html", "error")
+    if WZ_START not in content or WZHUB_START not in content:
+        log("FOUT: markers niet gevonden in HTML", "error")
         raise ValueError("Markers ontbreken")
-
-    content, _ = replace_between(content, TEEP_START, TEEP_END,
-                                 f'const RAW = {json.dumps(teep_data, ensure_ascii=False)};')
     if wz_meta:
         content, _ = replace_between(content, WZ_START, WZ_END,
                                      f'const WZ_META = {json.dumps(wz_meta, ensure_ascii=False)};')
+        log(f"  WZ Meta: {len(wz_meta)} wapens bijgewerkt")
     else:
-        log("  [WAARSCHUWING] WZ Meta leeg -- bestaande data behouden", "warning")
+        log("  [WAARSCHUWING] WZ Meta leeg — bestaande data behouden", "warning")
     if wzhub_data:
         content, _ = replace_between(content, WZHUB_START, WZHUB_END,
                                      f'const WZHUB_META = {json.dumps(wzhub_data, ensure_ascii=False)};')
+        log(f"  WZHUB: {len(wzhub_data)} wapens bijgewerkt")
     else:
-        log("  [WAARSCHUWING] WZHUB leeg -- bestaande data behouden", "warning")
-    if playlist_data and playlist_data.get("playlists"):
-        ORDER = ['BATTLE ROYALE', 'RESURGENCE', 'BATTLE ROYALE CASUAL', 'RESURGENCE CASUAL']
-        def pl_sort(p):
-            if p.get('ltm'): return (99, p['name'])
-            try: return (ORDER.index(p['name']), p['name'])
-            except ValueError: return (50, p['name'])
-        playlist_data['playlists'] = sorted(playlist_data['playlists'], key=pl_sort)
-        def escape_sq(obj):
-            if isinstance(obj, str):   return obj.replace("'", "\u2019")
-            if isinstance(obj, list):  return [escape_sq(i) for i in obj]
-            if isinstance(obj, dict):  return {k: escape_sq(v) for k, v in obj.items()}
-            return obj
-        pd = escape_sq(playlist_data)
-        # Update JS data
-        content, _ = replace_between(content, PLAYLIST_START, PLAYLIST_END,
-                                     f'const PLAYLIST_DATA = {json.dumps(pd, ensure_ascii=True)};')
-        # Also pre-render static HTML directly into the panel div (bulletproof)
-        def render_panel_html(d):
-            cards = ''
-            for p in d.get('playlists', []):
-                ltm = '<span class="pl-ltm">LTM</span>' if p.get('ltm') else ''
-                modes = ''
-                for ms in p.get('modes', []):
-                    dash = ms.rfind(' - ')
-                    left  = ms[dash+3:] if dash > 0 else ms   # mode left
-                    right = ms[:dash]   if dash > 0 else ''    # map right
-                    modes += f'<div class="pl-mode-row"><span class="pl-mode-map">{left}</span>'
-                    if right: modes += f'<span class="pl-mode-type">{right}</span>'
-                    modes += '</div>'
-                cls = 'pl-card ltm' if p.get('ltm') else 'pl-card'
-                cards += f'<div class="{cls}"><div class="pl-card-head"><span class="pl-name">{p["name"]}</span>{ltm}</div><div class="pl-modes">{modes}</div></div>'
-            dr = f'<div class="pl-daterange">{d.get("date_range","")}</div>' if d.get('date_range') else ''
-            return f'<div class="pl-title">🎮 WZ PLAYLISTS</div>{dr}<hr class="pl-divider">{cards}'
-
-        static_inner = render_panel_html(pd)
-        content = re.sub(
-            r'(<div class="playlist-panel" id="playlistPanel">).*?(</div>\s*</div>\s*<!-- Modal)',
-            rf'\g<1>{static_inner}\2',
-            content, count=1, flags=re.DOTALL
-        )
-    else:
-        log("  [WAARSCHUWING] Playlist leeg -- bestaande data behouden", "warning")
-
-    content = re.sub(
-        r'(id="lastUpdated"[^>]*>)[^<]*(<)',
-        rf'\1Bijgewerkt: {timestamp}\2',
-        content
-    )
-
+        log("  [WAARSCHUWING] WZHUB leeg — bestaande data behouden", "warning")
     with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
 
 
-# ══════════════════════════════════════════════
-#  MAIN
-# ══════════════════════════════════════════════
-
+# === MAIN ===
 def run():
     now       = datetime.datetime.now()
     timestamp = now.strftime('%d/%m/%Y %H:%M')
-
     log("=" * 55)
-    log("BuitKing's Loadout Updater gestart")
+    log("BuitKing's Loadout Updater gestart (v9)")
     log(f"Datum: {timestamp}")
 
     if not os.path.exists(HTML_PATH):
         log(f"FOUT: HTML niet gevonden: {HTML_PATH}", "error")
         sys.exit(1)
 
-    # -- Stap 1: Excel
-    log("\n[1/4] Excel downloaden & parseren...")
-    tmp = os.path.join(tempfile.gettempdir(), "buitking_temp.xlsx")
-    try:
-        r = requests.get(EXCEL_URL, timeout=30)
-        r.raise_for_status()
-        with open(tmp, 'wb') as f: f.write(r.content)
-        teep_data = parse_excel(tmp)
-        total = sum(len(w) for cats in teep_data.values() for w in cats.values())
-        log(f"      OK: {total} wapens over {len(teep_data)} games")
-    except Exception as e:
-        log(f"      FOUT: {e}", "error"); sys.exit(1)
-    finally:
-        try: os.remove(tmp)
-        except: pass
-
-    # -- Stap 2: WZ Meta (warzoneloadout.games)
-    log("\n[2/5] WZ Meta scrapen (warzoneloadout.games)...")
+    log("\n[1/2] WZ Meta scrapen (warzoneloadout.games)...")
     try:
         wz_meta = scrape_wz_meta()
         log(f"      OK: {len(wz_meta)} wapens")
     except Exception as e:
         log(f"      FOUT: {e}", "warning"); wz_meta = {}
 
-    # -- Stap 3: WZHUB Meta (wzhub.gg)
-    log("\n[3/5] WZHUB Meta scrapen (wzhub.gg)...")
+    log("\n[2/2] WZHUB Meta scrapen (wzhub.gg)...")
     try:
         wzhub_data = scrape_wzhub()
         log(f"      OK: {len(wzhub_data)} wapens")
     except Exception as e:
         log(f"      FOUT: {e}", "warning"); wzhub_data = {}
 
-    # -- Stap 4: Warzone Playlists (wzhub.gg/playlist/wz)
-    log("\n[4/5] Warzone Playlists scrapen (wzhub.gg/playlist/wz)...")
+    log("\n[3/3] HTML updaten...")
     try:
-        playlist_data = scrape_playlist()
-        log(f"      OK: {len(playlist_data.get('playlists', []))} playlists")
-    except Exception as e:
-        log(f"      FOUT: {e}", "warning"); playlist_data = {}
-
-    # -- Stap 5: HTML updaten
-    log(f"\n[5/5] HTML updaten...")
-    try:
-        update_html(HTML_PATH, teep_data, wz_meta, wzhub_data, playlist_data, timestamp)
+        update_html(HTML_PATH, wz_meta, wzhub_data)
         log(f"      OK: Bijgewerkt op {timestamp}")
     except Exception as e:
         log(f"      FOUT: {e}", "error"); sys.exit(1)
